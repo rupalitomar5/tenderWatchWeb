@@ -413,7 +413,7 @@ td::before {
     width: 16.7% !important;
 }
 .sidebar:hover .nav-link span {
-    display: table-cell !important;
+    display:inline-block !important;
 }
 .sidebar:hover .hd-logo {
     display: inline-block !important;
@@ -423,7 +423,7 @@ td::before {
     width: auto !important;
 }
 .sidebar-open-body {
-    width: calc(100% - 60px);
+    width: calc(100% - 64px);
     position: relative;
     left: 4%;
     z-index: 1031;
@@ -1627,5 +1627,8 @@ td.right-icons a.text-danger{
 
 }
 
+.app-wrapper{
+    overflow: hidden;
+}
 
 /****** Add By Designer End ******/

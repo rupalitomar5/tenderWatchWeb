@@ -24,7 +24,7 @@ class SideBar extends Component {
 
     render() {
         return (
-            <div className={"col-md-2 sidebar bg-white hide"} id="sidebar-wrapper">
+            <div className={"col-md-2 col-xs-12 sidebar bg-white hide"} id="sidebar-wrapper">
                 {/*<a className="pull-left show-menu" onClick={this.props.toggleSidebar}>
                   <i className="fa fa-bars fa-2x"/>
               </a>*/}

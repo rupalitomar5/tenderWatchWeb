@@ -23,27 +23,16 @@ class App extends Component {
         );
         const PrivateRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(routeProps) => (
-                this.props.user ? <div className='parent-class'>
-
-                    <div className="container-fluid">
-                        <div className="row">
-                            <div className="col-md-2">
-                                <SideBar/>
-                            </div>
-                            <div className="sidebar-open-body">
-                                <NavBar/>
-                                <div className="container-fluid">
-                                    <div className="row">
-                                        <div className="content-block">
-                                                <Component {...routeProps} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                this.props.user ?
+                    <div className="app-wrapper">
+                        <SideBar/>
+                        <div className="sidebar-open-body">
+                        <NavBar/>
+                        <Component {...routeProps} />
                         </div>
                     </div>
 
-                </div> : <Redirect to='/login'/>)}/>
+                    : <Redirect to='/login'/>)}/>
         );
 
         return (
