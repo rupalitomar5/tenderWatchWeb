@@ -1,0 +1,26 @@
+.main-wrapper{
+    background: #3b4651;
+    height: 100vh;
+
+}
+.login{
+    position: relative;
+    margin: 0 auto;
+}
+.login-content {
+    margin: 0 auto;
+    position: absolute;
+    width: 540px;
+    top: 150px;
+    right: 0;
+    left: 0;
+}
+.login-logo {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.login-form {
+    background: #ffffff;
+    padding: 30px 30px 20px;
+    border-radius: 2px;
+}
