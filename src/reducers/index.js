@@ -5,11 +5,13 @@ import auth from './auth';
 import isLoading from './loading';
 import alertModal from './alertModal';
 import userRole from './userRole';
+import country from './countryReducer';
 
 export default combineReducers({
     router: routerReducer,
     auth,
     isLoading,
     alertModal,
-    userRole
+    userRole,
+    country
 });

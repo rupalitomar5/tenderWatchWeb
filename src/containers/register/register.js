@@ -6,6 +6,7 @@ import {NavLink} from 'react-router-dom';
 
 import {registerMethod} from './../../actionMethods/authActionMethods';
 import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
+import { getCountries } from '../../actionMethods/userActionMethods';
 import AlertModal from '../../components/alertModal/alertmodal';
 import './register.css';
 
@@ -20,6 +21,9 @@ class Register extends React.Component {
         }
     }
 
+    componentWillMount() {
+        this.props.getCountries();//countryName
+    }
     componentDidMount() {
         const {userRole} = this.props;
         const {fields} = this.state;
@@ -109,7 +113,7 @@ class Register extends React.Component {
 
     render() {
         const {fields, errors, page} = this.state;
-        const {isAlert} = this.props;
+        const {isAlert, countries} = this.props;
         return (
             <div className="register-wrapper">
                 <div className='container'>
@@ -135,7 +139,7 @@ class Register extends React.Component {
                                                     <Label>email*</Label>
                                                     <Input type='text' id='email' value={fields.email}
                                                            onBlur={this.validate}
-                                                           onChange={this.changeHandler}/><br/>
+                                                           onChange={this.changeHandler}/>
                                                     {errors.email && <Alert color='danger'>{errors.email}</Alert>}
                                                 </FormGroup>
                                                 <FormGroup>
@@ -163,8 +167,16 @@ class Register extends React.Component {
                                                 </FormGroup>
                                                 <FormGroup>
                                                     <Label>country</Label>
-                                                    <Input type='text' id='country' onChange={this.changeHandler}
-                                                           value={fields.country}/>
+                                                    <Input type='select' id='country' onChange={this.changeHandler}
+                                                           value={fields.country}>
+                                                        <option>Select one</option>
+                                                        {
+                                                            countries.length > 0 &&
+                                                            countries.map( (country, index) =>(
+                                                                <option key={index} value={country.countryName}>{country.countryName}</option>
+                                                            ))
+                                                        }
+                                                    </Input>
                                                 </FormGroup>
                                                 <FormGroup>
                                                     <Label>contact no</Label>
@@ -203,9 +215,10 @@ class Register extends React.Component {
 const mapStateToProps = state => {
     return {
         isAlert: state.alertModal.isAlert,
-        userRole: state.userRole
+        userRole: state.userRole,
+        countries: state.country.countries
     }
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({registerMethod, openAlertModal}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({registerMethod, openAlertModal, getCountries}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

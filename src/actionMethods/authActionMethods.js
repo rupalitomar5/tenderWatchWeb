@@ -35,11 +35,10 @@ export const logoutMethod = () => {
 export const registerMethod = (regDetails) => {
   return dispatch => {
       let regForm = new FormData();
-      regForm.append("email",regDetails.email);
-      regForm.append("password",regDetails.password);
-      regForm.append('role',regDetails.role);
-      regForm.append('image',regDetails.profilePhoto);
-        registerService(regForm).then((response)=>{
+      for(let key in regDetails){
+          regForm.append(key,regDetails[key]);
+      }
+      registerService(regForm).then((response)=>{
             localStorage.setItem('auth_user',response.data.token);
             dispatch({type:LOGIN,payload:response.data.user});
         }).catch((err)=>{
