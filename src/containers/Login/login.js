@@ -19,15 +19,12 @@ class Login extends React.Component {
 
     changeHandler = (e) => {
         const {credentials} = this.state;
-        console.log('target', e.target.value);
-        debugger;
         credentials[e.target.id] = e.target.value;
         this.setState({credentials});
     };
     loginHandler = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        debugger;
         this.props.loginMethod(this.state.credentials);
     };
     setUser = (e) => {

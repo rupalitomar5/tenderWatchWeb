@@ -10,13 +10,11 @@ import SideBar from './components/sidebar/SideBar';
 import Register from './containers/register/register';
 import ForgotPassword from "./containers/forgotPassword/forgotPassword";
 import SpinnerLoader from './components/spinnerLoader/spinnerLoader';
-import AlertModal from './components/alertModal/alertmodal';
 
 import './components/sidebar/sideBar.css';
 
 class App extends Component {
     render() {
-        debugger;
         const PublicRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(routeProps) => (
                 !this.props.user ? <Component {...routeProps} /> : <Redirect to='/'/>)}/>
@@ -48,7 +46,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {user: state.auth.user, isLoading: state.isLoading, alertModal: state.alertModal}
+    return {user: state.auth.user, isLoading: state.isLoading}
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

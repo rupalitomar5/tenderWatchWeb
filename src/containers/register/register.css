@@ -1,0 +1,29 @@
+.register-wrapper{
+    background: #eef1f7;
+    height: 100vh;
+
+}
+.register{
+    position: relative;
+    margin: 0 auto;
+}
+.register-content {
+    margin: 0 auto;
+    position: absolute;
+    width: 540px;
+    top: 80px;
+    right: 0;
+    left: 0;
+}
+.register-logo {
+    text-align: left;
+    margin-bottom: 15px;
+    font-size: large;
+}
+.register-form {
+    background: #ffffff;
+    padding: 30px 30px 20px;
+    border-radius: 3%;
+    -webkit-box-shadow:0 0 50px rgba(0, 0, 0, 0.1);
+    box-shadow:0 0 50px rgba(0, 0, 0, 0.1);
+}

@@ -1,4 +1,10 @@
-import {HIDE_MODAL} from '../reducers/alertModal';
+import {HIDE_MODAL,SHOW_MODAL} from '../reducers/alertModal';
+
+export const openAlertModal = (payload) => {
+    return dispatch=>{
+        dispatch({type:SHOW_MODAL,payload});
+    }
+};
 
 export const hideAlertModal = () => {
   return dispatch => {
