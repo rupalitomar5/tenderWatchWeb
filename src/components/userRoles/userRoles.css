@@ -1,0 +1,14 @@
+.icon-userrole {
+    height: 40%;
+    width: 40%;
+    padding: 5%;
+    left:50%;
+}
+.main-container{
+    display: inline-block;
+}
+
+.icon-div {
+    width: 50%;
+    float: left;
+}

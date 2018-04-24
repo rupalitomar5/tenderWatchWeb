@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 
 const AlertModal = (props) => {
+    debugger;
     return (
         <Modal isOpen={props.alertModal.isAlert}>
             <ModalHeader>
@@ -14,7 +15,7 @@ const AlertModal = (props) => {
                 {props.alertModal.message}
             </ModalBody>
             <ModalFooter>
-                <button onClick={props.hideAlertModal}>okay</button>
+                <button className='btn btnAll' onClick={props.hideAlertModal}>okay</button>
             </ModalFooter>
         </Modal>
     )
@@ -24,4 +25,4 @@ const mapStateToProps = (state) => {
     return {alertModal: state.alertModal}
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({hideAlertModal}, dispatch);
-export default connect(mapStateToProps,null)(AlertModal);
+export default connect(mapStateToProps,mapDispatchToProps)(AlertModal);

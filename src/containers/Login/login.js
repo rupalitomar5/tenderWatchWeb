@@ -1,22 +1,25 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {withRouter,NavLink} from 'react-router-dom';
+import {withRouter, NavLink} from 'react-router-dom';
 import {FormGroup, Label, Input, Form} from 'reactstrap'
-import {loginMethod} from '../../actionMethods/authActionMethods';
+import {loginMethod, setUserRoleMethod,clearRoleMethod} from '../../actionMethods/authActionMethods';
+import UserRoles from '../../components/userRoles/userRoles';
 import './login.css';
 
 class Login extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            credentials: {}
+            credentials: {
+                role:this.props.userRole
+            }
         }
     }
 
     changeHandler = (e) => {
         const {credentials} = this.state;
-        console.log('target',e.target.value);
+        console.log('target', e.target.value);
         debugger;
         credentials[e.target.id] = e.target.value;
         this.setState({credentials});
@@ -27,67 +30,69 @@ class Login extends React.Component {
         debugger;
         this.props.loginMethod(this.state.credentials);
     };
+    setUser = (e) => {
+        this.props.setUserRoleMethod(e.target.id);
+    };
+    clearRole = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.props.clearRoleMethod();
+    };
 
     render() {
-        debugger;
         return (
             <div className="main-wrapper">
-            <div className='container'>
-                <div className="login">
-                <div className="login-content">
-                    <div class="login-logo">
-                            TenderWatch
+                <div className='container'>
+                    <div className="login">
+                        <div className="login-content">
+                            <div className="login-logo">
+                                Welcome,{this.props.userRole ? ' please login first:' : ' please select what you are looking for:'}
+                            </div>
+                            <div className="login-form">
+                                {this.props.userRole ? <React.Fragment>
+                                        role : <NavLink to='/' onClick={this.clearRole}>{this.props.userRole}</NavLink>
+                                        <Form onSubmit={this.loginHandler}>
+                                            <FormGroup>
+                                                <Label>username/email:</Label>
+                                                <Input type='email'
+                                                       id='email'
+                                                       onChange={this.changeHandler}
+                                                       value={this.state.credentials.email}
+                                                       required
+                                                />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label>password:</Label>
+                                                <Input type='password'
+                                                       id='password'
+                                                       onChange={this.changeHandler}
+                                                       value={this.state.credentials.password}
+                                                       required
+                                                />
+                                            </FormGroup>
+                                            <button type='submit' value='submit' className={'btnAll btn'}>Login</button>
+                                        </Form>
+                                        <NavLink to='/forgotpassword'> Forgot Password?</NavLink><br />
+                                        <NavLink to='/register'>Don't have an account? signup now!</NavLink>
+                                        <div>
+                                            <i id='facebook' onClick={this.props.socialLoginMethod} className="fa fa-facebook fa-2x" />
+                                            <i id='google' onClick={this.props.socialLoginMethod} className="fa fa-google fa-2x" />
+                                        </div>
+                                    </React.Fragment>
+                                    :
+                                    <UserRoles setUser={this.setUser}/>
+                                }
+
+                            </div>
+                        </div>
                     </div>
-                    <div className="login-form">
-                <Form onSubmit={this.loginHandler}>
-                    <FormGroup>
-                        <Label>username/email:</Label>
-                        <Input type='text'
-                               id='email'
-                               onChange={this.changeHandler}
-                               value={this.state.credentials.email}
-                               required
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>password:</Label>
-                        <Input type='password'
-                               id='password'
-                               onChange={this.changeHandler}
-                               value={this.state.credentials.password}
-                               required
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Role:</Label>
-                        <Input
-                            type='select'
-                            id='role'
-                            onChange={this.changeHandler}
-                            value={this.state.credentials.role}
-                            required
-                        >
-                            <option value={''}>select one</option>
-                            <option>client</option>
-                            <option>contractor</option>
-                        </Input>
-                    </FormGroup>
-                    <button type='submit' value='submit' className={'btnAll btn'}>Login</button>
-                </Form>
-                <NavLink to='/forgotpassword'>Forgot Password?</NavLink><br />
-
-                <NavLink to='/register'>Don't have an account? signup now!</NavLink>
-
-            </div>
                 </div>
-            </div>
-            </div>
             </div>
 
         )
     }
 }
 
-//const mapStateToProps = (state) => ({});
-const mapDispatchToProps = (dispatch) => bindActionCreators({loginMethod}, dispatch);
-export default withRouter(connect(null, mapDispatchToProps)(Login));
+const mapStateToProps = (state) => ({userRole: state.userRole});
+const mapDispatchToProps = (dispatch) => bindActionCreators({loginMethod, setUserRoleMethod,clearRoleMethod}, dispatch);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

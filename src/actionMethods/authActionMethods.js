@@ -1,6 +1,7 @@
 import { history } from '../store';
 import {LOGOUT,LOGIN} from '../reducers/auth';
 import {DISABLELOADING,ENABLELOADING} from '../reducers/loading';
+import {CHANGE_USER_ROLE,CLEAR_USER_ROLE} from '../reducers/userRole';
 import { loginService, logoutService,registerService,forgotPasswordService } from '../services/authServices';
 import {SHOW_MODAL} from '../reducers/alertModal';
 
@@ -62,5 +63,17 @@ export const forgotPasswordMethod = (payload) => {
       }).catch((err)=>{
           dispatch({type:SHOW_MODAL,payload:{header:'Error',message:err.message}})
       });
+  }
+};
+
+export const setUserRoleMethod = (role) => {
+    return dispatch => {
+        dispatch({type:CHANGE_USER_ROLE,payload:role})
+    }
+};
+
+export const clearRoleMethod = () => {
+  return dispatch => {
+      dispatch({type:CLEAR_USER_ROLE});
   }
 };

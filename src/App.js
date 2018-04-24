@@ -38,7 +38,6 @@ class App extends Component {
         return (
             <React.Fragment>
                 {this.props.isLoading && <SpinnerLoader/>}
-                {this.props.alertModal.isAlert && <AlertModal/>}
                 <PrivateRoute exact path='/' component={Home}/>
                 <PublicRoute exact path='/login' component={Login}/>
                 <PublicRoute exact path='/register' component={Register}/>
