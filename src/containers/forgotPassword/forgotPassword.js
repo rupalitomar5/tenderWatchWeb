@@ -23,8 +23,6 @@ class ForgotPassword extends React.Component {
 
     changeHandler = (e) => {
         const {credentials} = this.state;
-        console.log('target', e.target.value);
-        debugger;
         credentials[e.target.id] = e.target.value;
         this.setState({credentials});
     };

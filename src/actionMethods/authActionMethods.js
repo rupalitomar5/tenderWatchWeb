@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import {history} from '../store';
 import {LOGOUT, LOGIN} from '../reducers/auth';
 import {SHOW_MODAL} from '../reducers/alertModal';
@@ -12,18 +13,18 @@ import {
 import {ENABLELOADING, DISABLELOADING} from '../reducers/loading';
 
 export const loginMethod = (credentials) => {
-    return dispatch => {
-        dispatch({type: ENABLELOADING});
-        loginService(credentials).then(response => {
-            dispatch({type: DISABLELOADING});
-            localStorage.setItem('auth_user', response.data.token);
-            dispatch({type: LOGIN, payload: response.data.token});
-            history.push('/');
-        }).catch(error => {
-            dispatch({type: DISABLELOADING});
-            dispatch({type: SHOW_MODAL, payload: {header: 'Login', message: error.response.data.error}});
-        });
-    }
+  return dispatch => {
+      dispatch({type:ENABLELOADING});
+      loginService(credentials).then( response => {
+          dispatch({type:DISABLELOADING});
+          localStorage.setItem('auth_user', response.data.token);
+          dispatch({type:LOGIN,payload: jwt.decode(response.data.token)});
+          history.push('/');
+      }).catch( error => {
+          dispatch({type:DISABLELOADING});
+          dispatch({type:SHOW_MODAL,payload:{header:'Login',message:error.response.data.error}});
+      });
+  }
 };
 
 export const logoutMethod = () => {
@@ -37,10 +38,9 @@ export const logoutMethod = () => {
             } else {
                 throw Error(response.data.Message);
             }
-        }).catch(error => {
-            dispatch({type: DISABLELOADING});
-            console.log('error', error);
-            //alert(error);
+        }).catch( error => {
+            dispatch({type:DISABLELOADING});
+            dispatch({type:SHOW_MODAL,payload:{header:'Login',message:error.response.data.error}});
         });
     }
 };
