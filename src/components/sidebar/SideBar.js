@@ -30,9 +30,12 @@ class SideBar extends Component {
                 </Link>
                 <div className="sidebar-sticky">
                     <ul className="nav flex-column">
-                        <li name="Dashboard" className={this.props.active === 'Dashboard' ? "nav-item active" :"nav-item"} ><Link className="nav-link" onClick={this.activeLink}  name="Dashboard" to="/"><i className="fa fa-th-large"></i> <span> Dashboard </span></Link></li>
-                        <li name="usermanage" className={this.props.active === 'UserManagement' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="usermanage" to="/usermanage"><i className="fa fa-user"></i> <span> User Management </span> </Link></li>
-                        <li name="settings" className={this.props.active === 'Settings' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="settings" to="/settings"><i className="fa fa-gear"></i> <span> Settings </span></Link></li>
+                        <li name="Home" className={this.props.active === 'Home' ? "nav-item active" :"nav-item"} ><Link className="nav-link" onClick={this.activeLink}  name="Home" to="/"><i className="fa fa-home"></i> <span> Home </span></Link></li>
+                        <li name="uploadTender" className={this.props.active === 'uploadTender' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="uploadTender" to="/uploadTender"><i className="fa fa-upload"></i> <span> Upload Tender </span> </Link></li>
+                        <li name="editProfile" className={this.props.active === 'editProfile' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="editProfile" to="/editProfile"><i className="fa fa-user"></i> <span> Edit Profile </span></Link></li>
+                        <li name="changePassword" className={this.props.active === 'changePassword' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="changePassword" to="/changePassword"><i className="fa fa-lock"></i> <span> Change Password </span></Link></li>
+                        <li name="notification" className={this.props.active === 'notification' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="notification" to="/notification"><i className="fa fa-bell"></i> <span> Notification </span></Link></li>
+                        <li name="contactSupportTeam" className={this.props.active === 'contactSupportTeam' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="contactSupportTeam" to="/contactSupportTeam"><i className="fa fa-headphones"></i> <span> Contact Support Team </span></Link></li>
                     </ul>
                 </div>
             </div>

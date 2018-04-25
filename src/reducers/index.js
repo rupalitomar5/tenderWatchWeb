@@ -6,6 +6,7 @@ import isLoading from './loading';
 import alertModal from './alertModal';
 import userRole from './userRole';
 import country from './countryReducer';
+import tenders from './tenders';
 
 export default combineReducers({
     router: routerReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
     isLoading,
     alertModal,
     userRole,
-    country
+    country,
+    tenders
 });

@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {} from 'reactstrap';
 import {logoutMethod} from '../../actionMethods/authActionMethods';
-
+import {getAllTendersMethod} from '../../actionMethods/tenderActionMethods';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import '../../index.css';
 
@@ -12,6 +12,10 @@ class Home extends React.Component {
     constructor() {
         super();
         this.state = {}
+    }
+
+    componentDidMount() {
+        this.props.getAllTendersMethod();
     }
 
     render() {
@@ -30,5 +34,5 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
     return {isLoading: state.isLoading}
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({logoutMethod}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({logoutMethod, getAllTendersMethod}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
