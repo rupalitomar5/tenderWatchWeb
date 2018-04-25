@@ -3,11 +3,17 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter, NavLink} from 'react-router-dom';
 import {FormGroup, Label, Input, Form} from 'reactstrap'
-import {loginMethod, setUserRoleMethod,clearRoleMethod} from '../../actionMethods/authActionMethods';
+import {
+    loginMethod,
+    setUserRoleMethod,
+    clearRoleMethod,
+    googleLoginMethod
+} from '../../actionMethods/authActionMethods';
 import UserRoles from '../../components/userRoles/userRoles';
 import AlertModal from '../../components/alertModal/alertmodal';
 import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
-import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader'
+import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
+import GoogleButton from '../../components/google';
 import './login.css';
 
 class Login extends React.Component {
@@ -15,12 +21,13 @@ class Login extends React.Component {
         super(props);
         this.state = {
             credentials: {
-                role:props.userRole
+                role: props.userRole
             }
         }
     }
-    componentWillReceiveProps(nextProps){
-        !this.state.credentials.role && this.setState({credentials:{role:nextProps.userRole}})
+
+    componentWillReceiveProps(nextProps) {
+        !this.state.credentials.role && this.setState({credentials: {role: nextProps.userRole}})
     }
 
     changeHandler = (e) => {
@@ -41,13 +48,17 @@ class Login extends React.Component {
         e.stopPropagation();
         this.props.clearRoleMethod();
     };
+    googleLogin = (payload) => {
+      this.props.googleLoginMethod(payload,this.props.userRole);
+    };
 
     render() {
         debugger;
         return (
             <div className="main-wrapper">
                 {this.props.isLoading && <SpinnerLoader/>}
-                {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal} hideAlertModal={this.props.hideAlertModal} />}
+                {this.props.alertModal.isAlert &&
+                <AlertModal alertModal={this.props.alertModal} hideAlertModal={this.props.hideAlertModal}/>}
                 <div className='container'>
                     <div className="login">
                         <div className="login-content">
@@ -78,11 +89,12 @@ class Login extends React.Component {
                                             </FormGroup>
                                             <button type='submit' value='submit' className={'btnAll btn'}>Login</button>
                                         </Form>
-                                        <NavLink to='/forgotpassword'> Forgot Password?</NavLink><br />
+                                        <NavLink to='/forgotpassword'> Forgot Password?</NavLink><br/>
                                         <NavLink to='/register'>Don't have an account? signup now!</NavLink>
                                         <div>
-                                            <i id='facebook' onClick={this.props.socialLoginMethod} className="fa fa-facebook fa-2x" />
-                                            <i id='google' onClick={this.props.socialLoginMethod} className="fa fa-google fa-2x" />
+                                            <i id='facebook' onClick={this.props.socialLoginMethod}
+                                               className="fa fa-facebook fa-2x"/>
+                                            <GoogleButton id='google' googleLoginMethod={this.googleLogin} />
                                         </div>
                                     </React.Fragment>
                                     :
@@ -98,6 +110,16 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({userRole: state.userRole,alertModal: state.alertModal,isLoading:state.isLoading});
-const mapDispatchToProps = (dispatch) => bindActionCreators({loginMethod, setUserRoleMethod,clearRoleMethod,hideAlertModal}, dispatch);
+const mapStateToProps = (state) => ({
+    userRole: state.userRole,
+    alertModal: state.alertModal,
+    isLoading: state.isLoading
+});
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    loginMethod,
+    setUserRoleMethod,
+    clearRoleMethod,
+    hideAlertModal,
+    googleLoginMethod
+}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

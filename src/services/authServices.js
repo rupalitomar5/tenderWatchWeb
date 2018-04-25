@@ -17,3 +17,11 @@ export const registerService = (userDetails) => {
 export const forgotPasswordService = (payload) => {
   return axios.post('/api/auth/forgot',payload);
 };
+
+export const googleAuthService = (payload) => {
+  debugger;
+  return axios.post('/api/auth/glogin',payload);
+};
+
+
+//https://s3.ap-south-1.amazonaws.com/tenderwatch/tenderimages/

@@ -5,11 +5,14 @@ const responseGoogle = (response) => {
     console.log(response);
 };
 
-const GoogleComponent=()=>(<GoogleLogin
+const GoogleComponent=(props)=>(<GoogleLogin
+    id={props.id}
+    className='fa fa-google fa-2x'
     clientId="153589139177-5k2g5pv0088mgaoob6t3jp5pvm2oqori.apps.googleusercontent.com"
-    buttonText="Login"
-    onSuccess={responseGoogle}
-    onFailure={responseGoogle}
+    clientSecret="NLc61WmGlXJ2pHZDW6577j4F"
+    buttonText="oogle"
+    onSuccess={props.googleLoginMethod}
+    onFailure={props.googleLoginMethod}
 />);
 
 export default GoogleComponent;
