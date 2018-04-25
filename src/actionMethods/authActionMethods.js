@@ -92,8 +92,8 @@ export const clearRoleMethod = () => {
 
 export const googleLoginMethod = (payload, role) => {
     return dispatch => {
-        dispatch({type: ENABLELOADING});
-        googleAuthService({token: payload.tokenId, role}).then((res) => {
+        payload.tokenId && dispatch({type: ENABLELOADING});
+        payload.tokenId && googleAuthService({token: payload.tokenId, role}).then((res) => {
             dispatch({type: DISABLELOADING});
             localStorage.setItem('auth_user', res.data.token);
             dispatch({type: LOGIN, payload: res.data.user});

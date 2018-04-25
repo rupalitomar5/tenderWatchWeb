@@ -9,15 +9,15 @@ import NavBar from './components/navbar/NavBar';
 import SideBar from './components/sidebar/SideBar';
 import Register from './containers/register/register';
 import ForgotPassword from "./containers/forgotPassword/forgotPassword";
-
 import './components/sidebar/sideBar.css';
 import GoogleComponent from "./components/google/index";
+import Facebook from "./components/facebook/index";
 
 class App extends Component {
     render() {
         const PublicRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(routeProps) => (
-                !this.props.user ? <Component {...routeProps} /> : <Redirect to='/'/>)}/>
+                !this.props.user ? <React.Fragment><NavBar/><Component {...routeProps} /></React.Fragment> : <Redirect to='/'/>)}/>
         );
         const PrivateRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(routeProps) => (
@@ -35,12 +35,12 @@ class App extends Component {
 
         return (
             <React.Fragment>
-
                 <PrivateRoute exact path='/' component={Home}/>
                 <PublicRoute exact path='/login' component={Login}/>
                 <PublicRoute exact path='/register' component={Register}/>
                 <PublicRoute exact path='/forgotpassword' component={ForgotPassword}/>
                 <PublicRoute exact path='/googlelogin' component={GoogleComponent}/>
+                <PublicRoute exact path='/facelogin' component={Facebook} />
             </React.Fragment>
         );
     }

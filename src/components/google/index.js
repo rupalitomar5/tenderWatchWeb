@@ -7,10 +7,10 @@ const responseGoogle = (response) => {
 
 const GoogleComponent=(props)=>(<GoogleLogin
     id={props.id}
-    className='fa fa-google fa-2x'
+    className='btn fa fa-google fa-2x'
     clientId="153589139177-5k2g5pv0088mgaoob6t3jp5pvm2oqori.apps.googleusercontent.com"
     clientSecret="NLc61WmGlXJ2pHZDW6577j4F"
-    buttonText="oogle"
+    buttonText=" login with Google"
     onSuccess={props.googleLoginMethod}
     onFailure={props.googleLoginMethod}
 />);

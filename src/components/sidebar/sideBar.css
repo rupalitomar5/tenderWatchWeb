@@ -17,23 +17,25 @@ body {
 }
 #sidebar-wrapper li a{
     position:relative;
-    color:#aaa;
+    color:#AEB7C2;
     font-size:13px;
     text-transform:uppercase;
     font-weight:600;
     padding:1.3rem 1.3rem 1.3rem 1.6rem;
     display: -webkit-inline-box;
+    border-left: 5px solid transparent;
 }
 #sidebar-wrapper li:hover, #sidebar-wrapper li.active a i, #sidebar-wrapper li.active a, #sidebar-wrapper li span.active  {
     color: #F2BE35 !important;
 }
 
 #sidebar-wrapper li:hover  {
-    background-color: black;
+    background-color: #252c35;
+    border-left-color: #00AAFF;
 }
 
 #sidebar-wrapper li a:hover {
-    color: #aaa;
+    color: #fff;
 }
 
 #sidebar-wrapper li a i{
@@ -55,10 +57,12 @@ body {
     height:100%;
     overflow-x:hidden;
     overflow-y:auto;
-    background-color:#343434 !important;
+    background :#2B333E !important;
     transition: width .3s ease-in-out;
 }
-
+.sidebar .nav > li > a:hover i, .sidebar .nav > li > a:focus i, .sidebar .nav > li > a.active i {
+    color: #00AAFF;
+}
 .sidebar:hover {
     max-width: 16.7%;
     width: 16.7% !important;
@@ -80,6 +84,7 @@ body {
     z-index: 1031;
     background: #eef1f7;
     transition: left .3s ease-in-out;
+    height: 100vh;
 }
 .sidebar:hover ~ .sidebar-open-body {
     left: 16.7%;
