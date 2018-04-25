@@ -9,9 +9,9 @@ import NavBar from './components/navbar/NavBar';
 import SideBar from './components/sidebar/SideBar';
 import Register from './containers/register/register';
 import ForgotPassword from "./containers/forgotPassword/forgotPassword";
-import SpinnerLoader from './components/spinnerLoader/spinnerLoader';
 
 import './components/sidebar/sideBar.css';
+import GoogleComponent from "./components/google/index";
 
 class App extends Component {
     render() {
@@ -35,11 +35,12 @@ class App extends Component {
 
         return (
             <React.Fragment>
-                {this.props.isLoading && <SpinnerLoader/>}
+
                 <PrivateRoute exact path='/' component={Home}/>
                 <PublicRoute exact path='/login' component={Login}/>
                 <PublicRoute exact path='/register' component={Register}/>
                 <PublicRoute exact path='/forgotpassword' component={ForgotPassword}/>
+                <PublicRoute exact path='/googlelogin' component={GoogleComponent}/>
             </React.Fragment>
         );
     }

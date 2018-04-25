@@ -2,12 +2,12 @@ import React from 'react';
 import {Form, FormGroup, Alert, Input, Label} from 'reactstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {NavLink} from 'react-router-dom';
-
+import {NavLink, withRouter} from 'react-router-dom';
 import {registerMethod} from './../../actionMethods/authActionMethods';
 import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import { getCountries } from '../../actionMethods/userActionMethods';
 import AlertModal from '../../components/alertModal/alertmodal';
+import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import './register.css';
 
 class Register extends React.Component {
@@ -22,7 +22,8 @@ class Register extends React.Component {
     }
 
     componentWillMount() {
-        this.props.getCountries();//countryName
+        !this.props.countries && this.props.getCountries();//countryName
+        !this.props.userRole && this.props.history.push('/login');
     }
     componentDidMount() {
         const {userRole} = this.props;
@@ -113,13 +114,13 @@ class Register extends React.Component {
 
     render() {
         const {fields, errors, page} = this.state;
-        const {isAlert, countries} = this.props;
+        const {alertModal, countries} = this.props;
         return (
             <div className="register-wrapper">
                 <div className='container'>
                     <div className="register">
                         <div className="register-content">
-                            {isAlert && <AlertModal/>}
+                            {alertModal.isAlert && <AlertModal alertModal={alertModal} hideAlertModal={this.props.hideAlertModal}/>}
                             <div className="register-form">
                                 <Form encType='multipart/form-data' onSubmit={this.register}>
                                     {
@@ -163,7 +164,7 @@ class Register extends React.Component {
                                             <div>
                                                 <FormGroup>
                                                     <Label>profile photo</Label>
-                                                    <Input id='profilePhoto' type='file' onChange={this.changeHandler}/>
+                                                    <Input id='image' type='file' onChange={this.changeHandler}/>
                                                 </FormGroup>
                                                 <FormGroup>
                                                     <Label>country</Label>
@@ -201,7 +202,6 @@ class Register extends React.Component {
                                             </div>
                                     }
                                 </Form>
-
                                 <NavLink to='/login'>{'< back to login'}</NavLink>
                             </div>
                         </div>
@@ -214,11 +214,11 @@ class Register extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        isAlert: state.alertModal.isAlert,
+        alertModal: state.alertModal,
         userRole: state.userRole,
         countries: state.country.countries
     }
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({registerMethod, openAlertModal, getCountries}, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+const mapDispatchToProps = (dispatch) => bindActionCreators({registerMethod, openAlertModal, getCountries,hideAlertModal}, dispatch);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));

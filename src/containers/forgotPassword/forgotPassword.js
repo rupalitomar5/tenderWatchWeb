@@ -1,9 +1,11 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink,withRouter} from 'react-router-dom';
 import {Form, FormGroup, Label, Input} from 'reactstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {forgotPasswordMethod} from './../../actionMethods/authActionMethods';
+import AlertModal from '../../components/alertModal/alertmodal';
+import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 
 class ForgotPassword extends React.Component {
     constructor(props) {
@@ -13,6 +15,10 @@ class ForgotPassword extends React.Component {
                 role:props.userRole
             }
         }
+    }
+
+    componentWillMount(){
+        !this.props.userRole && this.props.history.push('/login');
     }
 
     changeHandler = (e) => {
@@ -25,13 +31,16 @@ class ForgotPassword extends React.Component {
     forgotPasswordHandler = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        this.props.forgotPasswordMethod(this.state.credentials);
-        this.props.history.push('/');
+        this.props.forgotPasswordMethod(this.state.credentials).then((res)=>{
+            res && this.props.history.push('/');
+        });
     };
 
     render() {
+        debugger;
         return (
             <div className="main-wrapper">
+                {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal} hideAlertModal={this.props.hideAlertModal} />}
                 <div className='container'>
                     <div className="login">
                         <div className="login-content">
@@ -58,6 +67,6 @@ class ForgotPassword extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {return {userRole:state.userRole}};
-const mapDispatchToProps = (dispatch) => bindActionCreators({forgotPasswordMethod}, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
+const mapStateToProps = (state) => {return {userRole:state.userRole, alertModal: state.alertModal}};
+const mapDispatchToProps = (dispatch) => bindActionCreators({forgotPasswordMethod,hideAlertModal}, dispatch);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgotPassword));

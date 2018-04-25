@@ -22,6 +22,7 @@ body {
     text-transform:uppercase;
     font-weight:600;
     padding:1.3rem 1.3rem 1.3rem 1.6rem;
+    display: -webkit-inline-box;
 }
 #sidebar-wrapper li:hover, #sidebar-wrapper li.active a i, #sidebar-wrapper li.active a, #sidebar-wrapper li span.active  {
     color: #F2BE35 !important;
