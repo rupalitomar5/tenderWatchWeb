@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 import { history } from '../store';
 import {LOGOUT,LOGIN} from '../reducers/auth';
 import { SHOW_MODAL } from '../reducers/alertModal';
@@ -11,7 +13,7 @@ export const loginMethod = (credentials) => {
       loginService(credentials).then( response => {
           dispatch({type:DISABLELOADING});
           localStorage.setItem('auth_user', response.data.token);
-          dispatch({type:LOGIN,payload: response.data.token});
+          dispatch({type:LOGIN,payload: jwt.decode(response.data.token)});
           history.push('/');
       }).catch( error => {
           dispatch({type:DISABLELOADING});
@@ -33,8 +35,7 @@ export const logoutMethod = () => {
             }
         }).catch( error => {
             dispatch({type:DISABLELOADING});
-            console.log('error',error);
-            //alert(error);
+            dispatch({type:SHOW_MODAL,payload:{header:'Login',message:error.response.data.error}});
         });
     }
 };

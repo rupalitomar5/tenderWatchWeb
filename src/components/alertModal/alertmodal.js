@@ -2,7 +2,6 @@ import React from 'react';
 import {ModalFooter, ModalBody, ModalHeader, Modal} from 'reactstrap';
 
 const AlertModal = (props) => {
-    debugger;
     return (
         <Modal isOpen={props.alertModal.isAlert}>
             <ModalHeader>

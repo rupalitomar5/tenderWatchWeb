@@ -23,8 +23,6 @@ class ForgotPassword extends React.Component {
 
     changeHandler = (e) => {
         const {credentials} = this.state;
-        console.log('target', e.target.value);
-        debugger;
         credentials[e.target.id] = e.target.value;
         this.setState({credentials});
     };
@@ -37,7 +35,6 @@ class ForgotPassword extends React.Component {
     };
 
     render() {
-        debugger;
         return (
             <div className="main-wrapper">
                 {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal} hideAlertModal={this.props.hideAlertModal} />}

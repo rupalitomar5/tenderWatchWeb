@@ -1,5 +1,7 @@
+import jwt from "jsonwebtoken";
+
 const initialState = {
-    user: localStorage.getItem('auth_user') || null,
+    user: localStorage.getItem('auth_user') && jwt.decode(localStorage.getItem('auth_user')) || null,
 };
 
 export const LOGIN = 'LOGIN';
