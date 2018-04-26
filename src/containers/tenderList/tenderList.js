@@ -1,18 +1,46 @@
 import React from 'react';
 import TenderCard from '../../components/tenderCard/tenderCard';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {logoutMethod} from '../../actionMethods/authActionMethods';
+import {getAllTendersMethod} from '../../actionMethods/tenderActionMethods';
+import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 
-class TenderList extends React.Component{
-    constructor(){
+class TenderList extends React.Component {
+    constructor() {
         super();
-        this.state={}
+        this.state = {}
     }
-    render(){
-        return(
-            <React.Fragment>
-                <TenderCard />
-            </React.Fragment>
+
+    componentDidMount() {
+        this.props.getAllTendersMethod();
+    }
+
+    render() {
+        debugger;
+        return (
+            <div className='col-lg-12 ml-auto p-5 hide'>
+                {this.props.isLoading && <SpinnerLoader/>}
+                <h1 className='colorText'>Tenders:</h1>
+                <div className="container">
+                    <div className="row">
+                {this.props.tenders && this.props.tenders.allTenders.map((x) =>
+                    <TenderCard tenderPhoto={x.tenderPhoto}
+                                                         tenderName={x.tenderName}
+                                                         tenderDescription={x.description}
+                                                         tenderExpiryDate={x.expiryDate}/>
+
+                )}
+                    </div>
+                </div>
+                <button className={'btnAll btn'} onClick={this.props.logoutMethod}>LogOut</button>
+            </div>
         )
     }
 }
 
-export default TenderList;
+const mapStateToProps = (state) => {
+    return {isLoading: state.isLoading, tenders: state.tenders}
+};
+const mapDispatchToProps = (dispatch) => bindActionCreators({logoutMethod, getAllTendersMethod}, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(TenderList);

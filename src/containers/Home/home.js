@@ -15,16 +15,13 @@ class Home extends React.Component {
         this.state = {}
     }
 
-    componentDidMount() {
-        this.props.getAllTendersMethod();
-    }
 
     render() {
         return (
             <React.Fragment>
                 {this.props.isLoading && <SpinnerLoader/>}
                 <div className='col-lg-12 ml-auto p-5 hide'>
-                    <h1>HOME</h1>
+                    <h1 className='colorText'>Tenders:</h1>
                     <TenderList />
                     <br />
                     <button className={'btnAll btn'} onClick={this.props.logoutMethod}>LogOut</button>

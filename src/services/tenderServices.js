@@ -1,5 +1,5 @@
 import baseService from './baseService';
 
 export const getAllTendersServices = () => {
-  return baseService.get('/api/tender');
+  return baseService.post('/api/tender/getTenders');
 };

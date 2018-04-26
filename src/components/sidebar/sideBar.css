@@ -25,14 +25,6 @@ body {
     display: -webkit-inline-box;
     border-left: 5px solid transparent;
 }
-#sidebar-wrapper li:hover, #sidebar-wrapper li.active a i, #sidebar-wrapper li.active a, #sidebar-wrapper li span.active  {
-    color: #F2BE35 !important;
-}
-
-#sidebar-wrapper li:hover  {
-    background-color: #252c35;
-    border-left-color: #00AAFF;
-}
 
 #sidebar-wrapper li a:hover {
     color: #fff;
@@ -61,7 +53,7 @@ body {
     transition: width .3s ease-in-out;
 }
 .sidebar .nav > li > a:hover i, .sidebar .nav > li > a:focus i, .sidebar .nav > li > a.active i {
-    color: #00AAFF;
+    color: #00bcd4;
 }
 .sidebar:hover {
     max-width: 16.7%;
@@ -194,14 +186,6 @@ body {
 
 @media (max-width: 1600px) {
 
-    .event-details ul li span{
-        width:100%;
-    }
-    .event-details ul li p{
-        width:100%;
-        margin-bottom:0.5rem;
-    }
-
 }
 
 @media (max-width: 1199px) {
@@ -211,54 +195,11 @@ body {
         font-size:0.9rem;
     }
 
-    .navbar-collapse{
-        /*flex-grow:0;*/
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-flex-flow: row wrap;
-        -ms-flex-flow: row wrap;
-        flex-flow: row wrap;
-    }
 
 }
 
 
 @media (max-width: 991px) {
-
-    .hd-logo{
-        width:auto;
-        padding:12px 15px;
-    }
-    .navbar-light .navbar-toggler{
-        margin-right:auto;
-    }
-    .navbar-light .navbar-collapse{
-        margin-left:auto;
-        margin-right:15px;
-        display:inline-block;
-        flex-basis:auto;
-    }
-    .hd-search{
-        margin-left:0 !important;
-        margin-right:8px !important;
-        display:inline-block;
-    }
-    .hd-search .form-control{
-        max-width:100%;
-        min-width:inherit;
-    }
-    .navbar-light .navbar-collapse .dropdown{
-        margin-right:0;
-        margin-left:auto;
-        display:inline-block;
-        padding:0 !important;
-    }
-    .user-menu .dropdown-menu{
-        right:0;
-    }
-
 
     /* Sidebar Menu */
     .navbar-toggler{

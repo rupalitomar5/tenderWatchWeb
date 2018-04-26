@@ -1,0 +1,10 @@
+
+.profileImage{
+    width: 40px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.colorMain-background .btn .btn-secondary{
+    border: none;
+}

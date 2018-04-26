@@ -1,18 +1,14 @@
 import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 
-const responseFacebook = (response) => {
-    console.log(response);
-};
-
-
-    const Facebook = () => (<FacebookLogin
-        appId="250693088764491"
-        autoLoad={true}
-        fields="name,email,picture"
-        scope="public_profile,user_friends,user_actions.books"
-        callback={responseFacebook}
-    />);
+const Facebook = (props) => (<FacebookLogin
+    appId="419928815108640"
+    autoLoad={false}
+    fields="name,email,picture"
+    scope="public_profile"
+    callback={props.facebookLoginMethod}
+    cssClass="btn fa-socialBtn fa fa-facebook fa-2x"
+/>);
 
 export default Facebook;
 

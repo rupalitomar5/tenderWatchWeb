@@ -8,7 +8,7 @@ import {
     logoutService,
     registerService,
     forgotPasswordService,
-    googleAuthService
+    socialAuthService
 } from '../services/authServices';
 import {ENABLELOADING, DISABLELOADING} from '../reducers/loading';
 
@@ -90,10 +90,11 @@ export const clearRoleMethod = () => {
     }
 };
 
-export const googleLoginMethod = (payload, role) => {
+export const socialLoginMethod = (payload, role, type) => {
+    debugger;
     return dispatch => {
-        payload.tokenId && dispatch({type: ENABLELOADING});
-        payload.tokenId && googleAuthService({token: payload.tokenId, role}).then((res) => {
+        payload.tokenId || payload.signedRequest && dispatch({type: ENABLELOADING});
+        socialAuthService({token: payload.tokenId || payload.accessToken , role},type).then((res) => {
             dispatch({type: DISABLELOADING});
             localStorage.setItem('auth_user', res.data.token);
             dispatch({type: LOGIN, payload: res.data.user});

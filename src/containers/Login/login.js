@@ -7,13 +7,14 @@ import {
     loginMethod,
     setUserRoleMethod,
     clearRoleMethod,
-    googleLoginMethod
+    socialLoginMethod
 } from '../../actionMethods/authActionMethods';
 import UserRoles from '../../components/userRoles/userRoles';
 import AlertModal from '../../components/alertModal/alertmodal';
 import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import GoogleButton from '../../components/google';
+import FacebookButton from '../../components/facebook';
 import './login.css';
 
 class Login extends React.Component {
@@ -48,8 +49,8 @@ class Login extends React.Component {
         e.stopPropagation();
         this.props.clearRoleMethod();
     };
-    googleLogin = (payload) => {
-      this.props.googleLoginMethod(payload,this.props.userRole);
+    socialLogin = (type) => {
+      return (payload)=>this.props.socialLoginMethod(payload,this.props.userRole,type);
     };
 
     render() {
@@ -91,9 +92,8 @@ class Login extends React.Component {
                                         <NavLink to='/forgotpassword'> Forgot Password?</NavLink><br/>
                                         <NavLink to='/register'>Don't have an account? signup now!</NavLink>
                                         <div>
-                                            <i id='facebook' onClick={this.props.socialLoginMethod}
-                                               className="fa fa-facebook fa-2x"/>
-                                            <GoogleButton id='google' googleLoginMethod={this.googleLogin} />
+                                            <FacebookButton facebookLoginMethod={this.socialLogin('facebook')}/>
+                                            <GoogleButton googleLoginMethod={this.socialLogin('google')} />
                                         </div>
                                     </React.Fragment>
                                     :
@@ -119,6 +119,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     setUserRoleMethod,
     clearRoleMethod,
     hideAlertModal,
-    googleLoginMethod
+    socialLoginMethod
 }, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

@@ -4,7 +4,8 @@ import {getAllTendersServices} from '../services/tenderServices';
 export const getAllTendersMethod = () => {
     return dispatch => {
         getAllTendersServices().then((res)=>{
-            dispatch({type:GET_ALL_TENDERS,payload:res.data});
+            debugger;
+            !res.data.message && dispatch({type:GET_ALL_TENDERS,payload:res.data});
         }).catch((err)=>{
 
         })
