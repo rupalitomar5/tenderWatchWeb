@@ -19,7 +19,6 @@ export const forgotPasswordService = (payload) => {
 };
 
 export const socialAuthService = (payload,type) => {
-  debugger;
   return type==='google' ?
   axios.post('/api/auth/glogin',payload) :
       axios.post('/api/auth/facelogin',payload);

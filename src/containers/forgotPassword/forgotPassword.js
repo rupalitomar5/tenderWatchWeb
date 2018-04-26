@@ -35,7 +35,6 @@ class ForgotPassword extends React.Component {
     };
 
     render() {
-        debugger;
         return (
             <div className="main-wrapper">
                 {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal} hideAlertModal={this.props.hideAlertModal} />}

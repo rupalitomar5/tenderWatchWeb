@@ -3,6 +3,7 @@ import './App.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter, Redirect, Route} from 'react-router-dom';
+
 import TenderList from './containers/tenderList/tenderList';
 import Login from './containers/Login/login';
 import NavBar from './components/navbar/NavBar';
@@ -13,6 +14,7 @@ import './components/sidebar/sideBar.css';
 import GoogleComponent from "./components/google/index";
 import Facebook from "./components/facebook/index";
 import UploadTender from './containers/uploadTender/uploadTender';
+import ChangePassword from './containers/ChangePassword/changePassword';
 
 class App extends Component {
     render() {
@@ -43,6 +45,7 @@ class App extends Component {
                 <PublicRoute exact path='/googlelogin' component={GoogleComponent}/>
                 <PublicRoute exact path='/facelogin' component={Facebook} />
                 <PrivateRoute exact path='/uploadTender' component={UploadTender} />
+                <PrivateRoute exact path='/changePassword' component={ChangePassword} />
             </React.Fragment>
         );
     }

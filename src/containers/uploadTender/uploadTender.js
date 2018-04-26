@@ -30,8 +30,6 @@ class UploadTender extends React.Component {
     };
 
     render() {
-        this.state.fields;
-        debugger;
         return (
             <div className='col-lg-12 ml-auto p-5 hide'>
                 <h1 className='colorText'>Upload Tender:</h1>
@@ -41,17 +39,17 @@ class UploadTender extends React.Component {
                             <React.Fragment>
                                 <FormGroup>
                                     <Label>Tender Name:</Label>
-                                    <Input name='tenderName' onChange={this.changeHandler}
+                                    <Input name='tenderName' type='text' onChange={this.changeHandler}
                                            value={this.state.fields.tenderName}/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label> Tender Description </Label>
-                                    <Input name='tenderName' onChange={this.changeHandler}
+                                    <Input name='tenderName' type='text' onChange={this.changeHandler}
                                            value={this.state.fields.tenderName}/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label>Country</Label>
-                                    <Input name='tenderName' onChange={this.changeHandler}
+                                    <Input name='tenderName' type='text' onChange={this.changeHandler}
                                            value={this.state.fields.tenderName}/>
                                 </FormGroup>
                                 <FormGroup>
@@ -62,7 +60,7 @@ class UploadTender extends React.Component {
                                 <FormGroup>
                                     <Label>image</Label>
                                     <Input type='file' name='tenderName' onChange={this.changeHandler}
-                                           value={this.state.fields.tenderName}/>
+                                           />
                                 </FormGroup>
                                 <button id={2} className='btn btnAll' onClick={this.changePage}>next</button>
                             </React.Fragment>:

@@ -195,10 +195,13 @@ class Register extends React.Component {
                                                     <Input type='text' id='aboutMe' onChange={this.changeHandler}
                                                            value={fields.aboutMe ? fields.aboutMe : ''}/>
                                                 </FormGroup>
-                                                <button className='btn btnAll' onClick={this.PreviousPage}>Previous
-                                                </button>
-                                                <button className='btn btnAll' type='submit' value='submit'>Signup
-                                                </button>
+                                                <div>
+                                                    <button className='btn btnAll' onClick={this.PreviousPage}>Previous
+                                                    </button>
+                                                    <button style={{'marginLeft':'5%'}} className='btn btnAll' type='submit' value='submit'>Signup
+                                                    </button>
+                                                </div>
+                                                <br/>
                                             </div>
                                     }
                                 </Form>
