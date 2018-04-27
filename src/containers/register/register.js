@@ -7,7 +7,6 @@ import {registerMethod} from './../../actionMethods/authActionMethods';
 import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import { getCountries } from '../../actionMethods/userActionMethods';
 import AlertModal from '../../components/alertModal/alertmodal';
-import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import './register.css';
 
 class Register extends React.Component {
@@ -40,7 +39,7 @@ class Register extends React.Component {
 
     changeHandler = (e) => {
         const {fields, errors} = this.state;
-        if (e.target.id === 'profilePhoto') {
+        if (e.target.id === 'image') {
             fields[e.target.id] = e.target.files[0];
         }else {
             fields[e.target.id] = e.target.value;
@@ -120,7 +119,7 @@ class Register extends React.Component {
                 <div className='container'>
                     <div className="register">
                         <div className="register-content">
-                            {alertModal.isAlert && <AlertModal alertModal={alertModal} hideAlertModal={this.props.hideAlertModal}/>}
+                            {alertModal.isAlert && <AlertModal alertModal={alertModal}/>}
                             <div className="register-form">
                                 <Form encType='multipart/form-data' onSubmit={this.register}>
                                     {
@@ -216,9 +215,9 @@ const mapStateToProps = state => {
     return {
         alertModal: state.alertModal,
         userRole: state.userRole,
-        countries: state.country.countries
+        countries: state.formData.countries
     }
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({registerMethod, openAlertModal, getCountries,hideAlertModal}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({registerMethod, openAlertModal, getCountries}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));

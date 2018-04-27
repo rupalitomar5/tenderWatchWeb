@@ -1,5 +1,8 @@
 import React from 'react';
 import {ModalFooter, ModalBody, ModalHeader, Modal} from 'reactstrap';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 
 const AlertModal = (props) => {
     debugger;
@@ -18,4 +21,5 @@ const AlertModal = (props) => {
     )
 };
 
-export default AlertModal;
+const mapDispatchToProps = (dispatch) => bindActionCreators({hideAlertModal},dispatch);
+export default connect(null,mapDispatchToProps)(AlertModal);

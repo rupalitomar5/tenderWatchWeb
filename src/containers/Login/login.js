@@ -11,7 +11,6 @@ import {
 } from '../../actionMethods/authActionMethods';
 import UserRoles from '../../components/userRoles/userRoles';
 import AlertModal from '../../components/alertModal/alertmodal';
-import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import GoogleButton from '../../components/google';
 import FacebookButton from '../../components/facebook';
@@ -58,7 +57,7 @@ class Login extends React.Component {
             <div className="main-wrapper">
                 {this.props.isLoading && <SpinnerLoader/>}
                 {this.props.alertModal.isAlert &&
-                <AlertModal alertModal={this.props.alertModal} hideAlertModal={this.props.hideAlertModal}/>}
+                <AlertModal alertModal={this.props.alertModal} />}
                 <div className='container'>
                     <div className="login">
                         <div className="login-content">
@@ -118,7 +117,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
     loginMethod,
     setUserRoleMethod,
     clearRoleMethod,
-    hideAlertModal,
     socialLoginMethod
 }, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

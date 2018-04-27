@@ -12,7 +12,7 @@ const GoogleComponent=(props)=>(<GoogleLogin
     clientSecret="89FqTW6KJ6J9Y8a08_cxL9lT"
     buttonText=" login with Google"
     onSuccess={props.googleLoginMethod}
-    onFailure={props.googleLoginMethod}
+    onFailure={(err)=>alert('error :',err.message)}
 />);
 
 export default GoogleComponent;

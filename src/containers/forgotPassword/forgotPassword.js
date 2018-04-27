@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {forgotPasswordMethod} from './../../actionMethods/authActionMethods';
 import AlertModal from '../../components/alertModal/alertmodal';
-import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 
 class ForgotPassword extends React.Component {
     constructor(props) {
@@ -38,7 +37,7 @@ class ForgotPassword extends React.Component {
         debugger;
         return (
             <div className="main-wrapper">
-                {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal} hideAlertModal={this.props.hideAlertModal} />}
+                {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal} />}
                 <div className='container'>
                     <div className="login">
                         <div className="login-content">
@@ -66,5 +65,5 @@ class ForgotPassword extends React.Component {
 }
 
 const mapStateToProps = (state) => {return {userRole:state.userRole, alertModal: state.alertModal}};
-const mapDispatchToProps = (dispatch) => bindActionCreators({forgotPasswordMethod,hideAlertModal}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({forgotPasswordMethod}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgotPassword));

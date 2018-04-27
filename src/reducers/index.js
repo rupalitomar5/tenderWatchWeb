@@ -5,7 +5,7 @@ import auth from './auth';
 import isLoading from './loading';
 import alertModal from './alertModal';
 import userRole from './userRole';
-import country from './countryReducer';
+import formData from './formData';
 import tenders from './tenders';
 
 export default combineReducers({
@@ -14,6 +14,6 @@ export default combineReducers({
     isLoading,
     alertModal,
     userRole,
-    country,
+    formData,
     tenders
 });
