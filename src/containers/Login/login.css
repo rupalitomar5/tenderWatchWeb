@@ -15,6 +15,11 @@
     right: 0;
     left: 0;
 }
+
+.tender-content {
+    width: 98%;
+}
+
 .login-logo {
     text-align: left;
     margin-bottom: 15px;
@@ -23,7 +28,7 @@
 .login-form {
     background: #ffffff;
     padding: 20px 30px 20px;
-    border-radius: 3%;
+    border-radius: 10px;
     -webkit-box-shadow:0 0 50px rgba(0, 0, 0, 0.1);
     box-shadow:0 0 50px rgba(0, 0, 0, 0.1);
 }
