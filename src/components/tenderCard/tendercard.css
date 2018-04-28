@@ -1,35 +1,53 @@
-.card{
+.card {
     margin: 0 auto 30px;
     display: block;
     padding: 15px;
-    box-shadow: 3px 3px 5px #ddd;
-    cursor: pointer;
 }
-.image{
+
+.card:hover {
+    box-shadow: 3px 3px 5px #ddd;
+}
+
+.image {
     margin: 0 auto 10px;
     display: table;
 }
 
-.image img{
+.image img {
     width: 60px;
     height: 55px;
     border-radius: 50%;
 }
-.text-box{
+
+.text-box {
     display: block;
 }
-.text-box ul{
+
+.text-box ul {
     padding: 0;
     margin: 0 auto;
 }
-.text-box ul li{
+
+.text-box ul li {
     list-style-type: none;
-    margin: 0 auto  ;
+    margin: 0 auto;
 }
 
-.text-box ul li a{
+.text-box ul li a {
     text-decoration: none;
     color: #333;
     text-align: center;
     font-size: 16px;
+}
+
+.cross-btn{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.cross-btn img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }

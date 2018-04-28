@@ -21,7 +21,7 @@ body {
     font-size:13px;
     text-transform:uppercase;
     font-weight:600;
-    padding:1.3rem 1.3rem 1.3rem 1.6rem;
+    padding:1.3rem 1.3rem 1.3rem 0.8rem;
     display: -webkit-inline-box;
     border-left: 5px solid transparent;
 }
@@ -76,7 +76,7 @@ body {
     z-index: 1031;
     background: #eef1f7;
     transition: left .3s ease-in-out;
-    height: 100vh;
+
 }
 .sidebar:hover ~ .sidebar-open-body {
     left: 16.7%;

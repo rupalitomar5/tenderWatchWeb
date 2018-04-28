@@ -1,19 +1,26 @@
 import React from 'react';
 import './tendercard.css';
+import {NavLink} from 'react-router-dom';
 
 const TenderCard = (props) => {
     return (
                 <div className="col-md-3">
                     <div className="card">
+                        <div className="cross-btn" onClick={props.deleteMethod}>
+                            <img id={props._id} name={props.tenderName} src='images/cross.svg' />
+                        </div>
                         <div className="image">
                             <img
-                                src={props.tenderPhoto}/>
+                                id={props._id}
+                                src={props.tenderPhoto}
+                                onError={(e)=>{e.target.src='images/picture.svg'}}
+                            />
                         </div>
                         <div className="text-box">
                             <ul className="text-center">
-                                <li><a href="#"><strong>Name: </strong> {props.tenderName}</a></li>
-                                <li><a href="#"><strong>Title: </strong> {props.tenderDescription}</a></li>
-                                <li><a href="#"><strong>Exp_Day: </strong> {props.tenderExpiryDate}</a></li>
+                                <li><NavLink to={`/tender/${props._id}`}><strong>Name: </strong>{props.tenderName}</NavLink></li>
+                               {/* <li><NavLink to={`/tender/${props._id}`}><strong>Title: </strong> {props.tenderDescription}</NavLink></li>*/}
+                                <li><NavLink to={`/tender/${props._id}`}><strong>Exp_Day: </strong> {props.tenderExpiryDate}</NavLink></li>
                             </ul>
                         </div>
                     </div>

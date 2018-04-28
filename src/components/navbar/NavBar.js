@@ -10,8 +10,9 @@ const NavBar = (props) => (
         <Navbar style={{backgroundColor: '#00bcd4'}} dark>
             <NavbarBrand style={{color: 'white'}}>TenderWatch</NavbarBrand>
             {props.user && <React.Fragment>
-                <div><i className="fa fa-bell"/></div>
-                < UncontrolledDropdown inNavbar>
+                <div className="right-icons">
+                    <div className="icons"><img className='nav-icon-btn' src='/images/notifications-bell-button.svg'/></div>
+                <UncontrolledDropdown inNavbar>
                     <DropdownToggle nav className={'colorMain-background'}>
                         <img className="profileImage"
                              src={`https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${props.user.profilePhoto}`}
@@ -31,6 +32,7 @@ const NavBar = (props) => (
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
+                </div>
             </React.Fragment>
             }
         </Navbar>

@@ -118,6 +118,7 @@ class Register extends React.Component {
             <div className="register-wrapper">
                 <div className='container'>
                     <div className="register">
+                        <img className="logo-sidebar" src="https://s3.ap-south-1.amazonaws.com/tenderwatch/logo3%401024.png" alt="Tender watch" width="150"/>
                         <div className="register-content">
                             {alertModal.isAlert && <AlertModal alertModal={alertModal}/>}
                             <div className="register-form">
@@ -194,10 +195,13 @@ class Register extends React.Component {
                                                     <Input type='text' id='aboutMe' onChange={this.changeHandler}
                                                            value={fields.aboutMe ? fields.aboutMe : ''}/>
                                                 </FormGroup>
-                                                <button className='btn btnAll' onClick={this.PreviousPage}>Previous
-                                                </button>
-                                                <button className='btn btnAll' type='submit' value='submit'>Signup
-                                                </button>
+                                                <div>
+                                                    <button className='btn btnAll' onClick={this.PreviousPage}>Previous
+                                                    </button>
+                                                    <button style={{'marginLeft':'5%'}} className='btn btnAll' type='submit' value='submit'>Signup
+                                                    </button>
+                                                </div>
+                                                <br/>
                                             </div>
                                     }
                                 </Form>

@@ -72,7 +72,7 @@ export const forgotPasswordMethod = (payload) => {
             return true;
         }).catch((err) => {
             dispatch({type: DISABLELOADING});
-            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.message}});
+            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
             return false;
         });
     }
@@ -91,7 +91,6 @@ export const clearRoleMethod = () => {
 };
 
 export const socialLoginMethod = (payload, role, type) => {
-    debugger;
     return dispatch => {
         payload.tokenId || payload.signedRequest && dispatch({type: ENABLELOADING});
         socialAuthService({token: payload.tokenId || payload.accessToken , role},type).then((res) => {
@@ -100,7 +99,6 @@ export const socialLoginMethod = (payload, role, type) => {
             dispatch({type: LOGIN, payload: res.data.user});
         }).catch((err)=>{
             dispatch({type: DISABLELOADING});
-            console.log('err',err);
             dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
         });
     }

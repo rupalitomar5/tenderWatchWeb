@@ -3,6 +3,7 @@ import './App.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter, Redirect, Route} from 'react-router-dom';
+
 import TenderList from './containers/tenderList/tenderList';
 import Login from './containers/Login/login';
 import NavBar from './components/navbar/NavBar';
@@ -13,6 +14,8 @@ import './components/sidebar/sideBar.css';
 import GoogleComponent from "./components/google/index";
 import Facebook from "./components/facebook/index";
 import UploadTender from './containers/uploadTender/uploadTender';
+import ChangePassword from './containers/ChangePassword/changePassword';
+import Tender from "./containers/tender/Tender";
 
 class App extends Component {
     render() {
@@ -36,20 +39,23 @@ class App extends Component {
 
         return (
             <React.Fragment>
-                <PrivateRoute exact path='/' component={TenderList}/>
                 <PublicRoute exact path='/login' component={Login}/>
                 <PublicRoute exact path='/register' component={Register}/>
                 <PublicRoute exact path='/forgotpassword' component={ForgotPassword}/>
                 <PublicRoute exact path='/googlelogin' component={GoogleComponent}/>
                 <PublicRoute exact path='/facelogin' component={Facebook} />
                 <PrivateRoute exact path='/uploadTender' component={UploadTender} />
+                <PrivateRoute exact path='/changePassword' component={ChangePassword} />
+                <PrivateRoute exact path='/tender' component={TenderList} />
+                <PrivateRoute exact path='/tender/:tenderID' component={Tender} />
+                <PrivateRoute exact path='/' component={TenderList}/>
             </React.Fragment>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    return {user: state.auth.user, isLoading: state.isLoading}
+    return {user: state.auth.user}
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -34,13 +34,13 @@ class ForgotPassword extends React.Component {
     };
 
     render() {
-        debugger;
         return (
             <div className="main-wrapper">
                 {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal} />}
                 <div className='container'>
                     <div className="login">
                         <div className="login-content">
+                            <img className="logo-sidebar" src="https://s3.ap-south-1.amazonaws.com/tenderwatch/logo3%401024.png" alt="Tender watch" width="150"/>
                             <div className="login-form">
                                 <Form onSubmit={this.forgotPasswordHandler}>
                                     <FormGroup>

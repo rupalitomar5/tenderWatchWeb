@@ -62,6 +62,7 @@ class Login extends React.Component {
                     <div className="login">
                         <div className="login-content">
                             <div className="login-logo">
+                                <img className="logo-sidebar" src="https://s3.ap-south-1.amazonaws.com/tenderwatch/logo3%401024.png" alt="Tender watch" width="150"/>
                                 Welcome,{this.props.userRole ? ' please login first:' : ' please select what you are looking for:'}
                             </div>
                             <div className="login-form">

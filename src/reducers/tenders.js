@@ -1,4 +1,5 @@
 import {LOGOUT} from './auth';
+import _ from 'lodash';
 
 export const GET_ALL_TENDERS = 'GET_ALL_TENDERS';
 export const GET_TENDER = 'GET_TENDER';
@@ -15,6 +16,10 @@ export default (state = initialState, action) => {
             return {...state,allTenders:action.payload};
         case LOGOUT:
             return {...state,allTenders:[]};
+        case DELETE_TENDER:
+            return {...state,allTenders:_.filter(state.allTenders,(o)=>o._id!==action.payload)};
+        case GET_TENDER:
+            return {...state,current_tender:action.payload};
         default:
             return {...state};
     }
