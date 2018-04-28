@@ -40,8 +40,8 @@ class UploadTender extends React.Component {
             fields[e.target.name] = e.target.files[0];
         } else {
             fields[e.target.name] = e.target.value;
-            this.setState({fields})
         }
+        this.setState({fields});
     };
 
     submitHandler = (e) => {

@@ -1,8 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {Navbar, NavbarBrand, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import './navbar.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import _ from 'lodash';
+
 import {logoutMethod} from '../../actionMethods/authActionMethods';
 
 const NavBar = (props) => (
@@ -15,20 +18,20 @@ const NavBar = (props) => (
                 <UncontrolledDropdown inNavbar>
                     <DropdownToggle nav className={'colorMain-background'}>
                         <img className="profileImage"
-                             src={`https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${props.user.profilePhoto}`}
+                             src={_.includes(props.user.profilePhoto,'amazonaws')? props.user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${props.user.profilePhoto}`}
                              alt={'profile picture'}
                              onError={(e)=>{e.target.src='images/user-pic.png'}}
                         />
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem>
-                            Profile
+                        <DropdownItem className='nav-bar-link'>
+                            <Link to='/profile'>Profile</Link>
                         </DropdownItem>
-                        <DropdownItem>
-                            Change Password
+                        <DropdownItem className='nav-bar-link'>
+                            <Link to='changePassword'>Change Password</Link>
                         </DropdownItem>
-                        <DropdownItem onClick={props.logoutMethod}>
-                            Log Out
+                        <DropdownItem onClick={props.logoutMethod} className='nav-bar-link'>
+                            <Link to=''>Log Out</Link>
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>

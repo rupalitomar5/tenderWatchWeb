@@ -29,17 +29,14 @@ class TenderList extends React.Component {
     componentWillReceiveProps(props) {
 
         if (this.props.tenders.allTenders !== props.tenders.allTenders) {
-            console.log(props);
             this.setState({Tenders: props.tenders.allTenders})
         }
     }
 
     searchChange = (e) => {
-        debugger;
         this.setState({search: e.target.value}, () => {
             this.setState({Tenders: _.filter(this.props.tenders.allTenders, (o) => o.tenderName.includes(this.state.search))});
         });
-        debugger;
     };
     askModalToggle = (e) => {
         e && this.setState({delete: {index: e.target.id, name: e.target.name}});

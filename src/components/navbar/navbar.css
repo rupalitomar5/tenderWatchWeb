@@ -29,3 +29,10 @@
     width: 90px;
     float: right;
 }
+.nav-bar-link a{
+    color:#242323;
+}
+.nav-bar-link a:hover {
+    color: rgb(0, 188, 212);
+    text-decoration: none;
+}

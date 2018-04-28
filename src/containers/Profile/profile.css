@@ -1,0 +1,64 @@
+.main-wrapper{
+    background: #eef1f7;
+    margin-top: 3%;
+    height: 100vh;
+}
+
+.profile-form {
+    background: #ffffff;
+    padding: 30px 30px 20px;
+    border-radius: 10px;
+    -webkit-box-shadow:0 0 50px rgba(0, 0, 0, 0.1);
+    box-shadow:0 0 50px rgba(0, 0, 0, 0.1);
+}
+.profile-logo {
+    text-align: left;
+    margin-bottom: 15px;
+    font-size: large;
+}
+
+.container {
+    position: relative;
+
+}
+.image{
+    opacity: 1;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    height:170px;
+    width:170px;
+}
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+.containers:hover .image {
+    opacity: 0.3;
+}
+.containers:hover .middle {
+    opacity: 0.8;
+}
+.text {
+    background-color: grey;
+    padding: 16px 32px;
+}
+
+#fileLoader
+{
+    display:none;
+}
+/*Icon*/
+.iconcss{
+    position: relative;
+    font-size: 40px;
+}
+.closecss{
+    position: relative;
+    font-size: 20px;
+}

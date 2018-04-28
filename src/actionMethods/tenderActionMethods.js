@@ -7,7 +7,6 @@ export const getAllTendersMethod = () => {
     return dispatch => {
         dispatch({type: ENABLELOADING});
         getAllTendersServices().then((res) => {
-            debugger;
             dispatch({type: DISABLELOADING});
             !res.data.message && dispatch({type: GET_ALL_TENDERS, payload: res.data});
         }).catch((err) => {
@@ -17,7 +16,6 @@ export const getAllTendersMethod = () => {
 };
 
 export const uploadTenderMethod = (tender) => {
-    debugger;
     return dispatch => {
         dispatch({type: ENABLELOADING});
         let tenderForm = new FormData();
@@ -25,11 +23,9 @@ export const uploadTenderMethod = (tender) => {
             tenderForm.append(key, tender[key]);
         }
         uploadTenderServices(tenderForm).then((res) => {
-            console.log(res);
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Add Tender', message: 'tender successfully added!'}});
         }).catch((err) => {
-            debugger;
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
         });
@@ -37,16 +33,13 @@ export const uploadTenderMethod = (tender) => {
 };
 
 export const deleteTenderMethod = (index) => {
-    debugger;
     return dispatch => {
         dispatch({type: ENABLELOADING});
         deleteTenderServices(index).then((res) => {
-            debugger;
             dispatch({type: DELETE_TENDER, payload: index});
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Delete', message: 'tender successfully deleted'}});
         }).catch((err) => {
-            debugger;
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
         })

@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {hideAlertModal} from '../../actionMethods/alertMessageActionMethods';
 
 const AlertModal = (props) => {
-    debugger;
     return (
         <Modal isOpen={props.alertModal.isAlert}>
             <ModalHeader>

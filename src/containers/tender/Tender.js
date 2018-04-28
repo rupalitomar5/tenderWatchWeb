@@ -7,7 +7,6 @@ import {getTenderMethod} from '../../actionMethods/tenderActionMethods';
 
 class Tender extends React.Component {
     constructor(props) {
-        debugger;
         super();
         this.state = {
             id: props.location.pathname.split('/').pop()
@@ -19,7 +18,6 @@ class Tender extends React.Component {
     }
 
     render() {
-        debugger;
         return (
             <div className="login">
                 <div className="col-lg-12 ml-auto p-5 hide">

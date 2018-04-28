@@ -16,8 +16,13 @@ import Facebook from "./components/facebook/index";
 import UploadTender from './containers/uploadTender/uploadTender';
 import ChangePassword from './containers/ChangePassword/changePassword';
 import Tender from "./containers/tender/Tender";
+import Profile from './containers/Profile/profile';
+import {getCountries} from "./actionMethods/userActionMethods";
 
 class App extends Component {
+    componentWillMount(){
+        !this.props.countries && this.props.getCountries();
+    }
     render() {
         const PublicRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(routeProps) => (
@@ -39,6 +44,7 @@ class App extends Component {
 
         return (
             <React.Fragment>
+                <PrivateRoute exact path='/' component={TenderList}/>
                 <PublicRoute exact path='/login' component={Login}/>
                 <PublicRoute exact path='/register' component={Register}/>
                 <PublicRoute exact path='/forgotpassword' component={ForgotPassword}/>
@@ -46,16 +52,19 @@ class App extends Component {
                 <PublicRoute exact path='/facelogin' component={Facebook} />
                 <PrivateRoute exact path='/uploadTender' component={UploadTender} />
                 <PrivateRoute exact path='/changePassword' component={ChangePassword} />
+                <PrivateRoute exact path='/profile' component={Profile}/>
                 <PrivateRoute exact path='/tender' component={TenderList} />
                 <PrivateRoute exact path='/tender/:tenderID' component={Tender} />
-                <PrivateRoute exact path='/' component={TenderList}/>
             </React.Fragment>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    return {user: state.auth.user}
+    return {
+        user: state.auth.user,
+        countries: state.formData.countries
+    }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
