@@ -15,3 +15,8 @@ export const deleteTenderServices = (index) => {
 export const getTenderService = (index) => {
   return baseService.get(`/api/tender/${index}`);
 };
+
+export const updateTenderService = (payload,index) => {
+  debugger;
+  return baseService.put(`/api/tender/${index}`,payload);
+};

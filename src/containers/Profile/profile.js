@@ -77,9 +77,9 @@ class Profile extends React.Component {
                                             <Label>Profile Picture</Label><br/>
 
                                             {
-                                                user.image ? <img className="image" src={this.state.previewFile}/>
+                                                user.image ? <img className="profile-image" src={this.state.previewFile}/>
                                                     :
-                                                    <img className='image' src={_.includes(user.profilePhoto,'amazonaws')? user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${user.profilePhoto}`}
+                                                    <img className='profile-image' src={_.includes(user.profilePhoto,'amazonaws')? user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${user.profilePhoto}`}
                                                          disabled={isView}
                                                     />
                                             }

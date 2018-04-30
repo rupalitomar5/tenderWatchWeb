@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import {logoutMethod} from '../../actionMethods/authActionMethods';
+import userImg from './user-pic.png';
+import bellIcon from './notifications-bell-button.svg';
 
 const NavBar = (props) => (
     <div>
@@ -14,13 +16,13 @@ const NavBar = (props) => (
             <NavbarBrand style={{color: 'white'}}>TenderWatch</NavbarBrand>
             {props.user && <React.Fragment>
                 <div className="right-icons">
-                    <div className="icons"><img className='nav-icon-btn' src='/images/notifications-bell-button.svg'/></div>
+                    <div className="icons"><img className='nav-icon-btn' src={bellIcon}/></div>
                 <UncontrolledDropdown inNavbar>
                     <DropdownToggle nav className={'colorMain-background'}>
                         <img className="profileImage"
                              src={_.includes(props.user.profilePhoto,'amazonaws')? props.user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${props.user.profilePhoto}`}
                              alt={'profile picture'}
-                             onError={(e)=>{e.target.src='images/user-pic.png'}}
+                             onError={(e)=>{e.target.src=userImg}}
                         />
                     </DropdownToggle>
                     <DropdownMenu right>

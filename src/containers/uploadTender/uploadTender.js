@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    FormGroup,
-    Form,
-    Input,
-    Label,
-    Alert
-} from 'reactstrap';
+import TenderForm from '../../components/tenderForm/tenderForm';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getCountries, getCategories} from '../../actionMethods/userActionMethods';
@@ -37,7 +31,17 @@ class UploadTender extends React.Component {
     changeHandler = (e) => {
         const {fields} = this.state;
         if (e.target.name === 'image') {
+
+            let reader = new FileReader();
+            let file = e.target.files[0];
+            reader.readAsDataURL(file);
             fields[e.target.name] = e.target.files[0];
+            reader.onloadend = () => {
+                this.setState({
+                    file: file,
+                    imagePreviewUrl: reader.result
+                });
+            }
         } else {
             fields[e.target.name] = e.target.value;
         }
@@ -47,11 +51,11 @@ class UploadTender extends React.Component {
     submitHandler = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        const {fields,errors} = this.state;
+        const {fields, errors} = this.state;
 
         if (!fields.tenderName || !fields.email || errors.email) {
             this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
-        }else if(!fields.agree){
+        } else if (!fields.agree) {
             this.props.openAlertModal({header: 'Register', message: 'please check on agree'});
         }
         else {
@@ -88,116 +92,18 @@ class UploadTender extends React.Component {
         const {errors} = this.state;
         return (
             <div className='col-lg-12 ml-auto p-5 hide'>
-                {this.props.isLoading && <SpinnerLoader />}
+                {this.props.isLoading && <SpinnerLoader/>}
                 {this.props.alertModal.isAlert &&
                 <AlertModal alertModal={this.props.alertModal}/>}
                 <h1 className='colorText'>Upload Tender:</h1>
                 <div className='login-form'>
-                    <Form encType='multipart/form-data' onSubmit={this.submitHandler}>
-                        <div className='row'>
-                        <div className='col-sm-6'>
-                            <h3 className='colorText'>tender info:</h3>
-                            <FormGroup>
-                                <Input type='file' name='image' onChange={this.changeHandler}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Tender Name*</Label>
-                                <Input name='tenderName' type='text' onChange={this.changeHandler}
-                                       onBlur={this.validate}
-                                       value={this.state.fields.tenderName}
-                                />
-                                {errors.tenderName && <Alert color='danger'>{errors.tenderName}</Alert>}
-                            </FormGroup>
-                            <FormGroup>
-                                <Label> Tender Description </Label>
-                                <Input name='description' type='text' onChange={this.changeHandler}
-                                       value={this.state.fields.description || ''}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Country</Label>
-                                <Input type='select' name='country' onChange={this.changeHandler}
-                                       onBlur={this.validate}
-                                       value={this.state.fields.country}
-                                >
-                                    <option>Select one</option>
-                                    {
-                                        this.props.formData.countries &&
-                                        this.props.formData.countries.map((country, index) => (
-                                            <option key={index} value={country._id}><img
-                                                src={`data:image/png;base64,${country.imageString}`}
-                                                alt='tender image'/>{country.countryName}</option>
-                                        ))
-                                    }
-                                </Input>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>City</Label>
-                                <Input type='text' name='city' onChange={this.changeHandler}
-                                       value={this.state.fields.city}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Categories</Label>
-                                <Input type='select' name='category' onChange={this.changeHandler}
-                                       onBlur={this.validate}
-                                       value={this.state.fields.category}
-                                >
-                                    <option>Select one</option>
-                                    {
-                                        this.props.formData.categories &&
-                                        this.props.formData.categories.map((category, index) => (
-                                            <option key={index} value={category._id}><img
-                                                src={`data:image/png;base64,${category.imageString}`}
-                                                alt='category image'/>{category.categoryName}</option>
-                                        ))
-                                    }
-                                </Input>
-                            </FormGroup>
-                        </div>
-                        <div className='col-sm-6'>
-                            <h3 className='colorText'>How contractor can contact you?</h3>
-                            <FormGroup>
-                                <Label> Email* </Label>
-                                <Input type='text' name='email' onChange={this.changeHandler}
-                                       onBlur={this.validate}
-                                       value={this.state.fields.email || ''}/>
-                                {errors.email && <Alert color='danger'>{errors.email}</Alert>}
-                            </FormGroup>
-                            <FormGroup>
-                                <Label> Mobile Number </Label>
-                                <Input type='number' name='contactNo' onChange={this.changeHandler}
-                                       onBlur={this.validate}
-                                       value={this.state.fields.contactNo}
-                                />
-                                {errors.contactNo && <Alert color='danger'>{errors.contactNo}</Alert>}
-                            </FormGroup>
-                            <FormGroup>
-                                <Label> Landline Number </Label>
-                                <Input type='number' name='landlineNo' onChange={this.changeHandler}
-                                       value={this.state.fields.landlineNo}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label> Address </Label>
-                                <Input type='textarea' name='address' onChange={this.changeHandler}
-                                       value={this.state.fields.address}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>
-                                    <input type='checkbox' name='agree' onChange={this.changeHandler}
-                                           onBlur={this.validate}/>
-                                </Label>
-                                <Label> I Agree </Label>
-                                {errors.agree && <Alert color='danger'>{errors.agree}</Alert>}
-                            </FormGroup>
-                            {' '}
-                            <button className='btn btnAll'>submit</button>
-                        </div>
-                        </div>
-                    </Form>
+                    <TenderForm
+                        {...this.state}
+                        submitHandler={this.submitHandler}
+                        changeHandler={this.changeHandler}
+                        validate={this.validate}
+                        formData={this.props.formData}
+                    />
                 </div>
                 <form>
                 </form>

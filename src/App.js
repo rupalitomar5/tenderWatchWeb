@@ -17,11 +17,12 @@ import UploadTender from './containers/uploadTender/uploadTender';
 import ChangePassword from './containers/ChangePassword/changePassword';
 import Tender from "./containers/tender/Tender";
 import Profile from './containers/Profile/profile';
-import {getCountries} from "./actionMethods/userActionMethods";
+import {getCountries,getCategories} from "./actionMethods/userActionMethods";
 
 class App extends Component {
     componentWillMount(){
         !this.props.countries && this.props.getCountries();
+        !this.props.categories && this.props.getCategories();
     }
     render() {
         const PublicRoute = ({component: Component, ...rest}) => (
@@ -63,8 +64,9 @@ class App extends Component {
 const mapStateToProps = (state) => {
     return {
         user: state.auth.user,
-        countries: state.formData.countries
+        countries: state.formData.countries,
+        categories:state.formData.categories
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries,getCategories}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

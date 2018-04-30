@@ -1,7 +1,13 @@
-import {GET_ALL_TENDERS,DELETE_TENDER,GET_TENDER} from '../reducers/tenders';
+import {GET_ALL_TENDERS, DELETE_TENDER, GET_TENDER} from '../reducers/tenders';
 import {DISABLELOADING, ENABLELOADING} from '../reducers/loading';
 import {SHOW_MODAL} from '../reducers/alertModal';
-import {getAllTendersServices, uploadTenderServices, deleteTenderServices,getTenderService} from '../services/tenderServices';
+import {
+    getAllTendersServices,
+    uploadTenderServices,
+    deleteTenderServices,
+    getTenderService,
+    updateTenderService
+} from '../services/tenderServices';
 
 export const getAllTendersMethod = () => {
     return dispatch => {
@@ -49,12 +55,34 @@ export const deleteTenderMethod = (index) => {
 export const getTenderMethod = (index) => {
     return dispatch => {
         dispatch({type: ENABLELOADING});
-        getTenderService(index).then((res)=>{
+        getTenderService(index).then((res) => {
             dispatch({type: DISABLELOADING});
-            dispatch({type:GET_TENDER,payload:res.data});
-        }).catch((err)=>{
+            dispatch({type: GET_TENDER, payload: res.data});
+        }).catch((err) => {
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
         });
+    }
+};
+
+export const updateTenderMethod = (data,index) => {
+    console.log('update:', data);
+    return dispatch => {
+        debugger;
+        dispatch({type: ENABLELOADING});
+        data={...data,country:data.country._id,category:data.category._id}
+        let regForm = new FormData();
+        for (let key in data) {
+            regForm.append(key, data[key]);
+        }
+        return updateTenderService(regForm,index).then((res)=>{
+            dispatch({type: DISABLELOADING});
+            dispatch({type: SHOW_MODAL, payload: {header: 'Tender', message: 'tender successfully updated!'}});
+            return true;
+        }).catch((err)=>{
+            dispatch({type: DISABLELOADING});
+            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
+            return false;
+        })
     }
 };

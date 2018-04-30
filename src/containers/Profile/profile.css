@@ -21,7 +21,7 @@
     position: relative;
 
 }
-.image{
+.profile-image{
     opacity: 1;
     transition: .5s ease;
     backface-visibility: hidden;
