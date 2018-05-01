@@ -27,6 +27,9 @@
     backface-visibility: hidden;
     height:170px;
     width:170px;
+    justify-content: center;
+    margin: 0 auto ;
+    display: table;
 }
 .middle {
     transition: .5s ease;
@@ -38,7 +41,7 @@
     -ms-transform: translate(-50%, -50%);
     text-align: center;
 }
-.containers:hover .image {
+.containers:hover .profile-image {
     opacity: 0.3;
 }
 .containers:hover .middle {

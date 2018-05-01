@@ -23,7 +23,6 @@ export const getAllTendersMethod = () => {
 
 export const uploadTenderMethod = (tender) => {
     return dispatch => {
-        debugger;
         dispatch({type: ENABLELOADING});
         tender = tender.country && tender.country._id ?  {...tender,country:tender.country._id} : tender;
         tender = tender.category && tender.category._id ?  {...tender,category:tender.category._id} : tender;
@@ -72,9 +71,7 @@ export const getTenderMethod = (index) => {
 };
 
 export const updateTenderMethod = (data,index) => {
-    console.log('update:', data);
     return dispatch => {
-        debugger;
         dispatch({type: ENABLELOADING});
         data = data.country && data.country._id ?  {...data,country:data.country._id} : data;
         data = data.category && data.category._id ?  {...data,category:data.category._id} : data;

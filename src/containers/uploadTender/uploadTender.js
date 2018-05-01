@@ -93,11 +93,8 @@ class UploadTender extends React.Component {
     };
 
     optionsHandler = (e) => {
-        debugger;
         const {fields} = this.state;
         fields[e.target.name]={...find(this.props.formData[e.target.id],{'_id':e.target.value})};
-        console.log('find',find(this.props.formData[e.target.id],{'_id':e.target.value}));
-        console.log('formdata',this.props.formData[e.target.id]);
         this.setState({fields});
     };
 

@@ -17,6 +17,5 @@ export const getTenderService = (index) => {
 };
 
 export const updateTenderService = (payload,index) => {
-  debugger;
   return baseService.put(`/api/tender/${index}`,payload);
 };

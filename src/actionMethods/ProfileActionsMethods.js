@@ -1,16 +1,31 @@
-import { editProfileService } from '../services/Profile';
-import {LOGIN} from "../reducers/auth";
+import { editProfileService, getUserProfileService } from '../services/Profile';
+import {SAVE_USER} from "../reducers/userProfile";
+import {SHOW_MODAL} from "../reducers/alertModal";
 
-export const editProfile = (user, image)=> {
+export const editProfile = (user)=> {
   return dispatch => {
       let profileForm = new FormData();
       for (let key in user) {
           profileForm.append(key, user[key]);
       }
-      editProfileService(profileForm, user._id).then( response => {
-          dispatch({type:LOGIN,payload:response.data});
+      return editProfileService(profileForm, user._id).then( response => {
+          dispatch({type:SAVE_USER,payload:response.data});
+          dispatch({type: SHOW_MODAL, payload: {header: 'Profile', message: 'Your changes are successfully saved!!'}});
+          return true;
       }).catch( e => {
-          console.log(e);
+          dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: e.response.data.error}});
+          return false;
+
       });
   }
+};
+
+export const getUserProfile = () => {
+    return dispatch => {
+        getUserProfileService().then( response => {
+            dispatch({type:SAVE_USER,payload:response.data});
+        }).catch( error => {
+            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: error.response.data.error}});
+        });
+    }
 };

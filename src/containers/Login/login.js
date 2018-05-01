@@ -109,11 +109,13 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    userRole: state.userRole,
-    alertModal: state.alertModal,
-    isLoading: state.isLoading
-});
+const mapStateToProps = (state) => {
+    return{
+        userRole: state.userRole,
+        alertModal: state.alertModal,
+        isLoading: state.isLoading
+    }
+};
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     loginMethod,
     setUserRoleMethod,

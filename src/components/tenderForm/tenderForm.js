@@ -8,7 +8,6 @@ import '../../containers/Profile/profile.css';
 import noImg from './picture.svg';
 
 const TenderForm = (props) => {
-    debugger;
     return (
         <Form encType='multipart/form-data' onSubmit={props.submitHandler}>
             {props.isLoading && <SpinnerLoader/>}

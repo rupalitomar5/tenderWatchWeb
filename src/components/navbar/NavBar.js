@@ -46,7 +46,7 @@ const NavBar = (props) => (
 
 const mapStateToProps = (state) => {
     return {
-        user: state.auth.user
+        user: state.userProfile.user
     }
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({logoutMethod}, dispatch);

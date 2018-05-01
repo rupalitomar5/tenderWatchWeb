@@ -11,6 +11,7 @@ import {
     socialAuthService
 } from '../services/authServices';
 import {ENABLELOADING, DISABLELOADING} from '../reducers/loading';
+import {SAVE_USER} from "../reducers/userProfile";
 
 export const loginMethod = (credentials) => {
   return dispatch => {
@@ -18,7 +19,8 @@ export const loginMethod = (credentials) => {
       loginService(credentials).then( response => {
           dispatch({type:DISABLELOADING});
           localStorage.setItem('auth_user', response.data.token);
-          dispatch({type:LOGIN,payload: jwt.decode(response.data.token)});
+          dispatch({type:LOGIN,payload: response.data.user});
+          dispatch({type:SAVE_USER,payload:response.data.user});
           history.push('/');
       }).catch( error => {
           dispatch({type:DISABLELOADING});
