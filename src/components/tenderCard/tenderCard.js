@@ -1,6 +1,8 @@
 import React from 'react';
 import './tendercard.css';
 import {NavLink} from 'react-router-dom';
+import noImage from '../../components/tenderForm/picture.svg'
+
 
 const TenderCard = (props) => {
     return (
@@ -13,7 +15,7 @@ const TenderCard = (props) => {
                             <img
                                 id={props._id}
                                 src={props.tenderPhoto}
-                                onError={(e)=>{e.target.src='images/picture.svg'}}
+                                onError={(e)=>{e.target.src=noImage}}
                             />
                         </div>
                         <div className="text-box">

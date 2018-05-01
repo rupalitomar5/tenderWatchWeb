@@ -44,9 +44,8 @@ class Tender extends React.Component {
         if (e.target.name === 'image') {
             let reader = new FileReader();
             let file = e.target.files[0];
-            reader.readAsDataURL(file);
+            file && reader.readAsDataURL(file);
             fields[e.target.name] = e.target.files[0];
-            //updatedFields[e.target.name] = e.target.files[0];
             reader.onloadend = () => {
                 this.setState({
                     file,
@@ -57,7 +56,6 @@ class Tender extends React.Component {
             }
         } else {
             fields[e.target.name] = e.target.value;
-            //updatedFields[e.target.name]=e.target.value;
             this.setState({fields, updatedFields})
         }
     };
@@ -80,8 +78,9 @@ class Tender extends React.Component {
             this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
         }
         else {
-            this.props.updateTenderMethod(this.state.fields, this.props.tender._id) &&
-            this.setState({edit: false})
+            this.props.updateTenderMethod(this.state.fields, this.props.tender._id).then((res)=>{
+                res && this.setState({edit: false});
+            });
         }
     };
 
@@ -132,6 +131,7 @@ class Tender extends React.Component {
                             isLoading={this.props.isLoading}
                             alertModal={this.props.alertModal}
                             optionsHandler={this.optionsHandler}
+                            imgHandler={this.changeHandler}
                         />
                     </div>
                 </div>
@@ -153,8 +153,9 @@ class Tender extends React.Component {
                                     <div className='col-sm-6'>
                                         <ListGroupItemHeading className='colorText'>Tender Image</ListGroupItemHeading>
                                         <ListGroupItemText>
-                                            <div className='smallImage'>
-                                                <img src={this.state.fields && this.state.fields.tenderPhoto}
+                                            <div className='profile-image'>
+                                                <img className='profile-image'
+                                                     src={this.state.fields && this.state.fields.tenderPhoto}
                                                      onError={(e) => {
                                                          e.target.src = '/images/picture.svg'
                                                      }}/>

@@ -1,9 +1,11 @@
 import React from 'react';
-import {Form, FormGroup, Label, Input, Alert} from 'reactstrap';
+import {Form, FormGroup, Label, Input, Alert, InputGroupAddon, InputGroup} from 'reactstrap';
 import AlertModal from '../alertModal/alertmodal';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import SpinnerLoader from '../spinnerLoader/spinnerLoader';
+import '../../containers/Profile/profile.css';
+import noImg from './picture.svg';
 
 const TenderForm = (props) => {
     debugger;
@@ -14,11 +16,23 @@ const TenderForm = (props) => {
             <AlertModal alertModal={props.alertModal}/>}
             <div className='row'>
                 <div className='col-sm-6'>
-                    {/*<img src={props.imagePreviewUrl} alt={''} />*/}
-                    { <img src={props.imagePreviewUrl || props.fields.tenderPhoto} alt='' />}
                     <FormGroup>
-                        <Input type='file' name='image' onChange={props.changeHandler}
-                        />
+                        <div className='tender-upload-image'>
+                            <i className='fa fa-camera fa-4x'/>
+                            {<img className='profile-image'
+                                  src={props.imagePreviewUrl || props.fields.tenderPhoto || ''}
+                                  alt=''
+                                  onError={(e) => {
+                                      e.target.src = noImg
+                                  }}
+                                  onClick={(e) => {
+                                      e.target.nextSibling.click();
+                                  }}
+                            />}
+
+                            <Input type='file' name='image' style={{display: 'none'}} onChange={props.changeHandler}
+                            />
+                        </div>
                     </FormGroup>
                     <FormGroup>
                         <Label>Tender Name*</Label>
@@ -37,8 +51,7 @@ const TenderForm = (props) => {
                     <FormGroup>
                         <Label>Country</Label>
                         <Input id='countries' type='select' name='country' onChange={props.optionsHandler}
-                               onBlur={props.validate}
-                        >
+                               onBlur={props.validate}>
                             {props.fields.category && props.fields.country.countryName &&
                             <option
                                 value={props.fields.country._id}>{props.fields.country.countryName}</option>}
@@ -63,7 +76,8 @@ const TenderForm = (props) => {
                     </FormGroup>
                     <FormGroup>
                         <Label>Categories</Label>
-                        <Input id='categories' type='select' name='category' onChange={props.optionsHandler} onBlur={props.validate}>
+                        <Input id='categories' type='select' name='category' onChange={props.optionsHandler}
+                               onBlur={props.validate}>
                             {props.fields.category && props.fields.category.categoryName &&
                             <option value={props.fields.category}>{props.fields.category.categoryName}</option>}
                             <option>Select one</option>
@@ -97,9 +111,14 @@ const TenderForm = (props) => {
                     </FormGroup>
                     <FormGroup>
                         <Label> Landline Number </Label>
-                        <Input type='number' name='landlineNo' onChange={props.changeHandler}
-                               value={props.fields.landlineNo}
-                        />
+                        <InputGroup>
+                            <InputGroupAddon
+                                addonType="prepend">{props.fields.country && props.fields.country.countryCode &&
+                            props.fields.country.countryCode}</InputGroupAddon>
+                            <Input type='number' name='landlineNo' onChange={props.changeHandler}
+                                   value={props.fields.landlineNo}
+                            />
+                        </InputGroup>
                     </FormGroup>
                     <FormGroup>
                         <Label> Address </Label>

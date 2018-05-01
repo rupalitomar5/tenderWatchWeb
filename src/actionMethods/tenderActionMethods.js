@@ -1,4 +1,4 @@
-import {GET_ALL_TENDERS, DELETE_TENDER, GET_TENDER} from '../reducers/tenders';
+import {GET_ALL_TENDERS, DELETE_TENDER, GET_TENDER,ADD_TENDER} from '../reducers/tenders';
 import {DISABLELOADING, ENABLELOADING} from '../reducers/loading';
 import {SHOW_MODAL} from '../reducers/alertModal';
 import {
@@ -23,17 +23,23 @@ export const getAllTendersMethod = () => {
 
 export const uploadTenderMethod = (tender) => {
     return dispatch => {
+        debugger;
         dispatch({type: ENABLELOADING});
+        tender = tender.country && tender.country._id ?  {...tender,country:tender.country._id} : tender;
+        tender = tender.category && tender.category._id ?  {...tender,category:tender.category._id} : tender;
         let tenderForm = new FormData();
         for (let key in tender) {
             tenderForm.append(key, tender[key]);
         }
-        uploadTenderServices(tenderForm).then((res) => {
+        return uploadTenderServices(tenderForm).then((res) => {
+            dispatch({type:ADD_TENDER,payload:tender});
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Add Tender', message: 'tender successfully added!'}});
+            return true;
         }).catch((err) => {
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
+            return false;
         });
     }
 };
@@ -70,7 +76,8 @@ export const updateTenderMethod = (data,index) => {
     return dispatch => {
         debugger;
         dispatch({type: ENABLELOADING});
-        data={...data,country:data.country._id,category:data.category._id}
+        data = data.country && data.country._id ?  {...data,country:data.country._id} : data;
+        data = data.category && data.category._id ?  {...data,category:data.category._id} : data;
         let regForm = new FormData();
         for (let key in data) {
             regForm.append(key, data[key]);

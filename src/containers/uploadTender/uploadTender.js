@@ -7,6 +7,7 @@ import {uploadTenderMethod} from '../../actionMethods/tenderActionMethods';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import AlertModal from '../../components/alertModal/alertmodal';
 import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
+import {find} from 'lodash';
 
 class UploadTender extends React.Component {
     constructor(props) {
@@ -34,7 +35,7 @@ class UploadTender extends React.Component {
 
             let reader = new FileReader();
             let file = e.target.files[0];
-            reader.readAsDataURL(file);
+            file && reader.readAsDataURL(file);
             fields[e.target.name] = e.target.files[0];
             reader.onloadend = () => {
                 this.setState({
@@ -59,7 +60,10 @@ class UploadTender extends React.Component {
             this.props.openAlertModal({header: 'Register', message: 'please check on agree'});
         }
         else {
-            this.props.uploadTenderMethod(this.state.fields);
+            this.props.uploadTenderMethod(this.state.fields).then((data)=>{
+                alert(data);
+                data && this.props.history.push('/');
+            });
         }
     };
 
@@ -88,6 +92,15 @@ class UploadTender extends React.Component {
         this.setState({errors});
     };
 
+    optionsHandler = (e) => {
+        debugger;
+        const {fields} = this.state;
+        fields[e.target.name]={...find(this.props.formData[e.target.id],{'_id':e.target.value})};
+        console.log('find',find(this.props.formData[e.target.id],{'_id':e.target.value}));
+        console.log('formdata',this.props.formData[e.target.id]);
+        this.setState({fields});
+    };
+
     render() {
         const {errors} = this.state;
         return (
@@ -103,6 +116,7 @@ class UploadTender extends React.Component {
                         changeHandler={this.changeHandler}
                         validate={this.validate}
                         formData={this.props.formData}
+                        optionsHandler={this.optionsHandler}
                     />
                 </div>
                 <form>

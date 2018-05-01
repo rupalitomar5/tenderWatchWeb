@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 export const GET_ALL_TENDERS = 'GET_ALL_TENDERS';
 export const GET_TENDER = 'GET_TENDER';
+export const ADD_TENDER = 'ADD_TENDER';
 export const DELETE_TENDER = 'DELETE_TENDER';
 
 
@@ -20,6 +21,9 @@ export default (state = initialState, action) => {
             return {...state,allTenders:_.filter(state.allTenders,(o)=>o._id!==action.payload)};
         case GET_TENDER:
             return {...state,current_tender:action.payload};
+        case ADD_TENDER:
+            state.allTenders.push(action.payload);
+            return _.cloneDeep(state);
         default:
             return {...state};
     }

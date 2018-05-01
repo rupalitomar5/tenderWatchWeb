@@ -7,7 +7,7 @@ export const getCountries = () => {
         getCountriesService().then((response)=>{
             dispatch({ type: GET_COUNTRIES, payload: response.data});
         }).catch((error)=>{
-            dispatch({type:SHOW_MODAL,payload:{header:'fetch data',message:error.response.data.error}});
+            dispatch({type:SHOW_MODAL,payload:{header:'fetch data',message:error.message || error.response.data.error}});
         });
     }
 };
@@ -17,7 +17,7 @@ export const getCategories = () => {
         getCategoriesService().then((res)=>{
             dispatch({ type: GET_CATEGORIES, payload: res.data});
         }).catch((err)=>{
-            dispatch({type:SHOW_MODAL,payload:{header:'fetch data',message:err.response.data.error}});
+            dispatch({type:SHOW_MODAL,payload:{header:'fetch data',message:err.message || err.response.data.error }});
         });
     }
 };
