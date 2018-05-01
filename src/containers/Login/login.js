@@ -25,7 +25,6 @@ class Login extends React.Component {
             }
         }
     }
-
     componentWillReceiveProps(nextProps) {
         !this.state.credentials.role && this.setState({credentials: {role: nextProps.userRole}})
     }

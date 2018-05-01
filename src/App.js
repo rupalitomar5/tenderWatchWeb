@@ -17,6 +17,7 @@ import UploadTender from './containers/uploadTender/uploadTender';
 import ChangePassword from './containers/ChangePassword/changePassword';
 import Tender from "./containers/tender/Tender";
 import Profile from './containers/Profile/profile';
+import ContactSupportTeam from './containers/contactSupportTeam/contactSupportTeam';
 import {getCountries,getCategories} from "./actionMethods/userActionMethods";
 
 class App extends Component {
@@ -56,6 +57,7 @@ class App extends Component {
                 <PrivateRoute exact path='/profile' component={Profile}/>
                 <PrivateRoute exact path='/tender' component={TenderList} />
                 <PrivateRoute exact path='/tender/:tenderID' component={Tender} />
+                <PrivateRoute exact path='/contactSupport' component={ContactSupportTeam} />
             </React.Fragment>
         );
     }
