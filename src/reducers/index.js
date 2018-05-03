@@ -7,6 +7,7 @@ import alertModal from './alertModal';
 import userRole from './userRole';
 import formData from './formData';
 import tenders from './tenders';
+import userProfile from './userProfile';
 
 export default combineReducers({
     router: routerReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
     alertModal,
     userRole,
     formData,
-    tenders
+    tenders,
+    userProfile
 });

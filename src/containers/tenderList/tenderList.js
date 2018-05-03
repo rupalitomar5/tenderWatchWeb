@@ -45,7 +45,6 @@ class TenderList extends React.Component {
 
 
     render() {
-        debugger;
         return (
             <div className='col-lg-12 ml-auto p-5 hide'>
                 {this.props.isLoading && <SpinnerLoader/>}

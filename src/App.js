@@ -19,11 +19,13 @@ import Tender from "./containers/tender/Tender";
 import Profile from './containers/Profile/profile';
 import ContactSupportTeam from './containers/contactSupportTeam/contactSupportTeam';
 import {getCountries,getCategories} from "./actionMethods/userActionMethods";
+import {getUserProfile} from './actionMethods/ProfileActionsMethods';
 
 class App extends Component {
     componentWillMount(){
         !this.props.countries && this.props.getCountries();
         !this.props.categories && this.props.getCategories();
+        localStorage.getItem('auth_user') && this.props.getUserProfile();
     }
     render() {
         const PublicRoute = ({component: Component, ...rest}) => (
@@ -70,5 +72,5 @@ const mapStateToProps = (state) => {
         categories:state.formData.categories
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries,getCategories}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries,getCategories, getUserProfile}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

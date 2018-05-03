@@ -28,7 +28,6 @@ class Tender extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        debugger;
         props.tender && props.tender !== this.props.tender && this.setState({fields: {...props.tender}});
     }
 
@@ -39,7 +38,6 @@ class Tender extends React.Component {
     };
 
     changeHandler = (e) => {
-        debugger;
         const {fields, updatedFields} = this.state;
         if (e.target.name === 'image') {
             let reader = new FileReader();
@@ -60,18 +58,14 @@ class Tender extends React.Component {
         }
     };
     optionsHandler = (e) => {
-        debugger;
         const {fields} = this.state;
         fields[e.target.name]={...find(this.props.formData[e.target.id],{'_id':e.target.value})};
-        console.log('find',find(this.props.formData[e.target.id],{'_id':e.target.value}));
-        console.log('formdata',this.props.formData[e.target.id]);
         this.setState({fields});
     };
 
     submitHandler = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        debugger;
         const {fields, errors} = this.state;
 
         if (!fields.tenderName || !fields.email || errors.email) {
@@ -112,8 +106,6 @@ class Tender extends React.Component {
     };
 
     render() {
-        debugger;
-        console.log(this.state.updatedFields);
         return this.state.edit ? (
                 <div className='col-lg-12 ml-auto p-5 hide'>
                     <NavLink to='' onClick={this.toggleEditMode}>{'< back'}</NavLink>

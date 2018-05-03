@@ -73,7 +73,7 @@ class Register extends React.Component {
                 } else {
                     errors[e.target.id] = '';
                 }
-            }else if(e.target.id === 'contact'){
+            }else if(e.target.id === 'contactNo'){
                 if(fields[e.target.id].length!==10){
                     errors[e.target.id] = 'Number must be of 10 digits';
                 }else {
@@ -181,9 +181,9 @@ class Register extends React.Component {
                                                 </FormGroup>
                                                 <FormGroup>
                                                     <Label>contact no</Label>
-                                                    <Input type='number' id='contact' onBlur={this.validate} onChange={this.changeHandler}
-                                                           value={fields.contact}/>
-                                                    {errors.contact && <Alert color='danger'>{errors.contact}</Alert>}
+                                                    <Input type='number' id='contactNo' onBlur={this.validate} onChange={this.changeHandler}
+                                                           value={fields.contactNo}/>
+                                                    {errors.contactNo && <Alert color='danger'>{errors.contactNo}</Alert>}
                                                 </FormGroup>
                                                 <FormGroup>
                                                     <Label>occupation</Label>
