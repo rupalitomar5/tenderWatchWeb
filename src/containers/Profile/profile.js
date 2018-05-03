@@ -32,6 +32,7 @@ class Profile extends React.Component {
         if (id === 'profilePhoto') {
             user['image'] = e.target.files[0];
         } else if(id === 'contactNo'){
+
             user[id] = Number(value);
         }else {
             user[id] = value;
@@ -83,6 +84,7 @@ class Profile extends React.Component {
         const { countries, alertModal } = this.props;
         const { isView, user, error } = this.state;
         return (
+            <div className="col-lg-12 ml-auto top-space hide">
             <div className='main-wrapper'>
                 {
                     !user ?
@@ -90,21 +92,16 @@ class Profile extends React.Component {
                         :
                         <div className='container'>
                             {alertModal.isAlert && <AlertModal alertModal={alertModal}/>}
-
+                            <h1 className='colorText'>Profile:</h1>
                             <div className='profile-form'>
-                                <div className='profile-logo'>
-                                    Profile
-                                </div>
                                 <div>
                                     <Form onSubmit={this.handleSubmit}>
                                         <div className='row'>
                                             <div className='col-sm-6'>
                                                 <FormGroup>
                                                     <div className="containers">
-                                                        <Label>Profile Picture</Label><br/>
-
                                                         {
-                                                            user.image ? <img className="profile-image"
+                                                            user.image ? <img className="profile-image "
                                                                               src={this.state.previewFile}/>
                                                                 :
                                                                 <img className='profile-image'
@@ -225,6 +222,7 @@ class Profile extends React.Component {
 
                         </div>
                 }
+            </div>
             </div>
         );
     }

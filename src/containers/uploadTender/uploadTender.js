@@ -30,6 +30,8 @@ class UploadTender extends React.Component {
     }
 
     changeHandler = (e) => {
+        console.log(e.target.value);
+        debugger;
         const {fields} = this.state;
         if (e.target.name === 'image') {
 
@@ -43,7 +45,11 @@ class UploadTender extends React.Component {
                     imagePreviewUrl: reader.result
                 });
             }
-        } else {
+        }
+        else if(e.target.name === 'agree'){
+            fields[e.target.name] = e.target.checked;
+        }
+        else {
             fields[e.target.name] = e.target.value;
         }
         this.setState({fields});

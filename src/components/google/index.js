@@ -1,5 +1,6 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
+import {SHOW_MODAL} from "../../reducers/alertModal";
 
 const responseGoogle = (response) => {
     console.log(response);
@@ -12,7 +13,7 @@ const GoogleComponent=(props)=>(<GoogleLogin
     clientSecret="89FqTW6KJ6J9Y8a08_cxL9lT"
     buttonText=" login with Google"
     onSuccess={props.googleLoginMethod}
-    onFailure={(err)=>alert('error :',err.message)}
+    onFailure={(err)=>""}
 />);
 
 export default GoogleComponent;

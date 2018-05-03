@@ -1,6 +1,6 @@
 .register-wrapper{
     background: #eef1f7;
-    height: 100vh;
+    height: calc(100vh - 68px);
 
 }
 .register{

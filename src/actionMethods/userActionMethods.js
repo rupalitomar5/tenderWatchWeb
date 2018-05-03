@@ -1,6 +1,7 @@
-import { getCountriesService,getCategoriesService } from '../services/userServices';
+import { getCountriesService,getCategoriesService,getSupportService } from '../services/userServices';
 import { GET_COUNTRIES,GET_CATEGORIES } from '../reducers/formData';
 import {SHOW_MODAL} from "../reducers/alertModal";
+import {DISABLELOADING,ENABLELOADING} from "../reducers/loading";
 
 export const getCountries = () => {
     return dispatch => {
@@ -20,4 +21,18 @@ export const getCategories = () => {
             dispatch({type:SHOW_MODAL,payload:{header:'fetch data',message:err.message || err.response.data.error }});
         });
     }
+};
+
+export const getSupportMethod = (payload) => {
+  return dispatch => {
+      dispatch({type: ENABLELOADING});
+      debugger;
+      getSupportService(payload).then((res)=>{
+          dispatch({type: DISABLELOADING});
+          dispatch({type:SHOW_MODAL,payload:{header:'Support',message:'email successfully sent'}});
+      }).catch((err)=>{
+          dispatch({type: DISABLELOADING});
+          dispatch({type:SHOW_MODAL,payload:{header:'Support',message:err.message || err.response.data.error }});
+      })
+  }
 };

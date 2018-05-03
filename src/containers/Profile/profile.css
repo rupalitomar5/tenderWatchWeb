@@ -1,7 +1,6 @@
 .main-wrapper{
     background: #eef1f7;
-    margin-top: 3%;
-    height: 100vh;
+    height: calc(100vh - 115px);
 }
 
 .profile-form {
@@ -21,6 +20,7 @@
     position: relative;
 
 }
+
 .profile-image{
     opacity: 1;
     transition: .5s ease;
@@ -31,6 +31,11 @@
     margin: 0 auto ;
     display: table;
 }
+.notification-image {
+    height:60px;
+    width:60px;
+}
+
 .middle {
     transition: .5s ease;
     opacity: 0;
@@ -73,4 +78,17 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.notification {
+    margin-bottom: 25px;
+    box-shadow: none;
+}
+.notification:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px 5px #ddd;
+}
+
+.paddingleft {
+    padding-left: 20px;
 }

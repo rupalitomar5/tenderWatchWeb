@@ -20,7 +20,7 @@
     cursor: pointer;
     height: 30px;
     width:20px;
-    margin-right:1%;
+    margin-right:5%;
 }
 .nav-icon-btn:hover {
 
@@ -35,4 +35,11 @@
 .nav-bar-link a:hover {
     color: rgb(0, 188, 212);
     text-decoration: none;
+}
+.underline {
+    text-decoration: none !important;
+}
+.underline:hover {
+    cursor: pointer;
+    color:#00bcd4;
 }

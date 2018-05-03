@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {Navbar, NavbarBrand, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import './navbar.css';
 import {bindActionCreators} from 'redux';
@@ -15,28 +15,53 @@ const NavBar = (props) => (
         <Navbar style={{backgroundColor: '#00bcd4'}} dark>
             <NavbarBrand style={{color: 'white'}}>TenderWatch</NavbarBrand>
             {props.user && <React.Fragment>
+
                 <div className="right-icons">
-                    <div className="icons"><img className='nav-icon-btn' src={bellIcon}/></div>
-                <UncontrolledDropdown inNavbar>
-                    <DropdownToggle nav className={'colorMain-background'}>
-                        <img className="profileImage"
-                             src={_.includes(props.user.profilePhoto,'amazonaws')? props.user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${props.user.profilePhoto}`}
-                             alt={'profile picture'}
-                             onError={(e)=>{e.target.src=userImg}}
-                        />
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                        <DropdownItem className='nav-bar-link'>
-                            <Link to='/profile'>Profile</Link>
-                        </DropdownItem>
-                        <DropdownItem className='nav-bar-link'>
-                            <Link to='changePassword'>Change Password</Link>
-                        </DropdownItem>
-                        <DropdownItem onClick={props.logoutMethod} className='nav-bar-link'>
-                            <Link to=''>Log Out</Link>
-                        </DropdownItem>
-                    </DropdownMenu>
-                </UncontrolledDropdown>
+                    <UncontrolledDropdown inNavbar>
+                        <DropdownToggle nav className={'colorMain-background'}>
+                            <img className='nav-icon-btn' src={bellIcon}/>
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                            {props.notifications.map((x,i) =>
+                                <React.Fragment>
+                                    <Link className='underline' to={`/notifications/${x._id}`} >
+                                    <DropdownItem>
+                                        <span className='colorText'>
+                                            {x.message}
+                                            </span>
+                                    </DropdownItem>
+                                    </Link>
+                                    {i!==props.notifications.length-1 && <DropdownItem divider/>}
+                                </React.Fragment>
+                            )}
+                        </DropdownMenu>
+                    </UncontrolledDropdown>
+                    <UncontrolledDropdown inNavbar>
+                        <DropdownToggle nav className={'colorMain-background'}>
+                            <img className="profileImage"
+                                 src={_.includes(props.user.profilePhoto, 'amazonaws') ? props.user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${props.user.profilePhoto}`}
+                                 alt={'profile picture'}
+                                 onError={(e) => {
+                                     e.target.src = userImg
+                                 }}
+                            />
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                            <Link className='underline' to='/profile'>
+                                <DropdownItem className='underline'>Profile</DropdownItem>
+                            </Link>
+                            <DropdownItem
+                                divider/>
+                            <Link className='underline' to='changePassword'>
+                                <DropdownItem className='underline'>Change Password</DropdownItem>
+                            </Link>
+                            <DropdownItem
+                                divider/>
+                            <Link className='underline' to=''>
+                                <DropdownItem onClick={props.logoutMethod} className='underline'>Log Out</DropdownItem>
+                            </Link>
+                        </DropdownMenu>
+                    </UncontrolledDropdown>
                 </div>
             </React.Fragment>
             }
@@ -46,7 +71,8 @@ const NavBar = (props) => (
 
 const mapStateToProps = (state) => {
     return {
-        user: state.userProfile.user
+        user: state.userProfile.user,
+        notifications: state.userProfile.notifications
     }
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({logoutMethod}, dispatch);

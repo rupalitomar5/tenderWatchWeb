@@ -8,6 +8,7 @@ import TenderList from './containers/tenderList/tenderList';
 import Login from './containers/Login/login';
 import NavBar from './components/navbar/NavBar';
 import SideBar from './components/sidebar/SideBar';
+import NotFound from './components/NotFound/notFound';
 import Register from './containers/register/register';
 import ForgotPassword from "./containers/forgotPassword/forgotPassword";
 import './components/sidebar/sideBar.css';
@@ -19,12 +20,15 @@ import Tender from "./containers/tender/Tender";
 import Profile from './containers/Profile/profile';
 import ContactSupportTeam from './containers/contactSupportTeam/contactSupportTeam';
 import {getCountries,getCategories} from "./actionMethods/userActionMethods";
-import {getUserProfile} from './actionMethods/ProfileActionsMethods';
+import {getUserProfile,getNotification} from './actionMethods/ProfileActionsMethods';
+import Notifications from "./containers/Notification/notification";
+import Notification from './components/notification/notification';
 
 class App extends Component {
     componentWillMount(){
         !this.props.countries && this.props.getCountries();
         !this.props.categories && this.props.getCategories();
+        this.props.getNotification();
         localStorage.getItem('auth_user') && this.props.getUserProfile();
     }
     render() {
@@ -46,6 +50,20 @@ class App extends Component {
                     : <Redirect to='/login'/>)}/>
         );
 
+        const NotFoundRoute = ({component: Component, ...rest}) => (
+            <Route {...rest} render={(routeProps) => (
+                this.props.user ?
+                    <div className="app-wrapper">
+                        <SideBar/>
+                        <div className="sidebar-open-body">
+                            <NavBar/>
+                            <Component {...routeProps} />
+                        </div>
+                    </div>
+                    :
+                <React.Fragment><NavBar/><Component {...routeProps} /></React.Fragment>
+            )}/>
+                );
         return (
             <React.Fragment>
                 <PrivateRoute exact path='/' component={TenderList}/>
@@ -60,6 +78,9 @@ class App extends Component {
                 <PrivateRoute exact path='/tender' component={TenderList} />
                 <PrivateRoute exact path='/tender/:tenderID' component={Tender} />
                 <PrivateRoute exact path='/contactSupport' component={ContactSupportTeam} />
+                <PrivateRoute exact path='/notifications' component={Notifications} />
+                <PrivateRoute exact path='/notification/:notificationID' component={Notification} />
+                {/*<NotFoundRoute path={'*'} exact component={NotFound}/>*/}
             </React.Fragment>
         );
     }
@@ -69,8 +90,9 @@ const mapStateToProps = (state) => {
     return {
         user: state.auth.user,
         countries: state.formData.countries,
-        categories:state.formData.categories
+        categories:state.formData.categories,
+        notification:state.userProfile.notifications
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries,getCategories, getUserProfile}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries,getCategories, getUserProfile,getNotification}, dispatch);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

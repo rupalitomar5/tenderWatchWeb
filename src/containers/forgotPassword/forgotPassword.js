@@ -21,9 +21,9 @@ class ForgotPassword extends React.Component {
     }
 
     changeHandler = (e) => {
-        const {credentials} = this.state;
+        const { credentials } = this.state;
         credentials[e.target.id] = e.target.value;
-        this.setState({credentials});
+        this.setState({ credentials });
     };
     forgotPasswordHandler = (e) => {
         e.preventDefault();

@@ -1,6 +1,6 @@
 .main-wrapper{
     background: #eef1f7;
-    height: calc(100vh - 58px);
+    height: calc(100vh - 115px);
 
 }
 .login{
@@ -11,7 +11,7 @@
     margin: 0 auto;
     position: relative;
     width: 540px;
-    top: 50px;
+    top: 150px;
     right: 0;
     left: 0;
 }

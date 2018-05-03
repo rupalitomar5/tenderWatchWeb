@@ -56,3 +56,9 @@ a :active{
 .tender-searchbar{
 
 }
+.top-space{
+  padding-top:3rem !important;
+  padding-right:3rem !important;
+  padding-left:3rem !important;
+  padding-bottom: 0 !important;
+}

@@ -21,7 +21,6 @@ const TenderCard = (props) => {
                         <div className="text-box">
                             <ul className="text-center">
                                 <li><NavLink to={`/tender/${props._id}`}><strong>Name: </strong>{props.tenderName}</NavLink></li>
-                               {/* <li><NavLink to={`/tender/${props._id}`}><strong>Title: </strong> {props.tenderDescription}</NavLink></li>*/}
                                 <li><NavLink to={`/tender/${props._id}`}><strong>Exp_Day: </strong> {props.tenderExpiryDate}</NavLink></li>
                             </ul>
                         </div>

@@ -189,26 +189,46 @@ body {
 }
 
 @media (max-width: 1199px) {
-
+    .main-wrapper{
+        height: 100vh !important;
+    }
+    .sidebar-open-body {
+        width: calc(100% - 40px);
+    }
     /* Input */
     .form-control{
         font-size:0.9rem;
     }
-
+    #sidebar-wrapper li a {
+        padding: 1.3rem 0.3rem 1.3rem 0.4rem;
+    }
+    .logo-sidebar {
+        height: 50px;
+        width: 40px;
+        margin: 15px auto;
+    }
+    #sidebar-wrapper ul li a:last-child{
+        width:140px;
+    }
 
 }
 
 
 @media (max-width: 991px) {
-
+    .logo-sidebar {
+        height: 50px;
+        width: 40px;
+        margin: 10px auto;
+            }
     /* Sidebar Menu */
     .navbar-toggler{
         cursor:pointer;
     }
+
     #sidebar-wrapper{
         z-index:4;
-        left:-250px;
-        width:250px;
+        /*left:-250px;*/
+        /*width:250px;*/
         max-width:250px;
         -webkit-transition:all 0.3s ease-in-out 0s;
         -moz-transition:all 0.3s ease-in-out 0s;
@@ -236,8 +256,27 @@ body {
 
 }
 
-@media (max-width: 767px){
+@media (max-width: 768px){
+    #sidebar-wrapper {
+        left: 0px;
+    }
+    #sidebar-wrapper ul li a {
+        width: 100px !important;
+        font-size: 12px;
+        padding:1.3rem 5px 1.3rem 15px;
+    }
 
+
+    .sidebar:hover {
+        max-width: 16.7%;
+        width: 16.7% !important;
+    }
+    .sidebar-open-body {
+        left: 8%;
+    }
+    .sidebar.hide {
+        width:8%;
+    }
     .top-title-block .top-title{
         margin-bottom:1rem;
     }
@@ -257,10 +296,37 @@ body {
 
 }
 
-@media (max-width: 479px) {
+@media (max-width: 580px) {
     .hd-search{
         display:none;
     }
+    .sidebar.hide {
+        width: 15%;
+    }
+      .sidebar-open-body {
+        left: 10%;
+    }
+    .top-space {
+        padding-top: 1rem !important;
+        padding-right: 1rem !important;
+        padding-left: 1rem !important;
+        padding-bottom: 0 !important;
+    }
+
+}
+@media (max-width: 380px) {
+    #sidebar-wrapper ul li a {
+        width: 100px !important;
+        font-size: 12px;
+        padding: 1.3rem 5px 1.3rem 3px;
+    }
+    .logo-sidebar {
+        height: 40px;
+        width: 30px;
+        margin: 10px auto;
+        margin-left: 0;
+    }
+
 }
 
 /*added line chart css*/

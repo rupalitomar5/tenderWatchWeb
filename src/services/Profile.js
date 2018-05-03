@@ -8,3 +8,6 @@ export const getUserProfileService = () => {
     return baseService.get('/api/users/profile');
 };
 
+export const getNotificationService = () => {
+    return baseService.get('/api/notification');
+};

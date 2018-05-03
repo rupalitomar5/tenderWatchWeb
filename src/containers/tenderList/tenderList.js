@@ -10,6 +10,7 @@ import {Input, InputGroup} from 'reactstrap';
 import _ from 'lodash';
 import AskModal from '../../components/askModal/askModal';
 
+import './tenderList.css';
 
 class TenderList extends React.Component {
     constructor() {
@@ -46,10 +47,10 @@ class TenderList extends React.Component {
 
     render() {
         return (
-            <div className='col-lg-12 ml-auto p-5 hide'>
+            <div className='col-lg-12 ml-auto top-space hide'>
                 {this.props.isLoading && <SpinnerLoader/>}
                 {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal}/>}
-                <h1 className='colorText'>Tenders:</h1>
+
                 <AskModal isAskModalOpen={this.state.isAskModalOpen}
                           noMethod={this.askModalToggle}
                           yesMethod={() => {
@@ -59,9 +60,10 @@ class TenderList extends React.Component {
                           message={`delete ${this.state.delete.name}`}
                 />
                 <div className="container">
+                    <h1 className='colorText'>Tenders:</h1>
                     <InputGroup>
                         <Input className='tender-searchbar' onChange={this.searchChange} placeholder='search tenders'/>
-                        <i className='fa fa-search'/>
+                        <i className='fa fa-search search-icon'/>
                     </InputGroup>
                     <div className="row">
                         {this.state.Tenders && this.state.Tenders.map((x) =>
@@ -69,7 +71,6 @@ class TenderList extends React.Component {
                                 _id={x._id}
                                 tenderPhoto={x.tenderPhoto}
                                 tenderName={x.tenderName}
-                                tenderDescription={x.description}
                                 tenderExpiryDate={x.expiryDate}
                                 deleteMethod={this.askModalToggle}
                             />

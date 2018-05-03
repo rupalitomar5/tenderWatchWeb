@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import SpinnerLoader from '../spinnerLoader/spinnerLoader';
 import '../../containers/Profile/profile.css';
 import noImg from './picture.svg';
-
+import './tenderForm.css'
 const TenderForm = (props) => {
     return (
         <Form encType='multipart/form-data' onSubmit={props.submitHandler}>
@@ -17,7 +17,9 @@ const TenderForm = (props) => {
                 <div className='col-sm-6'>
                     <FormGroup>
                         <div className='tender-upload-image'>
-                            <i className='fa fa-camera fa-4x'/>
+                            <div className='center'>
+                            <div className="text btn-lg"><i className='fa fa-camera fa-4x'/></div>
+                            </div>
                             {<img className='profile-image'
                                   src={props.imagePreviewUrl || props.fields.tenderPhoto || ''}
                                   alt=''
@@ -28,7 +30,6 @@ const TenderForm = (props) => {
                                       e.target.nextSibling.click();
                                   }}
                             />}
-
                             <Input type='file' name='image' style={{display: 'none'}} onChange={props.changeHandler}
                             />
                         </div>

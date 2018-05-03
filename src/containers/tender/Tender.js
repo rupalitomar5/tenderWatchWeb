@@ -10,6 +10,7 @@ import AlertModal from '../../components/alertModal/alertmodal';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import {NavLink} from 'react-router-dom';
 import {find} from  'lodash';
+import picture from '../../components/tenderForm/picture.svg';
 
 class Tender extends React.Component {
     constructor(props) {
@@ -149,7 +150,7 @@ class Tender extends React.Component {
                                                 <img className='profile-image'
                                                      src={this.state.fields && this.state.fields.tenderPhoto}
                                                      onError={(e) => {
-                                                         e.target.src = '/images/picture.svg'
+                                                         e.target.src = picture
                                                      }}/>
                                             </div>
                                         </ListGroupItemText>
