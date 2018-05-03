@@ -4,7 +4,6 @@ import picture from '../tenderForm/picture.svg';
 
 
 const ShowTender = (props) => {
-    debugger;
   return(
       <div className="col-lg-12 ml-auto hide">
           <div className="login-logo">

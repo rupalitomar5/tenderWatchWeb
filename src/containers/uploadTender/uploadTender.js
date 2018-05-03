@@ -30,8 +30,6 @@ class UploadTender extends React.Component {
     }
 
     changeHandler = (e) => {
-        console.log(e.target.value);
-        debugger;
         const {fields} = this.state;
         if (e.target.name === 'image') {
 

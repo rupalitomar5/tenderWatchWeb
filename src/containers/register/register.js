@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {NavLink, withRouter} from 'react-router-dom';
 import {registerMethod} from './../../actionMethods/authActionMethods';
 import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
-import { getCountries } from '../../actionMethods/userActionMethods';
+import {getCountries} from '../../actionMethods/userActionMethods';
 import AlertModal from '../../components/alertModal/alertmodal';
 import './register.css';
 
@@ -13,7 +13,9 @@ class Register extends React.Component {
     constructor() {
         super();
         this.state = {
-            fields: {},
+            fields: {
+                selections: ''
+            },
             errors: {},
             page: 1,
             showAlert: false
@@ -24,6 +26,7 @@ class Register extends React.Component {
         !this.props.countries && this.props.getCountries();//countryName
         !this.props.userRole && this.props.history.push('/login');
     }
+
     componentDidMount() {
         const {userRole} = this.props;
         const {fields} = this.state;
@@ -39,13 +42,28 @@ class Register extends React.Component {
 
     changeHandler = (e) => {
         const {fields, errors} = this.state;
-        if (e.target.id === 'image') {
-            fields[e.target.id] = e.target.files[0];
-        }else {
-            fields[e.target.id] = e.target.value;
-            errors[e.target.id] = '';
+        const {id, value} = e.target;
+        if (id === 'image') {
+            fields[id] = e.target.files[0];
+        } else if (id === 'selectedCountry') {
+            let selections = {};
+            selections[value] = [];
+            fields[id] = value;
+            fields.selections = JSON.stringify(selections);
+        } else if (id === 'category') {
+            let selections = JSON.parse(fields.selections);
+            selections[fields.selectedCountry] = [value];
+            fields.selections = JSON.stringify(selections);
+        } else {
+            fields[id] = value;
+            errors[id] = '';
         }
         this.setState({fields, errors});
+    };
+
+    handleSubmit = e => {
+        e.preventDefault();
+        e.stopPropagation();
     };
 
     validate = (e) => {
@@ -73,10 +91,10 @@ class Register extends React.Component {
                 } else {
                     errors[e.target.id] = '';
                 }
-            }else if(e.target.id === 'contactNo'){
-                if(fields[e.target.id].length!==10){
+            } else if (e.target.id === 'contactNo') {
+                if (fields[e.target.id].length !== 10) {
                     errors[e.target.id] = 'Number must be of 10 digits';
-                }else {
+                } else {
                     errors[e.target.id] = '';
                 }
             } else {
@@ -88,7 +106,7 @@ class Register extends React.Component {
     nextPage = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        const {errors} = this.state;
+        const {errors, page} = this.state;
         let flag = 0;
         const keys = ['email', 'password', 'confirmPassword'];
         for (let key in keys) {
@@ -100,7 +118,7 @@ class Register extends React.Component {
         if (flag) {
             this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
         } else {
-            this.setState({page: 2});
+            this.setState({page: page + 1});
 
         }
     };
@@ -108,21 +126,24 @@ class Register extends React.Component {
     PreviousPage = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        this.setState({page: 1});
+        const {page} = this.state;
+        this.setState({page: page - 1});
     };
 
     render() {
         const {fields, errors, page} = this.state;
-        const {alertModal, countries} = this.props;
+        const {alertModal, countries, categories} = this.props;
         return (
             <div className="register-wrapper">
                 <div className='container'>
                     <div className="register">
-                        <img className="logo-sidebar" src="https://s3.ap-south-1.amazonaws.com/tenderwatch/logo3%401024.png" alt="Tender watch" width="150"/>
+                        <img className="logo-sidebar"
+                             src="https://s3.ap-south-1.amazonaws.com/tenderwatch/logo3%401024.png" alt="Tender watch"
+                             width="150"/>
                         <div className="register-content">
                             {alertModal.isAlert && <AlertModal alertModal={alertModal}/>}
                             <div className="register-form">
-                                <Form encType='multipart/form-data' onSubmit={this.register}>
+                                <Form encType='multipart/form-data' onSubmit={this.handleSubmit}>
                                     {
                                         page === 1 ?
                                             <div>
@@ -161,48 +182,106 @@ class Register extends React.Component {
                                                 <button className='btn btnAll' onClick={this.nextPage}>Next</button>
                                             </div>
                                             :
-                                            <div>
-                                                <FormGroup>
-                                                    <Label>profile photo</Label>
-                                                    <Input id='image' type='file' onChange={this.changeHandler}/>
-                                                </FormGroup>
-                                                <FormGroup>
-                                                    <Label>country</Label>
-                                                    <Input type='select' id='country' onChange={this.changeHandler}
-                                                           value={fields.country}>
-                                                        <option>Select one</option>
-                                                        {
-                                                            countries.length > 0 &&
-                                                            countries.map( (country, index) =>(
-                                                                <option key={index} value={country.countryName}>{country.countryName}</option>
-                                                            ))
-                                                        }
-                                                    </Input>
-                                                </FormGroup>
-                                                <FormGroup>
-                                                    <Label>contact no</Label>
-                                                    <Input type='number' id='contactNo' onBlur={this.validate} onChange={this.changeHandler}
-                                                           value={fields.contactNo}/>
-                                                    {errors.contactNo && <Alert color='danger'>{errors.contactNo}</Alert>}
-                                                </FormGroup>
-                                                <FormGroup>
-                                                    <Label>occupation</Label>
-                                                    <Input type='text' id='occupation' onChange={this.changeHandler}
-                                                           value={fields.occupation ? fields.occupation : ''}/>
-                                                </FormGroup>
-                                                <FormGroup>
-                                                    <Label>about me</Label>
-                                                    <Input type='text' id='aboutMe' onChange={this.changeHandler}
-                                                           value={fields.aboutMe ? fields.aboutMe : ''}/>
-                                                </FormGroup>
+                                            page === 2 ?
                                                 <div>
-                                                    <button className='btn btnAll' onClick={this.PreviousPage}>Previous
-                                                    </button>
-                                                    <button style={{'marginLeft':'5%'}} className='btn btnAll' type='submit' value='submit'>Signup
-                                                    </button>
+                                                    <FormGroup>
+                                                        <Label>profile photo</Label>
+                                                        <Input id='image' type='file' onChange={this.changeHandler}/>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>country</Label>
+                                                        <Input type='select' id='country' onChange={this.changeHandler}
+                                                               value={fields.country}>
+                                                            <option>Select one</option>
+                                                            {
+                                                                countries.length > 0 &&
+                                                                countries.map((country, index) => (
+                                                                    <option key={index}
+                                                                            value={country.countryName}>{country.countryName}</option>
+                                                                ))
+                                                            }
+                                                        </Input>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>contact no</Label>
+                                                        <Input type='number' id='contactNo' onBlur={this.validate}
+                                                               onChange={this.changeHandler}
+                                                               value={fields.contactNo}/>
+                                                        {errors.contactNo &&
+                                                        <Alert color='danger'>{errors.contactNo}</Alert>}
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>occupation</Label>
+                                                        <Input type='text' id='occupation' onChange={this.changeHandler}
+                                                               value={fields.occupation ? fields.occupation : ''}/>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>about me</Label>
+                                                        <Input type='text' id='aboutMe' onChange={this.changeHandler}
+                                                               value={fields.aboutMe ? fields.aboutMe : ''}/>
+                                                    </FormGroup>
+                                                    <div>
+                                                        <button className='btn btnAll'
+                                                                onClick={this.PreviousPage}>Previous
+                                                        </button>
+                                                        <button style={{'marginLeft': '5%'}} className='btn btnAll'
+                                                                onClick={fields.role === 'contractor' ? this.nextPage : this.register}
+                                                                value='submit'>{fields.role === 'contractor' ? 'Next' : 'Sign Up'}
+                                                        </button>
+                                                    </div>
+                                                    <br/>
                                                 </div>
-                                                <br/>
-                                            </div>
+                                                :
+                                                <div>
+                                                    <FormGroup>
+                                                        <Label>subscribe</Label>
+                                                        <Input type='select' id='subscribe'
+                                                               onChange={this.changeHandler}
+                                                               value={fields.subscribe}>
+                                                            <option>Select one</option>
+                                                            <option key={1} value={1}>1 month free trial</option>
+                                                            <option key={2} value={1}>1 month subscription($15/month)</option>
+                                                            <option key={3} value={1}>1 year subscription($12/month)</option>
+                                                        </Input>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>country</Label>
+                                                        <Input type='select' id='selectedCountry'
+                                                               onChange={this.changeHandler}
+                                                               value={fields.selectedCountry ? fields.selectedCountry :''}>
+                                                            <option>Select one</option>
+                                                            {
+                                                                countries.length > 0 &&
+                                                                countries.map((country, index) => (
+                                                                    <option key={index}
+                                                                            value={country._id}>{country.countryName}</option>
+                                                                ))
+                                                            }
+                                                        </Input>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>category</Label>
+                                                        <Input type='select' id='category' onChange={this.changeHandler}
+                                                               value={fields.category}>
+                                                            <option>Select one</option>
+                                                            {
+                                                                categories.length > 0 &&
+                                                                categories.map((category, index) => (
+                                                                    <option key={index}
+                                                                            value={category._id}>{category.categoryName}</option>
+                                                                ))
+                                                            }
+                                                        </Input>
+                                                    </FormGroup>
+                                                    <div>
+                                                        <button className='btn btnAll'
+                                                                onClick={this.PreviousPage}>Previous
+                                                        </button>
+                                                        <button style={{'marginLeft': '5%'}} className='btn btnAll'
+                                                                onClick={this.register} value='submit'>Sign Up
+                                                        </button>
+                                                    </div>
+                                                </div>
                                     }
                                 </Form>
                                 <NavLink to='/login'>{'< back to login'}</NavLink>
@@ -219,7 +298,8 @@ const mapStateToProps = state => {
     return {
         alertModal: state.alertModal,
         userRole: state.userRole,
-        countries: state.formData.countries
+        countries: state.formData.countries,
+        categories: state.formData.categories
     }
 };
 

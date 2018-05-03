@@ -26,7 +26,6 @@ export const getCategories = () => {
 export const getSupportMethod = (payload) => {
   return dispatch => {
       dispatch({type: ENABLELOADING});
-      debugger;
       getSupportService(payload).then((res)=>{
           dispatch({type: DISABLELOADING});
           dispatch({type:SHOW_MODAL,payload:{header:'Support',message:'email successfully sent'}});
