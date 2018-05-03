@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color:#eef1f7 ;
+  background-color:#eef1f7 !important;
 }
 .btnAll{
   background-color: #00bcd4;
@@ -61,4 +61,8 @@ a :active{
   padding-right:3rem !important;
   padding-left:3rem !important;
   padding-bottom: 0 !important;
+}
+
+.p-5{
+  padding: 1rem !important;
 }

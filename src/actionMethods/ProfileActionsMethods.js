@@ -31,6 +31,7 @@ export const getUserProfile = () => {
 };
 
 export const getNotification = () => {
+    debugger;
   return dispatch => {
       getNotificationService().then((res)=>{
           dispatch({type:GET_NOTIFICATION,payload:res.data});

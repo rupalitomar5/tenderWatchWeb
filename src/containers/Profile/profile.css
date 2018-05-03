@@ -92,3 +92,12 @@ input[type=number]::-webkit-outer-spin-button {
 .paddingleft {
     padding-left: 20px;
 }
+
+.nav-link-noColor{
+    color: #2b333e;
+}
+
+.nav-link-noColor:hover {
+    color: #2b333e;
+   text-decoration: none;
+}

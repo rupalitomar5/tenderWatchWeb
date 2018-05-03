@@ -24,7 +24,7 @@ const NavBar = (props) => (
                         <DropdownMenu right>
                             {props.notifications.map((x,i) =>
                                 <React.Fragment>
-                                    <Link className='underline' to={`/notifications/${x._id}`} >
+                                    <Link className='underline' to={`/notification/${x._id}`} >
                                     <DropdownItem>
                                         <span className='colorText'>
                                             {x.message}

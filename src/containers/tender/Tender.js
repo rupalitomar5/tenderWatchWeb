@@ -1,6 +1,5 @@
 import React from 'react';
 import '../Login/login.css';
-import {ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getTenderMethod, updateTenderMethod} from '../../actionMethods/tenderActionMethods';
@@ -10,7 +9,7 @@ import AlertModal from '../../components/alertModal/alertmodal';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import {NavLink} from 'react-router-dom';
 import {find} from  'lodash';
-import picture from '../../components/tenderForm/picture.svg';
+import ShowTender from '../../components/showTender/showTender';
 
 class Tender extends React.Component {
     constructor(props) {
@@ -136,86 +135,10 @@ class Tender extends React.Component {
                     {this.props.isLoading && <SpinnerLoader/>}
                     {this.props.alertModal.isAlert &&
                     <AlertModal alertModal={this.props.alertModal}/>}
-                    <div className="col-lg-12 ml-auto p-5 hide">
-                        <div className="login-logo">
-                            <h3 className='colorText'>Tender:</h3>
-                        </div>
-                        <div className="login-form">
-                            <ListGroup>
-                                <div className='row'>
-                                    <div className='col-sm-6'>
-                                        <ListGroupItemHeading className='colorText'>Tender Image</ListGroupItemHeading>
-                                        <ListGroupItemText>
-                                            <div className='profile-image'>
-                                                <img className='profile-image'
-                                                     src={this.state.fields && this.state.fields.tenderPhoto}
-                                                     onError={(e) => {
-                                                         e.target.src = picture
-                                                     }}/>
-                                            </div>
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>Tender name:</ListGroupItemHeading>
-                                        <ListGroupItemText className='colorText'>
-                                            {this.state.fields && this.state.fields.tenderName}
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>Tender
-                                            Description:</ListGroupItemHeading>
-                                        <ListGroupItemText className='colorText'>
-                                            {this.state.fields && this.state.fields.description}
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>Country:</ListGroupItemHeading>
-                                        <ListGroupItemText className='colorText'>
-                                            {this.state.fields && this.state.fields.country &&
-                                            <React.Fragment><img
-                                                src={`data:image/png;base64,${this.state.fields.country.imageString}`}
-                                                alt=''/>
-                                                {' '}{this.state.fields.country.countryName}</React.Fragment>}
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>Category:</ListGroupItemHeading>
-                                        <ListGroupItemText>
-                                            {this.state.fields && this.state.fields.category && <React.Fragment>
-                                                <img
-                                                    src={`data:image/png;base64,${this.state.fields.category.imgString}`}
-                                                    alt=''
-                                                />
-                                                {' '}{this.state.fields.category.categoryName}</React.Fragment>}
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>Expiry Date:</ListGroupItemHeading>
-                                        <ListGroupItemText>
-                                            {this.state.fields && this.state.fields.expiryDate}
-                                        </ListGroupItemText>
-                                    </div>
-                                    <div className='col-sm-6'>
-
-                                        <div style={{border: '1px solid black'}}/>
-                                        <h4>Client Details:</h4>
-                                        <div style={{border: '1px solid black'}}/>
-                                        <ListGroupItemHeading className='colorText'>Email:</ListGroupItemHeading>
-                                        <ListGroupItemText>
-                                            {this.state.fields && this.state.fields.email}
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>Contact no:</ListGroupItemHeading>
-                                        <ListGroupItemText>
-                                            {this.state.fields && this.state.fields.contactNo}
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>Landline:</ListGroupItemHeading>
-                                        <ListGroupItemText>
-                                            {this.state.fields && this.state.fields.landlineNo}
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>Address:</ListGroupItemHeading>
-                                        <ListGroupItemText>
-                                            {this.state.fields && this.state.fields.address}
-                                        </ListGroupItemText>
-                                        <ListGroupItemHeading className='colorText'>City:</ListGroupItemHeading>
-                                        <ListGroupItemText>
-                                            {this.state.fields && this.state.fields.city}
-                                        </ListGroupItemText>
-                                    </div>
-                                    <button className='btn btnAll' onClick={this.toggleEditMode}>Edit Tender</button>
-                                </div>
-                            </ListGroup>
-                        </div>
-                    </div>
+                    <ShowTender
+                        {...this.state}
+                        toggleEditMode={this.toggleEditMode}
+                    />
                 </div>
             )
     }

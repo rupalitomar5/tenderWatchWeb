@@ -21,14 +21,14 @@ import Profile from './containers/Profile/profile';
 import ContactSupportTeam from './containers/contactSupportTeam/contactSupportTeam';
 import {getCountries,getCategories} from "./actionMethods/userActionMethods";
 import {getUserProfile,getNotification} from './actionMethods/ProfileActionsMethods';
-import Notifications from "./containers/Notification/notification";
-import Notification from './components/notification/notification';
+import Notifications from "./components/notificationList/notificationList";
+import Notification from './containers/notification/notification';
 
 class App extends Component {
     componentWillMount(){
         !this.props.countries && this.props.getCountries();
         !this.props.categories && this.props.getCategories();
-        this.props.getNotification();
+        this.props.user ? this.props.getNotification() : '';
         localStorage.getItem('auth_user') && this.props.getUserProfile();
     }
     render() {
