@@ -1,4 +1,5 @@
 import React from 'react';
+
 import TenderCard from '../../components/tenderCard/tenderCard';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';

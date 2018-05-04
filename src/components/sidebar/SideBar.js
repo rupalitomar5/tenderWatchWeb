@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import '../../index.css';
 
@@ -21,6 +22,7 @@ class SideBar extends Component {
     };
 
     render() {
+        const { user } = this.props;
         return (
             <div className={"col-md-2 col-xs-12 sidebar bg-white hide"} id="sidebar-wrapper">
                 {/*<a className="pull-left show-menu" onClick={this.props.toggleSidebar}>
@@ -32,8 +34,10 @@ class SideBar extends Component {
                 <div className="sidebar-sticky">
                     <ul className="nav flex-column">
                         <li name="Home" className={this.props.active === 'Home' ? "nav-item active" :"nav-item active"} ><Link className="nav-link" onClick={this.activeLink}  name="Home" to="/"><i className="fa fa-home"/><span> Home </span></Link></li>
-                        <li name="uploadTender" className={this.props.active === 'uploadTender' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="uploadTender" to="/uploadTender"><i className="fa fa-upload"/> <span> Upload Tender </span> </Link></li>
+                        { user && user.role === 'client' &&<li name="uploadTender" className={this.props.active === 'uploadTender' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="uploadTender" to="/uploadTender"><i className="fa fa-upload"/> <span> Upload Tender </span> </Link></li>}
+                        { user && user.role === 'contractor' && <li name="subscription" className={this.props.active === 'subscription' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="subscription" to="/subscription"><i className="fa fa-usd"/><span> Subscription </span></Link></li>}
                         <li name="notification" className={this.props.active === 'notification' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="notification" to="/notifications"><i className="fa fa-bell"/><span> Notification </span></Link></li>
+                        { user && user.role === 'contractor' && <li name="favorites" className={this.props.active === 'favorites' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="favorites" to="/favorites"><i className="fa fa-heart"/><span> Favorites </span></Link></li>}
                         <li name="contactSupportTeam" className={this.props.active === 'contactSupportTeam' ? "nav-item active" :"nav-item"} onClick={this.activeLink}><Link className="nav-link"  name="contactSupportTeam" to="/contactSupport"><i className="fa fa-headphones"/><span> Contact Support Team </span></Link></li>
                     </ul>
                 </div>
@@ -42,15 +46,10 @@ class SideBar extends Component {
     }
 }
 
-/*
 const mapStateToProps = (state) => {
     return {
-       sidebarShow:state.classesChange.sidebarShow
+       user:state.userProfile.user
     }
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({toggleSidebar,openSidebar,closeSidebar}, dispatch);
-
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SideBar));*/
-export default SideBar;
+export default connect(mapStateToProps, null)(SideBar);

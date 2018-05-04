@@ -19,3 +19,7 @@ export const getTenderService = (index) => {
 export const updateTenderService = (payload,index) => {
   return baseService.put(`/api/tender/${index}`,payload);
 };
+
+export const getFavoriteTendersService = () => {
+  return baseService.get('/api/tender/getTenders');
+};

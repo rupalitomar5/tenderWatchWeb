@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {withRouter, Redirect, Route} from 'react-router-dom';
+import {withRouter, Redirect, Route, Switch} from 'react-router-dom';
 
 import TenderList from './containers/tenderList/tenderList';
 import Login from './containers/Login/login';
@@ -11,7 +11,6 @@ import SideBar from './components/sidebar/SideBar';
 import NotFound from './components/NotFound/notFound';
 import Register from './containers/register/register';
 import ForgotPassword from "./containers/forgotPassword/forgotPassword";
-import './components/sidebar/sideBar.css';
 import GoogleComponent from "./components/google/index";
 import Facebook from "./components/facebook/index";
 import UploadTender from './containers/uploadTender/uploadTender';
@@ -19,10 +18,15 @@ import ChangePassword from './containers/ChangePassword/changePassword';
 import Tender from "./containers/tender/Tender";
 import Profile from './containers/Profile/profile';
 import ContactSupportTeam from './containers/contactSupportTeam/contactSupportTeam';
-import {getCountries,getCategories} from "./actionMethods/userActionMethods";
-import {getUserProfile,getNotification} from './actionMethods/ProfileActionsMethods';
 import Notifications from "./components/notificationList/notificationList";
 import Notification from './containers/notification/notification';
+import Subscription from './containers/subscription/subscription';
+import Favorite from './containers/favorites/favorite';
+
+import {getCountries,getCategories} from "./actionMethods/userActionMethods";
+import {getUserProfile,getNotification} from './actionMethods/ProfileActionsMethods';
+
+import './components/sidebar/sideBar.css';
 
 class App extends Component {
     componentWillMount(){
@@ -51,7 +55,38 @@ class App extends Component {
 
                     : <Redirect to='/login'/>)}/>
         );
+        const ClientPrivateRoute = ({component: Component, ...rest}) => (
+            <Route {...rest} render={(routeProps) => (
+                this.props.user ?
+                    this.props.user.role === 'client' ?
+                        <div className="app-wrapper">
+                            <SideBar/>
+                            <div className="sidebar-open-body">
+                                <NavBar/>
+                                <Component {...routeProps} />
+                            </div>
+                        </div>
 
+                        : <Redirect to='/PageNotFound'/>
+                    :<Redirect to='/login'/>
+            )}/>
+        );
+        const ContractorPrivateRoute = ({component: Component, ...rest}) => (
+            <Route {...rest} render={(routeProps) => (
+                this.props.user ?
+                    this.props.user.role === 'contractor' ?
+                    <div className="app-wrapper">
+                        <SideBar/>
+                        <div className="sidebar-open-body">
+                            <NavBar/>
+                            <Component {...routeProps} />
+                        </div>
+                    </div>
+
+                    : <Redirect to='/PageNotFound'/>
+                    :<Redirect to='/login'/>
+            )}/>
+        );
         const NotFoundRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(routeProps) => (
                 this.props.user ?
@@ -67,14 +102,13 @@ class App extends Component {
             )}/>
                 );
         return (
-            <React.Fragment>
+            <Switch>
                 <PrivateRoute exact path='/' component={TenderList}/>
                 <PublicRoute exact path='/login' component={Login}/>
                 <PublicRoute exact path='/register' component={Register}/>
                 <PublicRoute exact path='/forgotpassword' component={ForgotPassword}/>
                 <PublicRoute exact path='/googlelogin' component={GoogleComponent}/>
                 <PublicRoute exact path='/facelogin' component={Facebook} />
-                <PrivateRoute exact path='/uploadTender' component={UploadTender} />
                 <PrivateRoute exact path='/changePassword' component={ChangePassword} />
                 <PrivateRoute exact path='/profile' component={Profile}/>
                 <PrivateRoute exact path='/tender' component={TenderList} />
@@ -82,8 +116,11 @@ class App extends Component {
                 <PrivateRoute exact path='/contactSupport' component={ContactSupportTeam} />
                 <PrivateRoute exact path='/notifications' component={Notifications} />
                 <PrivateRoute exact path='/notification/:notificationID' component={Notification} />
-                {/*<NotFoundRoute path={'*'} exact component={NotFound}/>*/}
-            </React.Fragment>
+                <ClientPrivateRoute exact path='/uploadTender' component={UploadTender} />
+                <ContractorPrivateRoute exact path='/subscription' component={Subscription} />
+                <ContractorPrivateRoute exact path='/favorites' component={Favorite} />
+                <NotFoundRoute component={NotFound}/>
+            </Switch>
         );
     }
 }

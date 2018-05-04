@@ -1,4 +1,4 @@
-import {GET_ALL_TENDERS, DELETE_TENDER, GET_TENDER,ADD_TENDER} from '../reducers/tenders';
+import {GET_ALL_TENDERS, DELETE_TENDER, GET_TENDER,ADD_TENDER, GET_FAVORITE_TENDERS} from '../reducers/tenders';
 import {DISABLELOADING, ENABLELOADING} from '../reducers/loading';
 import {SHOW_MODAL} from '../reducers/alertModal';
 import {
@@ -6,7 +6,8 @@ import {
     uploadTenderServices,
     deleteTenderServices,
     getTenderService,
-    updateTenderService
+    updateTenderService,
+    getFavoriteTendersService
 } from '../services/tenderServices';
 
 export const getAllTendersMethod = () => {
@@ -89,4 +90,17 @@ export const updateTenderMethod = (data,index) => {
             return false;
         })
     }
+};
+
+export const getFavoriteTenders = () => {
+  return dispatch => {
+      getFavoriteTendersService().then( response => {
+          console.log('response',response);
+          debugger;
+          dispatch({type: GET_FAVORITE_TENDERS, payload: response.data.message});
+      }).catch( error => {
+          console.log('error',error);
+          debugger;
+      })
+  }
 };

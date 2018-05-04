@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import {history} from '../store';
 import {LOGOUT, LOGIN} from '../reducers/auth';
 import {SHOW_MODAL} from '../reducers/alertModal';
