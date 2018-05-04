@@ -54,18 +54,18 @@ class UploadTender extends React.Component {
     };
 
     submitHandler = (e) => {
+        debugger;
         e.preventDefault();
         e.stopPropagation();
         const {fields, errors} = this.state;
 
-        if (!fields.tenderName || !fields.email || errors.email) {
+        if (!fields.tenderName || !fields.email || errors.email || errors.contactNo) {
             this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
         } else if (!fields.agree) {
             this.props.openAlertModal({header: 'Register', message: 'please check on agree'});
         }
         else {
             this.props.uploadTenderMethod(this.state.fields).then((data)=>{
-                alert(data);
                 data && this.props.history.push('/');
             });
         }
@@ -104,6 +104,7 @@ class UploadTender extends React.Component {
 
     render() {
         const {errors} = this.state;
+        debugger;
         return (
             <div className='col-lg-12 ml-auto p-5 hide'>
                 {this.props.isLoading && <SpinnerLoader/>}

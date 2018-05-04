@@ -6,10 +6,11 @@ import {Media} from 'reactstrap';
 import '../../containers/Profile/profile.css';
 import {NavLink} from 'react-router-dom';
 import userImg from '../navbar/user-pic.png';
-import {removeNotificationMethod} from '../../actionMethods/ProfileActionsMethods';
+import {removeNotificationMethod,getNotification} from '../../actionMethods/ProfileActionsMethods';
 
 
 const Notification = (props) => {
+    //!props.notifications.length && props.getNotification();
     return (
         <div className="col-lg-12 ml-auto p-5 top-space hide">
             <h1 className='colorText'>Notifications:</h1>
@@ -54,8 +55,8 @@ const Notification = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        notifications: state.userProfile.notifications
+        notifications: state.userProfile.notifications.allNotifications
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({removeNotificationMethod}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({removeNotificationMethod,getNotification}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Notification);

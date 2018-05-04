@@ -31,7 +31,7 @@ export const getSupportMethod = (payload) => {
           dispatch({type:SHOW_MODAL,payload:{header:'Support',message:'email successfully sent'}});
       }).catch((err)=>{
           dispatch({type: DISABLELOADING});
-          dispatch({type:SHOW_MODAL,payload:{header:'Support',message:err.message || err.response.data.error }});
+          dispatch({type:SHOW_MODAL,payload:{header:'Support',message:err.message || err.response.data.error || 'error in fetching data' }});
       })
   }
 };

@@ -1,6 +1,7 @@
-import { editProfileService, getUserProfileService,getNotificationService,deleteNotificationService,readNotificationService } from '../services/Profile';
-import {SAVE_USER, GET_NOTIFICATION, READ_NOTIFICATION, REMOVE_NOTIFICATION} from "../reducers/userProfile";
+import { editProfileService, getUserProfileService,getNotificationService,deleteNotificationService,readNotificationService,getSenderDetailsService } from '../services/Profile';
+import {SAVE_USER, GET_NOTIFICATION, READ_NOTIFICATION, REMOVE_NOTIFICATION,SENDER_DETAILS_NOTIFICATION} from "../reducers/userProfile";
 import {SHOW_MODAL} from "../reducers/alertModal";
+import {DISABLELOADING,ENABLELOADING} from "../reducers/loading";
 
 export const editProfile = (user)=> {
   return dispatch => {
@@ -27,7 +28,7 @@ export const getUserProfile = () => {
         }).catch( error => {
             console.log(error);
             debugger;
-            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: error.response.data.error}});
+            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: error.response && error.response.data.error || 'error in fetching data'}});
         });
     }
 };
@@ -37,7 +38,7 @@ export const getNotification = () => {
       getNotificationService().then((res)=>{
           dispatch({type:GET_NOTIFICATION,payload:res.data});
       }).catch((err)=>{
-          dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
+          dispatch({type: SHOW_MODAL, payload: {header: 'Error', message:err.response && err.response.data.error}});
       })
   }
 };
@@ -58,5 +59,19 @@ export const removeNotificationMethod = (notification) => {
         }).catch((err)=>{
             dispatch({type: SHOW_MODAL, payload: {header: 'Error in removing notification', message: err.response.data.error}});
         })
+    }
+};
+
+export const getSenderDetailsMethod = (userId) => {
+    return dispatch => {
+        debugger;
+        dispatch({type: ENABLELOADING});
+        getSenderDetailsService(userId).then((res)=>{
+            dispatch({type: DISABLELOADING});
+            dispatch({type:SENDER_DETAILS_NOTIFICATION,payload:res.data});
+        }).catch((err)=>{
+            dispatch({type: DISABLELOADING});
+            dispatch({type:SHOW_MODAL,payload:{header:'Support',message:err.message || err.response.data.error || 'error in fetching data' }});
+        });
     }
 };

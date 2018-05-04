@@ -20,3 +20,8 @@ export const readNotificationService = (notification) => {
     debugger;
     return baseService.put(`api/notification/${notification}`);
 };
+
+export const getSenderDetailsService = (userId) => {
+    debugger;
+    return baseService.get(`api/users/${userId}`);
+};

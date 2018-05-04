@@ -11,6 +11,7 @@ import SideBar from './components/sidebar/SideBar';
 import NotFound from './components/NotFound/notFound';
 import Register from './containers/register/register';
 import ForgotPassword from "./containers/forgotPassword/forgotPassword";
+import './components/sidebar/sideBar.css';
 import GoogleComponent from "./components/google/index";
 import Facebook from "./components/facebook/index";
 import UploadTender from './containers/uploadTender/uploadTender';
@@ -22,6 +23,7 @@ import Notifications from "./components/notificationList/notificationList";
 import Notification from './containers/notification/notification';
 import Subscription from './containers/subscription/subscription';
 import Favorite from './containers/favorites/favorite';
+import ShowSenderDetails from "./containers/showSenderDetils/showSenderDetails";
 
 import {getCountries,getCategories} from "./actionMethods/userActionMethods";
 import {getUserProfile,getNotification} from './actionMethods/ProfileActionsMethods';
@@ -33,8 +35,8 @@ class App extends Component {
         !this.props.countries && this.props.getCountries();
         !this.props.categories && this.props.getCategories();
         localStorage.getItem('auth_user') && this.props.getUserProfile();
-        setInterval(this.props.getNotification,60000);
-        this.props.user && this.props.getNotification()
+        //setInterval(this.props.getNotification,2000);
+        //this.props.user && this.props.getNotification();
 
     }
     render() {
@@ -43,7 +45,9 @@ class App extends Component {
                 !this.props.user ? <React.Fragment><NavBar/><Component {...routeProps} /></React.Fragment> : <Redirect to='/'/>)}/>
         );
         const PrivateRoute = ({component: Component, ...rest}) => (
-            <Route {...rest} render={(routeProps) => (
+            <Route {...rest} render={(routeProps) => {
+                this.props.user && this.props.getNotification();
+                return (
                 this.props.user ?
                     <div className="app-wrapper">
                         <SideBar/>
@@ -53,7 +57,7 @@ class App extends Component {
                         </div>
                     </div>
 
-                    : <Redirect to='/login'/>)}/>
+                    : <Redirect to='/login'/>)}}/>
         );
         const ClientPrivateRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(routeProps) => (
@@ -116,6 +120,7 @@ class App extends Component {
                 <PrivateRoute exact path='/contactSupport' component={ContactSupportTeam} />
                 <PrivateRoute exact path='/notifications' component={Notifications} />
                 <PrivateRoute exact path='/notification/:notificationID' component={Notification} />
+                <PrivateRoute exact path='/notification/:notificationID/senderinfo' component={ShowSenderDetails} />
                 <ClientPrivateRoute exact path='/uploadTender' component={UploadTender} />
                 <ContractorPrivateRoute exact path='/subscription' component={Subscription} />
                 <ContractorPrivateRoute exact path='/favorites' component={Favorite} />

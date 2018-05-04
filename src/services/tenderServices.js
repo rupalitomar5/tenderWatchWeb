@@ -23,3 +23,7 @@ export const updateTenderService = (payload,index) => {
 export const getFavoriteTendersService = () => {
   return baseService.get('/api/tender/getTenders');
 };
+
+export const getSenderDetailsService = (userId) => {
+    return baseService.get(`api/users/${userId}`);
+};

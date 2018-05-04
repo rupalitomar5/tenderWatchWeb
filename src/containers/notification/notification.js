@@ -34,10 +34,12 @@ class Notification extends React.Component {
         return (
             <div className='login'>
                 <div className="login-form">
-                    <h4 className='colorText'>{this.state.notification && this.state.notification.message}</h4>
-                    <NavLink to={''} onClick={this.showSenderDetails}>
-                        {this.state.notification && this.state.notification.sender.email}
-                    </NavLink>
+                    <h4 className='colorText'>
+                        {this.state.notification && this.state.notification.message}&nbsp;{' '}
+                        {this.state.notification && <NavLink to={`${this.state.token}/senderinfo`}>
+                            {this.state.notification && this.state.notification.sender.email}
+                        </NavLink>}
+                    </h4>
                 </div>
                 {this.state.notification &&
                 <ShowTender
@@ -50,7 +52,7 @@ class Notification extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        notifications: state.userProfile.notifications
+        notifications: state.userProfile.notifications.allNotifications
     }
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({readNotificationMethod}, dispatch);

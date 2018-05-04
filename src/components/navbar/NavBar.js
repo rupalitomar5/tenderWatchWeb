@@ -7,11 +7,13 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import {logoutMethod} from '../../actionMethods/authActionMethods';
+import {getNotification} from '../../actionMethods/ProfileActionsMethods';
 import userImg from './user-pic.png';
 import bellIcon from './notifications-bell-button.svg';
 
 const NavBar = (props) => {
     const newNotifications = _.filter(props.notifications,{'read':false}).length;
+    //props.authUser && !props.notifications.length && props.getNotification();
     debugger;
     return (
         <div>
@@ -84,8 +86,9 @@ const NavBar = (props) => {
 const mapStateToProps = (state) => {
     return {
         user: state.userProfile.user,
-        notifications: state.userProfile.notifications
+        notifications: state.userProfile.notifications.allNotifications,
+        authUser:state.auth.user
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({logoutMethod}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({logoutMethod,getNotification}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
