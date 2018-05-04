@@ -10,7 +10,6 @@ import {NavLink} from 'react-router-dom';
 class Notification extends React.Component {
     constructor(props) {
         super(props);
-        debugger;
         this.state = {
             token: props.location.pathname.split('/')[props.location.pathname.split('/').length - 1],
             notification: find(this.props.notifications, {'_id': props.location.pathname.split('/')[props.location.pathname.split('/').length - 1]})
@@ -32,7 +31,6 @@ class Notification extends React.Component {
     };
 
     render() {
-        debugger;
         return (
             <div className='login'>
                 <div className="login-form">

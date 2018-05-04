@@ -10,7 +10,6 @@ import {removeNotificationMethod} from '../../actionMethods/ProfileActionsMethod
 
 
 const Notification = (props) => {
-    debugger;
     return (
         <div className="col-lg-12 ml-auto p-5 top-space hide">
             <h1 className='colorText'>Notifications:</h1>

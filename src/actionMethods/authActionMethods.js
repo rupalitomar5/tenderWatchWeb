@@ -58,6 +58,7 @@ export const registerMethod = (regDetails) => {
         registerService(regForm).then((response) => {
             localStorage.setItem('auth_user', response.data.token);
             dispatch({type: LOGIN, payload: response.data.user});
+            dispatch({type:SAVE_USER,payload:response.data.user});
             dispatch({type: DISABLELOADING});
         }).catch((err) => {
             dispatch({type: DISABLELOADING});
