@@ -37,7 +37,20 @@ class Register extends React.Component {
     register = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        this.props.registerMethod(this.state.fields);
+        const { errors } = this.state;
+        let flag = 0;
+        const keys = ['selectedCountry', 'category', 'subscribe'];
+        for (let key in keys) {
+            if (errors[keys[key]] === undefined || errors[keys[key]] !== '') {
+                flag = 1;
+                break;
+            }
+        }
+        if (flag) {
+            this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
+        } else {
+            this.props.registerMethod(this.state.fields);
+        }
     };
 
     changeHandler = (e) => {
@@ -53,12 +66,16 @@ class Register extends React.Component {
         } else if (id === 'category') {
             let selections = JSON.parse(fields.selections);
             selections[fields.selectedCountry] = [value];
+            fields[id] = value;
             fields.selections = JSON.stringify(selections);
         } else {
             fields[id] = value;
             errors[id] = '';
         }
-        this.setState({fields, errors});
+        this.setState({fields, errors},()=>{
+            console.log('this.state',this.state);
+            debugger;
+        });
     };
 
     handleSubmit = e => {
@@ -191,6 +208,7 @@ class Register extends React.Component {
                                                     <FormGroup>
                                                         <Label>country</Label>
                                                         <Input type='select' id='country' onChange={this.changeHandler}
+                                                               onBlur={this.validate}
                                                                value={fields.country}>
                                                             <option>Select one</option>
                                                             {
@@ -234,20 +252,23 @@ class Register extends React.Component {
                                                 :
                                                 <div>
                                                     <FormGroup>
-                                                        <Label>subscribe</Label>
+                                                        <Label>subscribe *</Label>
                                                         <Input type='select' id='subscribe'
                                                                onChange={this.changeHandler}
+                                                               onBlur={this.validate}
                                                                value={fields.subscribe}>
                                                             <option>Select one</option>
                                                             <option key={1} value={1}>1 month free trial</option>
                                                             <option key={2} value={1}>1 month subscription($15/month)</option>
                                                             <option key={3} value={1}>1 year subscription($12/month)</option>
                                                         </Input>
+                                                        {errors.subscribe && <Alert color='danger'>{errors.subscribe}</Alert>}
                                                     </FormGroup>
                                                     <FormGroup>
-                                                        <Label>country</Label>
+                                                        <Label>country *</Label>
                                                         <Input type='select' id='selectedCountry'
                                                                onChange={this.changeHandler}
+                                                               onBlur={this.validate}
                                                                value={fields.selectedCountry ? fields.selectedCountry :''}>
                                                             <option>Select one</option>
                                                             {
@@ -258,11 +279,13 @@ class Register extends React.Component {
                                                                 ))
                                                             }
                                                         </Input>
+                                                        {errors.selectedCountry && <Alert color='danger'>{errors.selectedCountry}</Alert>}
                                                     </FormGroup>
                                                     <FormGroup>
-                                                        <Label>category</Label>
+                                                        <Label>category *</Label>
                                                         <Input type='select' id='category' onChange={this.changeHandler}
-                                                               value={fields.category}>
+                                                               value={fields.category}
+                                                               onBlur={this.validate}>
                                                             <option>Select one</option>
                                                             {
                                                                 categories.length > 0 &&
@@ -272,6 +295,7 @@ class Register extends React.Component {
                                                                 ))
                                                             }
                                                         </Input>
+                                                        {errors.category && <Alert color='danger'>{errors.category}</Alert>}
                                                     </FormGroup>
                                                     <div>
                                                         <button className='btn btnAll'
