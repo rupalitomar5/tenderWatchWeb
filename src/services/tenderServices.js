@@ -27,3 +27,10 @@ export const getFavoriteTendersService = () => {
 export const getSenderDetailsService = (userId) => {
     return baseService.get(`api/users/${userId}`);
 };
+export const addFavoriteTenderService = ( tenderId ) => {
+    return baseService.put(`/api/tender/favorite/${tenderId}`);
+};
+
+export const deleteFavoriteTenderService = ( tenderId ) =>{
+    return baseService.delete(`/api/tender/favorite/${tenderId}`);
+};

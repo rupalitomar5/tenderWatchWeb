@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 import TenderCard from '../../components/tenderCard/tenderCard';
 
@@ -10,23 +11,19 @@ class Favorite extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-
+            favorites: props.favorites
         }
     }
     componentWillReceiveProps(nextProps) {
-        debugger;
         this.setState({
             favorites: nextProps.favorites
         });
     }
     componentDidMount(){
-        debugger;
         this.props.getFavoriteTenders();
     }
     render(){
         const { favorites } = this.state;
-        console.log('favorites',favorites);
-        debugger;
         return(
             <div className='col-lg-12 ml-auto top-space hide'>
                 <div className="container">
@@ -40,6 +37,7 @@ class Favorite extends React.Component {
                             tenderName={x.tenderName}
                             tenderExpiryDate={x.expiryDate}
                             deleteMethod={this.askModalToggle}
+                            title='favorite'
                         />
                     ))}
                 </div>
@@ -48,9 +46,8 @@ class Favorite extends React.Component {
     }
 }
 const mapStateToProps = state => {
-    debugger;
     return{
-        favorites: state.tenders.favoriteTenders
+        favorites: _.cloneDeep(state.tenders.favoriteTenders)
     }
 };
 const mapDispatchToProps = dispatch => bindActionCreators({ getFavoriteTenders }, dispatch);

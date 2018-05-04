@@ -31,7 +31,7 @@ const SenderDetails = (props) => {
                             changeRating={props.changeRating}
                             starHoverColor='black'
                             numberOfStars={5}
-                            starSpacing={1}
+                            starSpacing={2}
                         />}
                     </div>
                 </div>

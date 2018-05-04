@@ -35,7 +35,6 @@ class Login extends React.Component {
         this.setState({credentials});
     };
     loginHandler = (e) => {
-        debugger;
         e.preventDefault();
         e.stopPropagation();
         this.props.loginMethod(this.state.credentials);

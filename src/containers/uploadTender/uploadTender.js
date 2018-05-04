@@ -54,7 +54,6 @@ class UploadTender extends React.Component {
     };
 
     submitHandler = (e) => {
-        debugger;
         e.preventDefault();
         e.stopPropagation();
         const {fields, errors} = this.state;
@@ -73,7 +72,7 @@ class UploadTender extends React.Component {
 
     validate = (e) => {
         const {fields, errors} = this.state;
-        if (!fields[e.target.name]) {
+        if (!fields[e.target.name]&& e.target.name!=='contactNo') {
             errors[e.target.name] = `please enter ${e.target.name}`;
         } else {
             if (e.target.name === 'email') {
@@ -84,7 +83,7 @@ class UploadTender extends React.Component {
                     errors[e.target.name] = '';
                 }
             } else if (e.target.name === 'contactNo') {
-                if (fields[e.target.name].length !== 10) {
+                if (fields[e.target.name] && fields[e.target.name].length > 0 && fields[e.target.name].length !== 10) {
                     errors[e.target.name] = 'Number must be of 10 digits';
                 } else {
                     errors[e.target.name] = '';
@@ -104,7 +103,6 @@ class UploadTender extends React.Component {
 
     render() {
         const {errors} = this.state;
-        debugger;
         return (
             <div className='col-lg-12 ml-auto p-5 hide'>
                 {this.props.isLoading && <SpinnerLoader/>}

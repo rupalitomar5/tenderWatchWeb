@@ -2,13 +2,14 @@ import React from 'react';
 import '../Login/login.css';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import _ from 'lodash';
 import {getTenderMethod, updateTenderMethod} from '../../actionMethods/tenderActionMethods';
 import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import TenderForm from '../../components/tenderForm/tenderForm';
 import AlertModal from '../../components/alertModal/alertmodal';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import {NavLink} from 'react-router-dom';
-import {find} from  'lodash';
+import {find} from 'lodash';
 import ShowTender from '../../components/showTender/showTender';
 
 class Tender extends React.Component {
@@ -17,17 +18,16 @@ class Tender extends React.Component {
         this.state = {
             id: props.location.pathname.split('/').pop(),
             fields: {},
-            updatedFields: {},
             errors: {},
-            edit: false
-        }
+            edit: false,
+        };
     }
 
     componentDidMount() {
         this.props.getTenderMethod(this.state.id);
     }
 
-    componentWillReceiveProps(props) {
+    componentWillReceiveProps(props){
         props.tender && props.tender !== this.props.tender && this.setState({fields: {...props.tender}});
     }
 
@@ -38,7 +38,7 @@ class Tender extends React.Component {
     };
 
     changeHandler = (e) => {
-        const {fields, updatedFields} = this.state;
+        const {fields} = this.state;
         if (e.target.name === 'image') {
             let reader = new FileReader();
             let file = e.target.files[0];
@@ -48,18 +48,17 @@ class Tender extends React.Component {
                 this.setState({
                     file,
                     imagePreviewUrl: reader.result,
-                    fields,
-                    updatedFields
+                    fields
                 });
             }
         } else {
             fields[e.target.name] = e.target.value;
-            this.setState({fields, updatedFields})
+            this.setState({fields})
         }
     };
     optionsHandler = (e) => {
         const {fields} = this.state;
-        fields[e.target.name]={...find(this.props.formData[e.target.id],{'_id':e.target.value})};
+        fields[e.target.name] = {...find(this.props.formData[e.target.id], {'_id': e.target.value})};
         this.setState({fields});
     };
 
@@ -68,11 +67,11 @@ class Tender extends React.Component {
         e.stopPropagation();
         const {fields, errors} = this.state;
 
-        if (!fields.tenderName || !fields.email || errors.email) {
+        if (!fields.tenderName || !fields.email || errors.email || errors.contactNo ) {
             this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
         }
         else {
-            this.props.updateTenderMethod(this.state.fields, this.props.tender._id).then((res)=>{
+            this.props.updateTenderMethod(this.state.fields, this.props.tender._id).then((res) => {
                 res && this.setState({edit: false});
             });
         }
@@ -82,7 +81,7 @@ class Tender extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         const {fields, errors} = this.state;
-        if (!fields[e.target.name]) {
+        if (e.target.name!=='contactNo' && !fields[e.target.name] ) {
             errors[e.target.name] = `please enter ${e.target.name}`;
         } else {
             if (e.target.name === 'email') {
@@ -93,7 +92,7 @@ class Tender extends React.Component {
                     errors[e.target.name] = '';
                 }
             } else if (e.target.name === 'contactNo') {
-                if (fields[e.target.name].length !== 10) {
+                if (fields[e.target.name].length > 0 && fields[e.target.name].length !==10 ) {
                     errors[e.target.name] = 'Number must be of 10 digits';
                 } else {
                     errors[e.target.name] = '';
@@ -106,8 +105,8 @@ class Tender extends React.Component {
     };
 
     render() {
-        return this.state.edit ? (
-                <div className='col-lg-12 ml-auto p-5 hide'>
+        return (
+            this.state.edit ? <div className='col-lg-12 ml-auto p-5 hide'>
                     <NavLink to='' onClick={this.toggleEditMode}>{'< back'}</NavLink>
                     {this.props.isLoading && <SpinnerLoader/>}
                     {this.props.alertModal.isAlert &&
@@ -127,10 +126,7 @@ class Tender extends React.Component {
                         />
                     </div>
                 </div>
-            )
-            :
-            (
-
+                :
                 <div className="login">
                     {this.props.isLoading && <SpinnerLoader/>}
                     {this.props.alertModal.isAlert &&
@@ -140,13 +136,13 @@ class Tender extends React.Component {
                         toggleEditMode={this.toggleEditMode}
                     />
                 </div>
-            )
+        )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        tender: state.tenders.current_tender,
+        tender: _.cloneDeep(state.tenders.current_tender),
         formData: state.formData,
         isLoading: state.isLoading,
         alertModal: state.alertModal

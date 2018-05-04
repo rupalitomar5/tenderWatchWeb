@@ -17,7 +17,6 @@ class Notification extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        debugger;
         this.setState({notification: find(nextProps.notifications, {'_id': this.state.token})});
     }
 
@@ -25,10 +24,6 @@ class Notification extends React.Component {
         this.state.notification && this.props.readNotificationMethod(this.state.token);
     }
 
-    showSenderDetails = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    };
 
     render() {
         return (

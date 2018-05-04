@@ -43,7 +43,6 @@ const userProfile = (state = initialState, action) => {
             notification = {...notification, read: true};
             console.log('notification', notification);
             state.notifications.allNotifications.splice(index, 1);
-            debugger;
             return {
                 ...state,
                 notifications: {...state.notifications,allNotifications:[...state.notifications.allNotifications, notification]}

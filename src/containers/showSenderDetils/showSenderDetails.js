@@ -13,7 +13,6 @@ import {find} from 'lodash';
 class ShowSenderDetails extends React.Component {
     constructor(props) {
         super(props);
-        debugger;
         this.state = {
             token: props.location.pathname.split('/')[2],
             UserRating: 1
@@ -27,6 +26,7 @@ class ShowSenderDetails extends React.Component {
 
     changeRating=(r)=>{
         this.setState({UserRating: r});
+
     };
 
     render() {
