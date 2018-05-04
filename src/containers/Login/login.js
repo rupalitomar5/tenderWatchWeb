@@ -26,7 +26,7 @@ class Login extends React.Component {
         }
     }
     componentWillReceiveProps(nextProps) {
-        !this.state.credentials.role && this.setState({credentials: {role: nextProps.userRole}})
+         this.setState({credentials: {...this.state.credentials,role: nextProps.userRole}})
     }
 
     changeHandler = (e) => {
@@ -35,6 +35,7 @@ class Login extends React.Component {
         this.setState({credentials});
     };
     loginHandler = (e) => {
+        debugger;
         e.preventDefault();
         e.stopPropagation();
         this.props.loginMethod(this.state.credentials);

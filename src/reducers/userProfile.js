@@ -1,7 +1,10 @@
 import {LOGOUT} from './auth';
+import _ from 'lodash';
 
 export const SAVE_USER = 'SAVE_USER';
-export const GET_NOTIFICATION = '';
+export const GET_NOTIFICATION = 'GET_NOTIFICATION';
+export const READ_NOTIFICATION = 'READ_NOTIFICATION';
+export const REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATION';
 
 const initialState = {
     user: null,
@@ -24,6 +27,24 @@ const userProfile = (state = initialState, action) => {
             return {
                 ...state,
                 notifications: action.payload
+            };
+        case READ_NOTIFICATION:
+            let index=_.findIndex(state.notifications,{'_id':action.payload});
+            let notification=state.notifications[index];
+            console.log('notification',notification);
+            notification={...notification,read:true};
+            console.log('notification',notification);
+            state.notifications.splice(index,1);
+            debugger;
+            return {
+                ...state,
+                notifications:[...state.notifications,notification]
+            };
+        case REMOVE_NOTIFICATION:
+            state.notifications.splice(_.findIndex(state.notifications,{'_id':action.payload}),1);
+            return {
+                ...state,
+                notifications:[...state.notifications]
             };
         default:
             return state;

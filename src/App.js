@@ -28,8 +28,10 @@ class App extends Component {
     componentWillMount(){
         !this.props.countries && this.props.getCountries();
         !this.props.categories && this.props.getCategories();
-        this.props.user ? this.props.getNotification() : '';
         localStorage.getItem('auth_user') && this.props.getUserProfile();
+        setInterval(this.props.getNotification,60000);
+        this.props.user && this.props.getNotification()
+
     }
     render() {
         const PublicRoute = ({component: Component, ...rest}) => (
@@ -91,7 +93,6 @@ const mapStateToProps = (state) => {
         user: state.auth.user,
         countries: state.formData.countries,
         categories:state.formData.categories,
-        notification:state.userProfile.notifications
     }
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries,getCategories, getUserProfile,getNotification}, dispatch);

@@ -35,6 +35,12 @@
     height:60px;
     width:60px;
 }
+.notification-image-navbar{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+
 
 .middle {
     transition: .5s ease;
@@ -85,7 +91,6 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: none;
 }
 .notification:hover {
-    cursor: pointer;
     box-shadow: 3px 3px 5px #ddd;
 }
 

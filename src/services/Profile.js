@@ -11,3 +11,12 @@ export const getUserProfileService = () => {
 export const getNotificationService = () => {
     return baseService.get('/api/notification');
 };
+
+export const deleteNotificationService = (notification) => {
+  return baseService.delete('/api/notification/delete',{data:{notification}});
+};
+
+export const readNotificationService = (notification) => {
+    debugger;
+    return baseService.put(`api/notification/${notification}`);
+};

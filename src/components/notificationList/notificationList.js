@@ -5,6 +5,8 @@ import SpinnerLoader from '../spinnerLoader/spinnerLoader';
 import {Media} from 'reactstrap';
 import '../../containers/Profile/profile.css';
 import {NavLink} from 'react-router-dom';
+import userImg from '../navbar/user-pic.png';
+import {removeNotificationMethod} from '../../actionMethods/ProfileActionsMethods';
 
 
 const Notification = (props) => {
@@ -17,23 +19,32 @@ const Notification = (props) => {
                 <div className='container'>
 
                     {props.notifications.map((x) =>
-                        <NavLink className='nav-link-noColor' to={`/notification/${x._id}`}>
+
                         <div className="login">
                             <div className="login-form notification">
+                                <div className='cross-btn'>
+                                    <img id={x._id} src='images/cross.svg' onClick={(e)=>{props.removeNotificationMethod(x._id)}}/>
+                                </div>
                                 <Media>
                                     <Media left>
-                                        <img className='notification-image' src={x.sender.profilePhoto}/>
+                                        <img className='notification-image' src={x.sender.profilePhoto}
+                                             onError={(e) => {
+                                                 e.target.src = userImg
+                                             }}/>
                                     </Media>
                                     <Media className='paddingleft' body>
                                         <Media heading>
-                                            {x.type}
+                                            <NavLink className='nav-link-noColor' to={`/notification/${x._id}`}>
+                                                {x.type}
+                                            </NavLink>
                                         </Media>
-                                        {x.message}
+                                        <NavLink className='nav-link-noColor' to={`/notification/${x._id}`}>
+                                            {x.message}
+                                        </NavLink>
                                     </Media>
                                 </Media>
                             </div>
                         </div>
-                        </NavLink>
                     )}
                 </div>
             </div>
@@ -47,5 +58,5 @@ const mapStateToProps = (state) => {
         notifications: state.userProfile.notifications
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({removeNotificationMethod}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(Notification);

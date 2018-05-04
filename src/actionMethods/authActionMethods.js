@@ -15,6 +15,7 @@ import {SAVE_USER} from "../reducers/userProfile";
 
 export const loginMethod = (credentials) => {
   return dispatch => {
+      debugger;
       dispatch({type:ENABLELOADING});
       loginService(credentials).then( response => {
           dispatch({type:DISABLELOADING});
