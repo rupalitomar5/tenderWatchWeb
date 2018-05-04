@@ -6,6 +6,8 @@ export const GET_TENDER = 'GET_TENDER';
 export const ADD_TENDER = 'ADD_TENDER';
 export const DELETE_TENDER = 'DELETE_TENDER';
 export const GET_FAVORITE_TENDERS = 'GET_FAVORITE_TENDERS';
+export const ADD_FAVORITE_TENDER = 'ADD_FAVORITE_TENDER';
+export const DELETE_FAVORITE_TENDER = 'DELETE_FAVORITE_TENDER';
 
 const initialState = {
     allTenders:[]
@@ -25,10 +27,23 @@ export default (state = initialState, action) => {
             state.allTenders.push(action.payload);
             return _.cloneDeep(state);
         case GET_FAVORITE_TENDERS:
-            debugger;
             return{
                 ...state,
                 favoriteTenders:action.payload
+            };
+        case ADD_FAVORITE_TENDER:
+            let current_tender = state.current_tender;
+            current_tender.favorite = action.payload.favorite;
+            return{
+                ...state,
+                current_tender
+            };
+        case DELETE_FAVORITE_TENDER:
+            let current_tender1 = state.current_tender;
+            _.pull(current_tender1.favorite,action.payload);
+            return{
+                ...state,
+                current_tender: current_tender1
             };
         default:
             return {...state};

@@ -8,9 +8,11 @@ const TenderCard = (props) => {
     return (
                 <div className="col-md-3">
                     <div className="card">
-                        <div className="cross-btn" onClick={props.deleteMethod}>
-                            <img id={props._id} name={props.tenderName} src='images/cross.svg' />
-                        </div>
+                        {
+                            props.title !=='favorite' && <div className="cross-btn" onClick={props.deleteMethod}>
+                                <img id={props._id} name={props.tenderName} src='images/cross.svg' />
+                            </div>
+                        }
                         <div className="image">
                             <img
                                 id={props._id}

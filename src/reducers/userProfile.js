@@ -31,11 +31,8 @@ const userProfile = (state = initialState, action) => {
         case READ_NOTIFICATION:
             let index=_.findIndex(state.notifications,{'_id':action.payload});
             let notification=state.notifications[index];
-            console.log('notification',notification);
             notification={...notification,read:true};
-            console.log('notification',notification);
             state.notifications.splice(index,1);
-            debugger;
             return {
                 ...state,
                 notifications:[...state.notifications,notification]

@@ -2,6 +2,7 @@ import React from 'react';
 import '../Login/login.css';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import _ from 'lodash';
 import {getTenderMethod, updateTenderMethod} from '../../actionMethods/tenderActionMethods';
 import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import TenderForm from '../../components/tenderForm/tenderForm';
@@ -19,7 +20,7 @@ class Tender extends React.Component {
             fields: {},
             updatedFields: {},
             errors: {},
-            edit: false
+            edit: false,
         }
     }
 
@@ -146,7 +147,7 @@ class Tender extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        tender: state.tenders.current_tender,
+        tender: _.cloneDeep(state.tenders.current_tender),
         formData: state.formData,
         isLoading: state.isLoading,
         alertModal: state.alertModal

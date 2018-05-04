@@ -23,3 +23,10 @@ export const updateTenderService = (payload,index) => {
 export const getFavoriteTendersService = () => {
   return baseService.get('/api/tender/getTenders');
 };
+export const addFavoriteTenderService = ( tenderId ) => {
+    return baseService.put(`/api/tender/favorite/${tenderId}`);
+};
+
+export const deleteFavoriteTenderService = ( tenderId ) =>{
+    return baseService.delete(`/api/tender/favorite/${tenderId}`);
+};

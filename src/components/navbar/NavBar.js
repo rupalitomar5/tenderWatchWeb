@@ -12,7 +12,6 @@ import bellIcon from './notifications-bell-button.svg';
 
 const NavBar = (props) => {
     const newNotifications = _.filter(props.notifications,{'read':false}).length;
-    debugger;
     return (
         <div>
             <Navbar style={{backgroundColor: '#00bcd4'}} dark>

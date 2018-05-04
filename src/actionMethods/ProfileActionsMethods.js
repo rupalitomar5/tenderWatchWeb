@@ -25,8 +25,6 @@ export const getUserProfile = () => {
         getUserProfileService().then( response => {
             dispatch({type:SAVE_USER,payload:response.data});
         }).catch( error => {
-            console.log(error);
-            debugger;
             dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: error.response.data.error}});
         });
     }
@@ -44,10 +42,11 @@ export const getNotification = () => {
 
 export const readNotificationMethod = (notification) => {
     return dispatch => {
-        debugger;
         readNotificationService(notification).then((res)=>{
             dispatch({type:READ_NOTIFICATION,payload:notification});
-        }).catch((err)=>{console.log('error in read notification:',err)});
+        }).catch((err)=>{
+            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});
+        });
     }
 };
 

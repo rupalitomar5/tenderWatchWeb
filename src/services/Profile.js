@@ -17,6 +17,5 @@ export const deleteNotificationService = (notification) => {
 };
 
 export const readNotificationService = (notification) => {
-    debugger;
     return baseService.put(`api/notification/${notification}`);
 };
