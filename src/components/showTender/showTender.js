@@ -70,6 +70,7 @@ const ShowTender = (props) => {
                           <ListGroupItemText>
                               {props.fields && props.fields.expiryDate}
                           </ListGroupItemText>
+                          {props.role === 'contractor' && <button className='btn btn-success'>Interested</button>}
                       </div></div>
                         </div>
                         <div className="col-lg-6 ml-auto hide">

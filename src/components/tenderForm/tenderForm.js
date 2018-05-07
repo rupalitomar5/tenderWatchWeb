@@ -96,9 +96,10 @@ const TenderForm = (props) => {
                     <h3 className='colorText'>How contractor can contact you?</h3>
                     <FormGroup>
                         <Label> Email* </Label>
-                        <Input type='text' name='email' onChange={this.changeHandler}
+                        <Input type='text' name='email' onChange={props.changeHandler}
                                onBlur={props.validate}
-                               value={props.fields.email || ''}/>
+                               value={props.fields.email}
+                        />
                         {props.errors.email && <Alert color='danger'>{props.errors.email}</Alert>}
                     </FormGroup>
                     <FormGroup>

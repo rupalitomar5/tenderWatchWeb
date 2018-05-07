@@ -6,6 +6,7 @@ export const GET_NOTIFICATION = 'GET_NOTIFICATION';
 export const READ_NOTIFICATION = 'READ_NOTIFICATION';
 export const REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATION';
 export const SENDER_DETAILS_NOTIFICATION = 'SENDER_DETAILS_NOTIFICATION';
+export const CHANGE_REVIEW = 'CHANGE_REVIEW';
 
 const initialState = {
     user: null,
@@ -45,16 +46,33 @@ const userProfile = (state = initialState, action) => {
             state.notifications.allNotifications.splice(index, 1);
             return {
                 ...state,
-                notifications: {...state.notifications,allNotifications:[...state.notifications.allNotifications, notification]}
+                notifications: {
+                    ...state.notifications,
+                    allNotifications: [...state.notifications.allNotifications, notification]
+                }
             };
         case REMOVE_NOTIFICATION:
             state.notifications.allNotifications.splice(_.findIndex(state.notifications.allNotifications, {'_id': action.payload}), 1);
             return {
                 ...state,
-                notifications:{...state.notifications,allNotifications: [...state.notifications.allNotifications]}
+                notifications: {...state.notifications, allNotifications: [...state.notifications.allNotifications]}
             };
         case SENDER_DETAILS_NOTIFICATION:
-            return {...state,notifications:{...state.notifications,notificationSender:action.payload}};
+            return {...state, notifications: {...state.notifications, notificationSender: action.payload}};
+        case CHANGE_REVIEW:
+            return {
+                ...state, notifications:
+                    {
+                        ...state.notifications, notificationSender:
+                        {
+                            ...state.notifications.notificationSender,
+                            avg: action.payload.avg,
+                            review: {
+                                _id: action.payload._id, rating: action.payload.rating
+                            }
+                        }
+                    }
+            };
         default:
             return state;
     }

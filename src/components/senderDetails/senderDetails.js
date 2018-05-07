@@ -26,12 +26,12 @@ const SenderDetails = (props) => {
                     <div className='col-sm-7'>
                         {<UserField fieldValue={props.avg} fieldName='Rating:' /> }
                         { <StarRatings
-                            rating={props.UserRating}
+                            rating={props.review && props.review.rating}
                             starRatedColor="black"
                             changeRating={props.changeRating}
                             starHoverColor='black'
                             numberOfStars={5}
-                            starSpacing={2}
+                            starSpacing={'2'}
                         />}
                     </div>
                 </div>

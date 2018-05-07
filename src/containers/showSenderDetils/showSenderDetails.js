@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getSenderDetailsMethod} from '../../actionMethods/ProfileActionsMethods';
+import {getSenderDetailsMethod, ReviewMethod} from '../../actionMethods/ProfileActionsMethods';
 import AlertModal from '../../components/alertModal/alertmodal';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import SenderDetails from '../../components/senderDetails/senderDetails';
@@ -20,13 +20,27 @@ class ShowSenderDetails extends React.Component {
     }
 
     componentDidMount() {
+        console.log('did mount notifications',this.props.notifications);
         this.props.notifications.length &&
         this.props.getSenderDetailsMethod(find(this.props.notifications,{'_id':this.state.token}).sender._id);
     }
+    componentWillReceiveProps(nextProps){
+        console.log('will',nextProps,this.props.notifications);
+        /*nextProps.notifications.length &&
+        this.props.getSenderDetailsMethod(find(nextProps.notifications,{'_id':this.state.token}).sender._id);*/
+    }
 
     changeRating=(r)=>{
-        this.setState({UserRating: r});
-
+        console.log(this.props.senderDetails.review._id);
+        this.props.senderDetails.review.rating = r;
+        this.setState({UserRating: r},()=>{
+            const review={
+                user:this.props.senderDetails._id,
+                reviewer:this.state.token,
+                rating:this.state.UserRating
+            };
+            this.props.ReviewMethod(review,this.props.senderDetails.review._id);
+        });
     };
 
     render() {
@@ -66,5 +80,5 @@ const mapStateToProps = (state) => {
         notifications:state.userProfile.notifications.allNotifications
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({getSenderDetailsMethod, openAlertModal}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({getSenderDetailsMethod, openAlertModal, ReviewMethod}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(ShowSenderDetails);

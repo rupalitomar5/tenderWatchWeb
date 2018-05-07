@@ -37,21 +37,28 @@ class Register extends React.Component {
     register = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        const { errors } = this.state;
-        let flag = 0;
-        const keys = ['selectedCountry', 'category', 'subscribe'];
-        for (let key in keys) {
-            if (errors[keys[key]] === undefined || errors[keys[key]] !== '') {
-                flag = 1;
-                break;
+        const {fields} = this.state;
+        if(fields.role === 'contractor'){
+            const { errors } = this.state;
+            let flag = 0;
+            const keys = ['selectedCountry', 'category', 'subscribe'];
+            for (let key in keys) {
+                if (errors[keys[key]] === undefined || errors[keys[key]] !== '') {
+                    flag = 1;
+                    break;
+                }
             }
-        }
-        if (flag) {
-            this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
-        } else {
+            if (flag) {
+                this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
+            } else {
+                this.props.registerMethod(this.state.fields);
+            }
+        }else {
             this.props.registerMethod(this.state.fields);
         }
-    };
+    }
+
+    ;
 
     changeHandler = (e) => {
         const {fields, errors} = this.state;
