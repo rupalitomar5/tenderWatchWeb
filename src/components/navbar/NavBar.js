@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {Link} from 'react-router-dom';
 import {Navbar, NavbarBrand, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge} from 'reactstrap';
 import './navbar.css';
@@ -27,7 +28,7 @@ const NavBar = (props) => {
                                 {newNotifications>0 && <Badge color='danger' pill>{newNotifications}</Badge>}
                             </DropdownToggle>
                             <DropdownMenu right>
-                                {props.notifications.map((x, i) =>
+                                {props.notifications.length > 0 ? props.notifications.map((x, i) =>
                                     <React.Fragment>
                                         <Link className='underline' to={`/notification/${x._id}`}>
                                             <DropdownItem>
@@ -44,7 +45,15 @@ const NavBar = (props) => {
                                         </Link>
                                         {i !== props.notifications.length - 1 && <DropdownItem divider/>}
                                     </React.Fragment>
-                                )}
+                                ):
+                                <React.Fragment>
+                                    <DropdownItem>
+                                    <span className='colorText'>
+                                           No notification for you...!!!
+                                            </span>
+                                    </DropdownItem>
+                                </React.Fragment>
+                                }
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         <UncontrolledDropdown inNavbar>

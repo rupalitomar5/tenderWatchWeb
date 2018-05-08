@@ -15,23 +15,18 @@ const ShowTender = (props) => {
             <ListGroup>
                 <div className='row'>
                     <div className="col-lg-6 ml-auto custom-box1 hide">
-                        <div className='login-form'>
-                            {
-                                props.role === 'contractor' && <div style={{float: 'right'}}>
-                                    {(props.fields.favorite && props.fields.favorite[0]) === props.user ?
-                                        <div onClick={() => {
-                                            props.deleteFavoriteTender(props.fields._id, props.user)
-                                        }}>
-                                            <i className="fas fa-heart" style={{color: '#ff0000', fontSize: '150%'}}/>
-                                        </div>
-                                        : <div onClick={() => {
-                                            props.addFavoriteTender(props.fields._id)
-                                        }}>
-                                            <i className='far  fa-heart' style={{fontSize: '150%'}}/>
-                                        </div>
-                                    }
+                        <div style={{float:'right'}}>
+                            { props.role === 'contractor' && ((props.fields.favorite && props.fields.favorite[0]) === props.user?
+                                <div onClick={()=>{props.deleteFavoriteTender(props.fields._id, props.user)}}>
+                                    <i className="fas fa-heart" style={{color:'#ff0000', fontSize:'150%'}}/>
                                 </div>
+                                :<div onClick={()=>{props.addFavoriteTender(props.fields._id)}}>
+                                    <i className='far  fa-heart' style={{fontSize: '150%'}}/>
+                                </div>)
                             }
+                        </div>
+                        <div className='login-form'>
+
                             <div className='col-sm-6 custom-box2'>
                                 <ListGroupItemHeading className='colorText'>Tender Image</ListGroupItemHeading>
                                 <ListGroupItemText>

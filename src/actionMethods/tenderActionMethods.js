@@ -7,7 +7,8 @@ import {
     ADD_FAVORITE_TENDER,
     DELETE_FAVORITE_TENDER,
     UPDATE_TENDER,
-    INTERESTED_TENDER
+    INTERESTED_TENDER,
+    SEARCH_KEY
 } from '../reducers/tenders';
 import {DISABLELOADING, ENABLELOADING} from '../reducers/loading';
 import {SHOW_MODAL} from '../reducers/alertModal';
@@ -160,5 +161,11 @@ export const interestedTenderMethod = (tenderId, userId) => {
                 payload: {header: 'Error', message: err.response && err.response.data && err.response.data.error || err.message}
             });
         })
+    }
+};
+
+export const setSearchKey = key => {
+    return dispatch => {
+        dispatch({type: SEARCH_KEY, payload: key});
     }
 };

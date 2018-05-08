@@ -4,33 +4,60 @@ import {bindActionCreators} from 'redux';
 import AlertModal from '../../components/alertModal/alertmodal'
 import {InputGroup, Input, Label, Alert, FormGroup} from 'reactstrap';
 import {getSupportMethod} from '../../actionMethods/userActionMethods';
-import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader'
+import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
+import { openAlertModal } from '../../actionMethods/alertMessageActionMethods';
 
 class ContactSupportTeam extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             fields: {
-                email:props.user && props.user.email
-            }
+                email:props.user && props.user.email,
+            },
+            error:[]
         }
     }
 
     changeHandler = (e) => {
-        const {fields} = this.state;
+        const {fields, error} = this.state;
         fields[e.target.name]=e.target.value;
+        error[e.target.name] = '';
+        this.setState({fields, error});
     };
 
+    validation = e => {
+        const { fields,error } = this.state;
+        const { name } = e.target;
+            if(!fields[name]){
+                error[name] = `please enter ${name}`;
+                this.setState({error});
+            }
+    };
     submitHandler = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        this.props.getSupportMethod(this.state.fields);
+        const { error } = this.state;
+        let flag = 0;
+        const keys = ['subject','description'];
+        keys.map( key => {
+            if(error[key] === undefined || error[key] !== ''){
+                flag = 1;
+            }
+        });
+        if(flag === 0){
+            this.props.getSupportMethod(this.state.fields);
+        }else {
+            this.props.openAlertModal({header: 'Error', message: 'Please enter valid details'});
+        }
+
     };
 
     render() {
+        const { error } = this.state;
         return (
-            <div className="col-lg-12 ml-auto top-space hide">
+            <React.Fragment>
                 {this.props.isLoading && <SpinnerLoader/>}
+            <div className="col-lg-12 ml-auto top-space hide">
             <div className="main-wrapper">
                 {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal}/>}
                 <div className='container'>
@@ -51,11 +78,16 @@ class ContactSupportTeam extends React.Component {
                                 <Input type='text' name='subject' value={this.state.fields.subject}
                                        placeholder='subject'
                                        onChange={this.changeHandler}
+                                       onBlur={this.validation}
                                 />
+                                { error.subject && <Alert color='danger'>{error.subject}</Alert>}
                             </FormGroup>
                             <FormGroup>
                                 <Input name='description' type='textarea' placeholder='enter your queries or complains here' rows='8'
-                                       onChange={this.changeHandler}/>
+                                       onChange={this.changeHandler}
+                                       onBlur={this.validation}
+                                />
+                                { error.description && <Alert color='danger'>{error.description}</Alert>}
                             </FormGroup>
                             <button className='btn btnAll' onClick={this.submitHandler}>Send</button>
                         </div>
@@ -64,6 +96,7 @@ class ContactSupportTeam extends React.Component {
                 </div>
             </div>
             </div>
+            </React.Fragment>
         )
     }
 }
@@ -75,5 +108,5 @@ const mapStateToProps = (state) => {
         isLoading:state.isLoading
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({getSupportMethod}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({getSupportMethod, openAlertModal}, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(ContactSupportTeam);
