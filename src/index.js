@@ -6,12 +6,15 @@ import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux'
 import store, {history} from './store';
 import {ConnectedRouter} from 'react-router-redux';
+import {StripeProvider} from 'react-stripe-elements';
 
 ReactDOM.render(
+    <StripeProvider apiKey="pk_test_mjxYxMlj4K2WZfR6TwlHdIXW">
     <Provider store={store}>
         <ConnectedRouter history={history}>
             <App/>
         </ConnectedRouter>
-    </Provider>, document.getElementById('root')
+    </Provider>
+    </StripeProvider>, document.getElementById('root')
 );
 registerServiceWorker();

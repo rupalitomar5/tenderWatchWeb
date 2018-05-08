@@ -52,7 +52,7 @@ const TenderForm = (props) => {
                         <Label>Country</Label>
                         <Input id='countries' type='select' name='country' onChange={props.optionsHandler}
                                onBlur={props.validate}>
-                            {props.fields.category && props.fields.country.countryName &&
+                            {props.fields.country && props.fields.country.countryName &&
                             <option
                                 value={props.fields.country._id}>{props.fields.country.countryName}</option>}
                             <option>Select one</option>

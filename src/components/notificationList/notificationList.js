@@ -7,6 +7,7 @@ import '../../containers/Profile/profile.css';
 import {NavLink} from 'react-router-dom';
 import userImg from '../navbar/user-pic.png';
 import {removeNotificationMethod,getNotification} from '../../actionMethods/ProfileActionsMethods';
+import cross from '../../images/cross.svg';
 
 
 const Notification = (props) => {
@@ -23,7 +24,7 @@ const Notification = (props) => {
                         <div className="login">
                             <div className="login-form notification">
                                 <div className='cross-btn'>
-                                    <img id={x._id} src='images/cross.svg' onClick={(e)=>{props.removeNotificationMethod(x._id)}}/>
+                                    <img id={x._id} src={cross} onClick={(e)=>{props.removeNotificationMethod(x._id)}}/>
                                 </div>
                                 <Media>
                                     <Media left>

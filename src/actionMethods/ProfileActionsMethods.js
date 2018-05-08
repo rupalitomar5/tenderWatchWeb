@@ -110,10 +110,8 @@ export const getSenderDetailsMethod = (userId) => {
 
 export const ReviewMethod = (review, review_id) => {
     return dispatch => {
-        dispatch({type: ENABLELOADING});
         review_id === 'no id' ?
             addReviewService(review).then((res) => {
-                dispatch({type: DISABLELOADING});
                 console.log(res);
                 dispatch({type: CHANGE_REVIEW, payload: res.data})
             }).catch((err) => {
@@ -127,7 +125,6 @@ export const ReviewMethod = (review, review_id) => {
                 });
             }) :
             updateReviewService(review, review_id).then((res) => {
-                dispatch({type: DISABLELOADING});
                 console.log(res);
                 dispatch({type: CHANGE_REVIEW, payload: res.data})
             }).catch((err) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import './tendercard.css';
 import {NavLink} from 'react-router-dom';
 import noImage from '../../components/tenderForm/picture.svg'
+import cross from '../../images/cross.svg'
 
 
 const TenderCard = (props) => {
@@ -10,7 +11,7 @@ const TenderCard = (props) => {
                     <div className="card">
                         {
                             props.title !=='favorite' && <div className="cross-btn" onClick={props.deleteMethod}>
-                                <img id={props._id} name={props.tenderName} src='images/cross.svg' />
+                                <img id={props._id} name={props.tenderName} src={cross} />
                             </div>
                         }
                         <div className="image">

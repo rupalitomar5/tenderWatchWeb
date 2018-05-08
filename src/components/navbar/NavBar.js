@@ -22,7 +22,7 @@ const NavBar = (props) => {
 
                     <div className="right-icons">
                         <UncontrolledDropdown inNavbar>
-                            <DropdownToggle nav className={'colorMain-background'}>
+                            <DropdownToggle  nav className={'colorMain-background bell-icon'}>
                                 <img className='nav-icon-btn' src={bellIcon}/>
                                 {newNotifications>0 && <Badge color='danger' pill>{newNotifications}</Badge>}
                             </DropdownToggle>

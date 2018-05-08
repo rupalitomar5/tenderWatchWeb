@@ -6,7 +6,8 @@ import {
     GET_FAVORITE_TENDERS,
     ADD_FAVORITE_TENDER,
     DELETE_FAVORITE_TENDER,
-    UPDATE_TENDER
+    UPDATE_TENDER,
+    INTERESTED_TENDER
 } from '../reducers/tenders';
 import {DISABLELOADING, ENABLELOADING} from '../reducers/loading';
 import {SHOW_MODAL} from '../reducers/alertModal';
@@ -18,7 +19,8 @@ import {
     updateTenderService,
     getFavoriteTendersService,
     addFavoriteTenderService,
-    deleteFavoriteTenderService
+    deleteFavoriteTenderService,
+    interestedTenderService
 } from '../services/tenderServices';
 
 export const getAllTendersMethod = () => {
@@ -138,5 +140,25 @@ export const deleteFavoriteTender = (tenderId, userId) => {
                 payload: {header: 'Error', message: error.response.data && error.response.data.error || error.message}
             });
         });
+    }
+};
+
+export const interestedTenderMethod = (tenderId, userId) => {
+    return dispatch => {
+        dispatch({type: ENABLELOADING});
+        interestedTenderService(tenderId).then(() => {
+            dispatch({type: DISABLELOADING});
+            dispatch({type: INTERESTED_TENDER, payload: {tenderId, userId}});
+            dispatch({
+                type: SHOW_MODAL,
+                payload: {header: 'Tender', message: 'you are now interested in this tender'}
+            });
+        }).catch((err) => {
+            dispatch({type: ENABLELOADING});
+            dispatch({
+                type: SHOW_MODAL,
+                payload: {header: 'Error', message: err.response && err.response.data && err.response.data.error || err.message}
+            });
+        })
     }
 };

@@ -9,6 +9,7 @@ export const GET_FAVORITE_TENDERS = 'GET_FAVORITE_TENDERS';
 export const ADD_FAVORITE_TENDER = 'ADD_FAVORITE_TENDER';
 export const DELETE_FAVORITE_TENDER = 'DELETE_FAVORITE_TENDER';
 export const UPDATE_TENDER = 'UPDATE_TENDER';
+export const INTERESTED_TENDER = 'INTERESTED_TENDER';
 
 const initialState = {
     allTenders:[]
@@ -48,6 +49,11 @@ export default (state = initialState, action) => {
                 ...state,
                 current_tender: current_tender1
             };
+        case INTERESTED_TENDER:
+            const index= _.findIndex(state.allTenders,{'_id':action.payload.tenderId});
+            state.allTenders[index].interested.push(action.payload.userId);
+            state.current_tender.interested.push(action.payload.userId);
+            return {...state,allTenders:[...state.allTenders],current_tender:{...state.current_tender}};
         default:
             return {...state};
     }

@@ -32,7 +32,6 @@ class UploadTender extends React.Component {
     changeHandler = (e) => {
         const {fields} = this.state;
         if (e.target.name === 'image') {
-
             let reader = new FileReader();
             let file = e.target.files[0];
             file && reader.readAsDataURL(file);

@@ -34,3 +34,7 @@ export const addFavoriteTenderService = ( tenderId ) => {
 export const deleteFavoriteTenderService = ( tenderId ) =>{
     return baseService.delete(`/api/tender/favorite/${tenderId}`);
 };
+
+export const interestedTenderService = (tenderId) => {
+    return baseService.put(`/api/tender/interested/${tenderId}`);
+};

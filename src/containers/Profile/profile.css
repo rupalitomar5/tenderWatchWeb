@@ -28,7 +28,7 @@
     height:170px;
     width:170px;
     justify-content: center;
-    margin: 0 auto ;
+    /*margin: 0 auto ;*/
     display: table;
 }
 .notification-image {

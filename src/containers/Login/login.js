@@ -25,8 +25,9 @@ class Login extends React.Component {
             }
         }
     }
+
     componentWillReceiveProps(nextProps) {
-         this.setState({credentials: {...this.state.credentials,role: nextProps.userRole}})
+        this.setState({credentials: {...this.state.credentials, role: nextProps.userRole}})
     }
 
     changeHandler = (e) => {
@@ -48,7 +49,7 @@ class Login extends React.Component {
         this.props.clearRoleMethod();
     };
     socialLogin = (type) => {
-      return (payload)=>this.props.socialLoginMethod(payload,this.props.userRole,type);
+        return (payload) => this.props.socialLoginMethod(payload, this.props.userRole, type);
     };
 
     render() {
@@ -56,12 +57,15 @@ class Login extends React.Component {
             <div className="main-wrapper">
                 {this.props.isLoading && <SpinnerLoader/>}
                 {this.props.alertModal.isAlert &&
-                <AlertModal alertModal={this.props.alertModal} />}
+                <AlertModal alertModal={this.props.alertModal}/>}
                 <div className='container'>
                     <div className="login">
                         <div className="login-content">
                             <div className="login-logo">
-                                <img className="logo-sidebar" src="https://s3.ap-south-1.amazonaws.com/tenderwatch/logo3%401024.png" alt="Tender watch" width="150"/>
+                                <img className="logo-sidebar"
+                                     src="https://s3.ap-south-1.amazonaws.com/tenderwatch/logo3%401024.png"
+                                     alt="Tender watch" width="150"
+                                />
                                 Welcome,{this.props.userRole ? ' please login first:' : ' please select what you are looking for:'}
                             </div>
                             <div className="login-form">
@@ -92,7 +96,7 @@ class Login extends React.Component {
                                         <NavLink to='/register'>Don't have an account? signup now!</NavLink>
                                         <div>
                                             <FacebookButton facebookLoginMethod={this.socialLogin('facebook')}/>
-                                            <GoogleButton googleLoginMethod={this.socialLogin('google')} />
+                                            <GoogleButton googleLoginMethod={this.socialLogin('google')}/>
                                         </div>
                                     </React.Fragment>
                                     :
@@ -109,7 +113,7 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return{
+    return {
         userRole: state.userRole,
         alertModal: state.alertModal,
         isLoading: state.isLoading

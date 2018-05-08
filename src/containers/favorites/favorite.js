@@ -35,7 +35,7 @@ class Favorite extends React.Component {
                             _id={x._id}
                             tenderPhoto={x.tenderPhoto}
                             tenderName={x.tenderName}
-                            tenderExpiryDate={x.expiryDate}
+                            tenderExpiryDate={new Date(x.expiryDate).toString().split(' ').splice(1,3).join('-')}
                             deleteMethod={this.askModalToggle}
                             title='favorite'
                         />
