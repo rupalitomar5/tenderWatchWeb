@@ -12,6 +12,7 @@ import userImg from './user-pic.png';
 import bellIcon from './notifications-bell-button.svg';
 
 const NavBar = (props) => {
+    debugger;
     const newNotifications = _.filter(props.notifications,{'read':false}).length;
     //props.authUser && !props.notifications.length && props.getNotification();
     return (
@@ -24,9 +25,9 @@ const NavBar = (props) => {
                         <UncontrolledDropdown inNavbar>
                             <DropdownToggle  nav className={'colorMain-background bell-icon'}>
                                 <img className='nav-icon-btn' src={bellIcon}/>
-                                {newNotifications>0 && <Badge color='danger' pill>{newNotifications}</Badge>}
+                                {newNotifications>0 && <Badge className='notification-badge' color='danger' pill>{newNotifications}</Badge>}
                             </DropdownToggle>
-                            <DropdownMenu right>
+                            <DropdownMenu className='dropdown-notification' right>
                                 {props.notifications.map((x, i) =>
                                     <React.Fragment>
                                         <Link className='underline' to={`/notification/${x._id}`}>

@@ -25,11 +25,14 @@
     opacity: 1;
     transition: .5s ease;
     backface-visibility: hidden;
-    height:170px;
-    width:170px;
     justify-content: center;
     /*margin: 0 auto ;*/
     display: table;
+    height: auto;
+    width: 100%;
+    /* min-width: 90px; */
+    max-width: 250px;
+    max-height: 250px;
 }
 .notification-image {
     height:60px;

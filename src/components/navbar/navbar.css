@@ -1,75 +1,95 @@
 
-.profileImage{
+.profileImage {
     width: 40px;
     height: 35px;
     border-radius: 50%;
 }
 
-.colorMain-background .btn .btn-secondary{
+.colorMain-background .btn .btn-secondary {
     border: none;
 }
-.right-icons{
+
+.right-icons {
     float: right;
 }
-.icons{
+
+.icons {
     float: left;
     width: 19px;
     margin-top: 11px;
 }
-.nav-icon-btn{
+
+.nav-icon-btn {
     cursor: pointer;
     height: 40px;
-    width: 25px;
+    width: 30px;
+    right: 28px;
+    position: relative;
 }
+
 .nav-icon-btn:hover {
 
 }
-.dropdown{
+.dropdown-notification {
+    top:55px
+}
+
+.dropdown {
     width: 90px;
 }
 
-.bell-icon{
+.bell-icon {
     position: absolute;
-    right: 100px;
-    top: -2px;
+    right: 70px;
 }
 
 .row {
     margin-right: 0;
 }
 
-.custom-box1{
+.custom-box1 {
     width: 90%;
     position: absolute;
     left: 5px;
 }
 
-.custom-box2{
-    max-width: none!important;
+.custom-box2 {
+    max-width: none !important;
 }
 
 .login-logo h3 {
     margin: 10px 0 0 20px;
 }
 
-.login-form h4{
+.login-form h4 {
     color: #00bcd4;
 }
 
+.notification-badge {
 
+    color: #fff;
+    background-color: #dc3545;
+    top: 10px;
+    left: 13px;
+    position: absolute;
 
-.nav-bar-link a{
-    color:#242323;
 }
+
+.nav-bar-link a {
+    color: #242323;
+}
+
 .nav-bar-link a:hover {
     color: rgb(0, 188, 212);
     text-decoration: none;
 }
+
 .underline {
     text-decoration: none !important;
 }
+
 .underline:hover {
     cursor: pointer;
-    color:#00bcd4;
+    color: #00bcd4;
 }
 

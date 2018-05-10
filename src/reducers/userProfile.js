@@ -38,17 +38,15 @@ const userProfile = (state = initialState, action) => {
                 }
             };
         case READ_NOTIFICATION:
+            debugger;
             let index = _.findIndex(state.notifications.allNotifications, {'_id': action.payload});
-            let notification = state.notifications.allNotifications[index];
-            console.log('notification', notification);
-            notification = {...notification, read: true};
-            console.log('notification', notification);
-            state.notifications.allNotifications.splice(index, 1);
+            state.notifications.allNotifications[index].read=true;
+
             return {
                 ...state,
                 notifications: {
                     ...state.notifications,
-                    allNotifications: [...state.notifications.allNotifications, notification]
+                    allNotifications: [..._.cloneDeep(state.notifications.allNotifications)]
                 }
             };
         case REMOVE_NOTIFICATION:
