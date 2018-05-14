@@ -99,6 +99,7 @@ export const socialLoginMethod = (payload, role, type) => {
             dispatch({type: DISABLELOADING});
             localStorage.setItem('auth_user', res.data.token);
             dispatch({type: LOGIN, payload: res.data.user});
+            dispatch({type:SAVE_USER,payload:res.data.user});
         }).catch((err)=>{
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response.data.error}});

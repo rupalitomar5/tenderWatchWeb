@@ -32,7 +32,6 @@ class Profile extends React.Component {
         if (id === 'profilePhoto') {
             user['image'] = e.target.files[0];
         } else if(id === 'contactNo'){
-
             user[id] = Number(value);
         }else {
             user[id] = value;

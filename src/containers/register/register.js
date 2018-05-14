@@ -7,6 +7,7 @@ import {registerMethod} from './../../actionMethods/authActionMethods';
 import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
 import {getCountries} from '../../actionMethods/userActionMethods';
 import AlertModal from '../../components/alertModal/alertmodal';
+import SubscriptionModal from '../SubscriptionModal/subscriptionModal';
 import './register.css';
 
 class Register extends React.Component {
@@ -18,7 +19,9 @@ class Register extends React.Component {
             },
             errors: {},
             page: 1,
-            showAlert: false
+            showAlert: false,
+            isOpen: false,
+            subscriptionCall: false
         }
     }
 
@@ -34,31 +37,39 @@ class Register extends React.Component {
         this.setState({fields});
     }
 
-    register = (e) => {
+    register = (e, selections, subscriptionPackage) => {
         e.preventDefault();
         e.stopPropagation();
         const {fields} = this.state;
-        if(fields.role === 'contractor'){
-            const { errors } = this.state;
+        if (fields.role === 'contractor') {
+            const {errors} = this.state;
             let flag = 0;
-            const keys = ['selectedCountry', 'category', 'subscribe'];
-            for (let key in keys) {
-                if (errors[keys[key]] === undefined || errors[keys[key]] !== '') {
-                    flag = 1;
-                    break;
-                }
-            }
+            // const keys = ['selectedCountry', 'category', 'subscribe'];
+            // for (let key in keys) {
+            //     if (errors[keys[key]] === undefined || errors[keys[key]] !== '') {
+            //         flag = 1;
+            //         break;
+            //     }
+            // }
             if (flag) {
                 this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
             } else {
-                this.props.registerMethod(this.state.fields);
+                console.log(this.state.fields);
+                debugger;
+                const { fields } = this.state;
+                let user = {
+                    ...fields,
+                    subscribe: subscriptionPackage,
+                    selections
+                };
+                console.log('user',user);
+                debugger;
+                this.props.registerMethod(user);
             }
-        }else {
+        } else {
             this.props.registerMethod(this.state.fields);
         }
-    }
-
-    ;
+    };
 
     changeHandler = (e) => {
         const {fields, errors} = this.state;
@@ -79,8 +90,8 @@ class Register extends React.Component {
             fields[id] = value;
             errors[id] = '';
         }
-        this.setState({fields, errors},()=>{
-            console.log('this.state',this.state);
+        this.setState({fields, errors}, () => {
+            console.log('this.state', this.state);
         });
     };
 
@@ -141,11 +152,18 @@ class Register extends React.Component {
         if (flag) {
             this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
         } else {
-            this.setState({page: page + 1});
-
+            if (this.state.page === 2) {
+                this.toggleChange();
+            }
+            else
+                this.setState({page: page + 1});
         }
     };
-
+    toggleChange = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    };
     PreviousPage = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -254,6 +272,11 @@ class Register extends React.Component {
                                                         </button>
                                                     </div>
                                                     <br/>
+                                                    <SubscriptionModal
+                                                        isOpen={this.state.isOpen}
+                                                        toggleChange={this.toggleChange}
+                                                            register={this.register}
+                                                    />
                                                 </div>
                                                 :
                                                 <div>
@@ -312,6 +335,8 @@ class Register extends React.Component {
                                                         </button>
                                                     </div>
                                                 </div>
+
+
                                     }
                                 </Form>
                                 <NavLink to='/login'>{'< back to login'}</NavLink>

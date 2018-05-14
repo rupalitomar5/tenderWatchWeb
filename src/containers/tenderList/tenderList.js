@@ -4,7 +4,7 @@ import TenderCard from '../../components/tenderCard/tenderCard';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {logoutMethod} from '../../actionMethods/authActionMethods';
-import {getAllTendersMethod, deleteTenderMethod} from '../../actionMethods/tenderActionMethods';
+import {getAllTendersMethod, deleteTenderMethod, setSearchKey} from '../../actionMethods/tenderActionMethods';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import AlertModal from '../../components/alertModal/alertmodal';
 import {Input, InputGroup} from 'reactstrap';
@@ -30,15 +30,21 @@ class TenderList extends React.Component {
 
     componentWillReceiveProps(props) {
 
-        if (this.props.tenders.allTenders !== props.tenders.allTenders) {
-            this.setState({Tenders: props.tenders.allTenders})
-        }
+        if(this.props.searchKey){
+            this.setState({Tenders: _.filter(this.props.tenders.allTenders, (o) => o.tenderName.includes(this.props.searchKey))});
+        }else {
+            if (this.props.tenders.allTenders !== props.tenders.allTenders) {
+                this.setState({Tenders: props.tenders.allTenders})
+            }
+       }
+
     }
 
     searchChange = (e) => {
         this.setState({search: e.target.value}, () => {
             this.setState({Tenders: _.filter(this.props.tenders.allTenders, (o) => o.tenderName.includes(this.state.search))});
         });
+        this.props.setSearchKey(e.target.value);
     };
     askModalToggle = (e) => {
         e && this.setState({delete: {index: e.target.id, name: e.target.name}});
@@ -63,7 +69,7 @@ class TenderList extends React.Component {
                 <div className="container">
                     <h1 className='colorText'>Tenders:</h1>
                     <InputGroup>
-                        <Input className='tender-searchbar' onChange={this.searchChange} placeholder='search tenders'/>
+                        <Input className='tender-searchbar' value={this.props.searchKey} onChange={this.searchChange} placeholder='search tenders'/>
                         <i className='fa fa-search search-icon'/>
                     </InputGroup>
                     <div className="row">
@@ -86,12 +92,14 @@ class TenderList extends React.Component {
 const mapStateToProps = (state) => {
     return {
         tenders: state.tenders,
-        alertModal: state.alertModal
+        alertModal: state.alertModal,
+        searchKey:state.tenders.searchKey
     }
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     logoutMethod,
     getAllTendersMethod,
-    deleteTenderMethod
+    deleteTenderMethod,
+    setSearchKey
 }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(TenderList);

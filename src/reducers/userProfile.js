@@ -25,10 +25,7 @@ const userProfile = (state = initialState, action) => {
                 user: action.payload
             };
         case LOGOUT:
-            return {
-                ...state,
-                user: null
-            };
+            return initialState;
         case GET_NOTIFICATION:
             return {
                 ...state,

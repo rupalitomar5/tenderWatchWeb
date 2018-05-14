@@ -26,6 +26,7 @@ class Notification extends React.Component {
 
 
     render() {
+        debugger;
         return (
             <div className='login'>
                 <div className="login-form">
@@ -39,6 +40,7 @@ class Notification extends React.Component {
                 {this.state.notification &&
                 <ShowTender
                     fields={this.state.notification.tender}
+                    id={this.state.notification.tender._id}
                 />}
             </div>
         )

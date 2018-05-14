@@ -11,3 +11,11 @@ export const hideAlertModal = () => {
       dispatch({type:HIDE_MODAL});
   }
 };
+
+export const enableLoading= () => {
+    return dispatch => dispatch({type: 'ENABLELOADING'});
+};
+
+export const disableLoading= () => {
+    return (dispatch) => dispatch({type: 'DISABLELOADING'});
+};
