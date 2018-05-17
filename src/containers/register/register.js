@@ -44,13 +44,6 @@ class Register extends React.Component {
         if (fields.role === 'contractor') {
             const {errors} = this.state;
             let flag = 0;
-            // const keys = ['selectedCountry', 'category', 'subscribe'];
-            // for (let key in keys) {
-            //     if (errors[keys[key]] === undefined || errors[keys[key]] !== '') {
-            //         flag = 1;
-            //         break;
-            //     }
-            // }
             if (flag) {
                 this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
             } else {
@@ -275,7 +268,8 @@ class Register extends React.Component {
                                                     <SubscriptionModal
                                                         isOpen={this.state.isOpen}
                                                         toggleChange={this.toggleChange}
-                                                            register={this.register}
+                                                        register={this.register}
+                                                        fields={this.state.fields}
                                                     />
                                                 </div>
                                                 :

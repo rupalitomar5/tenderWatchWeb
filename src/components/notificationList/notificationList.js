@@ -2,16 +2,15 @@ import React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import SpinnerLoader from '../spinnerLoader/spinnerLoader';
-import {Media} from 'reactstrap';
+import {Media,Badge} from 'reactstrap';
 import '../../containers/Profile/profile.css';
 import {NavLink} from 'react-router-dom';
-import userImg from '../navbar/user-pic.png';
+import userImg from '../../images/user-pic.png';
 import {removeNotificationMethod,getNotification} from '../../actionMethods/ProfileActionsMethods';
 import cross from '../../images/cross.svg';
 
 
 const Notification = (props) => {
-    //!props.notifications.length && props.getNotification();
     return (
         <div className="col-lg-12 ml-auto p-5 top-space hide">
             <h1 className='colorText'>Notifications:</h1>
@@ -38,6 +37,7 @@ const Notification = (props) => {
                                             <NavLink className='nav-link-noColor' to={`/notification/${x._id}`}>
                                                 {x.type}
                                             </NavLink>
+                                            {!x.read && <h6><Badge color='danger' pill>new</Badge></h6>}
                                         </Media>
                                         <NavLink className='nav-link-noColor' to={`/notification/${x._id}`}>
                                             {x.message}

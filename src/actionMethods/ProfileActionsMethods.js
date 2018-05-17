@@ -61,7 +61,7 @@ export const getNotification = () => {
         getNotificationService().then((res) => {
             dispatch({type: GET_NOTIFICATION, payload: res.data});
         }).catch((err) => {
-            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response && err.response.data.error}});
+            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: err.response && err.response.data.error || 'error in fetching the notification'}});
         })
     }
 };

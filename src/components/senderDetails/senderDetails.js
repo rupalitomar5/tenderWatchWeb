@@ -1,5 +1,5 @@
 import React from 'react';
-import userImg from '../navbar/user-pic.png';
+import userImg from '../../images/user-pic.png';
 import StarRatings from 'react-star-ratings';
 
 const UserField = (props) => {

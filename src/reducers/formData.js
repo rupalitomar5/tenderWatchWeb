@@ -1,9 +1,7 @@
 export const GET_COUNTRIES = 'GET_COUNTRIES';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 
-const initialState = {
-
-};
+const initialState = {};
 
 const country = ( state = initialState, action) =>{
     switch (action.type) {

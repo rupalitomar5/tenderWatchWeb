@@ -1,16 +1,15 @@
 import React from 'react';
 import {Form, FormGroup, Label, Input, Alert, InputGroupAddon, InputGroup} from 'reactstrap';
 import AlertModal from '../alertModal/alertmodal';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import SpinnerLoader from '../spinnerLoader/spinnerLoader';
 import '../../containers/Profile/profile.css';
 import noImg from './picture.svg';
 import './tenderForm.css'
 const TenderForm = (props) => {
     return (
-        <Form encType='multipart/form-data' onSubmit={props.submitHandler}>
+        <React.Fragment>
             {props.isLoading && <SpinnerLoader/>}
+        <Form encType='multipart/form-data' onSubmit={props.submitHandler}>
             {props.alertModal && props.alertModal.isAlert &&
             <AlertModal alertModal={props.alertModal}/>}
             <div className='row'>
@@ -20,7 +19,7 @@ const TenderForm = (props) => {
                             <div className='center'>
                             <div className="text btn-lg"><i className='fa fa-camera fa-4x'/></div>
                             </div>
-                            {<img className='profile-image'
+                            <img className='profile-image'
                                   src={props.imagePreviewUrl || props.fields.tenderPhoto || ''}
                                   alt=''
                                   onError={(e) => {
@@ -29,7 +28,7 @@ const TenderForm = (props) => {
                                   onClick={(e) => {
                                       e.target.nextSibling.click();
                                   }}
-                            />}
+                            />
                             <Input type='file' name='image' style={{display: 'none'}} onChange={props.changeHandler}
                             />
                         </div>
@@ -49,7 +48,7 @@ const TenderForm = (props) => {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Country</Label>
+                        <Label>Country *</Label>
                         <Input id='countries' type='select' name='country' onChange={props.optionsHandler}
                                onBlur={props.validate}>
                             {props.fields.country && props.fields.country.countryName &&
@@ -75,7 +74,7 @@ const TenderForm = (props) => {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Categories</Label>
+                        <Label>Categories *</Label>
                         <Input id='categories' type='select' name='category' onChange={props.optionsHandler}
                                onBlur={props.validate}>
                             {props.fields.category && props.fields.category.categoryName &&
@@ -140,6 +139,7 @@ const TenderForm = (props) => {
                 </div>
             </div>
         </Form>
+        </React.Fragment>
     )
 };
 

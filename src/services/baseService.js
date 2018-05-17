@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '../store';
 import {LOGOUT} from "../reducers/auth";
-const baseService  = axios.create({ baseURL: 'http://192.168.200.63:4000' });
+const baseService  = axios.create({ baseURL: 'http://13.127.41.167:4000/' });
 
 baseService.interceptors.request.use( config => {
     if( localStorage.getItem('auth_user') ) {

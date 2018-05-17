@@ -8,6 +8,7 @@ import userRole from './userRole';
 import formData from './formData';
 import tenders from './tenders';
 import userProfile from './userProfile';
+import bankInformation from './bankInformation';
 
 export default combineReducers({
     router: routerReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
     userRole,
     formData,
     tenders,
-    userProfile
+    userProfile,
+    bankInformation
 });

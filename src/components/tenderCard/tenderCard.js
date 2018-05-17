@@ -19,6 +19,7 @@ const TenderCard = (props) => {
                                 id={props._id}
                                 src={props.tenderPhoto}
                                 onError={(e)=>{e.target.src=noImage}}
+                                alt=''
                             />
                         </div>
                         <div className="text-box">

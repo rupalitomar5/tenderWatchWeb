@@ -54,10 +54,10 @@ class TenderList extends React.Component {
 
     render() {
         return (
-            <div className='col-lg-12 ml-auto top-space hide'>
+            <React.Fragment>
                 {this.props.isLoading && <SpinnerLoader/>}
                 {this.props.alertModal.isAlert && <AlertModal alertModal={this.props.alertModal}/>}
-
+            <div className='col-lg-12 ml-auto top-space hide'>
                 <AskModal isAskModalOpen={this.state.isAskModalOpen}
                           noMethod={this.askModalToggle}
                           yesMethod={() => {
@@ -85,6 +85,7 @@ class TenderList extends React.Component {
                     </div>
                 </div>
             </div>
+            </React.Fragment>
         )
     }
 }
@@ -93,7 +94,8 @@ const mapStateToProps = (state) => {
     return {
         tenders: state.tenders,
         alertModal: state.alertModal,
-        searchKey:state.tenders.searchKey
+        searchKey:state.tenders.searchKey,
+        isLoading:state.isLoading
     }
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -49,6 +49,7 @@ export const logoutMethod = () => {
 export const registerMethod = (regDetails) => {
     return dispatch => {
         dispatch({type: ENABLELOADING});
+        debugger;
         let regForm = new FormData();
         for (let key in regDetails) {
             regForm.append(key, regDetails[key]);

@@ -8,17 +8,30 @@ import _ from 'lodash';
 
 import {logoutMethod} from '../../actionMethods/authActionMethods';
 import {getNotification} from '../../actionMethods/ProfileActionsMethods';
-import userImg from './user-pic.png';
+import userImg from '../../images/user-pic.png';
 import bellIcon from './notifications-bell-button.svg';
 
-const NavBar = (props) => {
-    const newNotifications = _.filter(props.notifications,{'read':false}).length;
-    //props.authUser && !props.notifications.length && props.getNotification();
+class NavBar extends React.Component{
+
+    constructor(){
+        super();
+        this.state={
+
+        }
+    }
+
+
+    componentDidMount(){
+        this.props.authUser && this.props.getNotification();
+    }
+
+    render(){
+        const newNotifications = _.filter(this.props.notifications,{'read':false}).length;
     return (
         <div>
             <Navbar style={{backgroundColor: '#00bcd4'}} dark>
                 <NavbarBrand style={{color: 'white'}}>TenderWatch</NavbarBrand>
-                {props.user && <React.Fragment>
+                {this.props.user && <React.Fragment>
 
                     <div className="right-icons">
                         <UncontrolledDropdown inNavbar>
@@ -27,7 +40,7 @@ const NavBar = (props) => {
                                 {newNotifications>0 && <Badge className='notification-badge' color='danger' pill>{newNotifications}</Badge>}
                             </DropdownToggle>
                             <DropdownMenu className='dropdown-notification' right>
-                                {props.notifications.length > 0 ? props.notifications.map((x, i) =>
+                                {this.props.notifications.length > 0 ? this.props.notifications.slice(0,5).map((x, i) =>
                                     <React.Fragment>
                                         <Link className='underline' to={`/notification/${x._id}`}>
                                             <DropdownItem>
@@ -42,23 +55,24 @@ const NavBar = (props) => {
                                             </span>
                                             </DropdownItem>
                                         </Link>
-                                        {i !== props.notifications.length - 1 && <DropdownItem divider/>}
+                                        {i !== this.props.notifications.length - 1 && <DropdownItem divider/>}
                                     </React.Fragment>
                                 ):
                                 <React.Fragment>
                                     <DropdownItem>
                                     <span className='colorText'>
-                                           No notification for you...!!!
+                                           No notifications
                                             </span>
                                     </DropdownItem>
                                 </React.Fragment>
                                 }
+                                {this.props.notifications.length>5 && <Link to='/notifications'><DropdownItem>show more</DropdownItem></Link>}
                             </DropdownMenu>
                         </UncontrolledDropdown>
                         <UncontrolledDropdown inNavbar>
                             <DropdownToggle nav className={'colorMain-background'}>
                                 <img className="profileImage"
-                                     src={_.includes(props.user.profilePhoto, 'amazonaws') ? props.user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${props.user.profilePhoto}`}
+                                     src={_.includes(this.props.user.profilePhoto, 'amazonaws') ? this.props.user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${this.props.user.profilePhoto}`}
                                      alt={'profile picture'}
                                      onError={(e) => {
                                          e.target.src = userImg
@@ -77,8 +91,7 @@ const NavBar = (props) => {
                                 <DropdownItem
                                     divider/>
                                 <Link className='underline' to=''>
-                                    <DropdownItem onClick={props.logoutMethod} className='underline'>Log
-                                        Out</DropdownItem>
+                                    <DropdownItem onClick={this.props.logoutMethod} className='underline'>Log Out</DropdownItem>
                                 </Link>
                             </DropdownMenu>
                         </UncontrolledDropdown>
@@ -87,8 +100,8 @@ const NavBar = (props) => {
                 }
             </Navbar>
         </div>
-    )
-};
+    )}
+}
 
 const mapStateToProps = (state) => {
     return {

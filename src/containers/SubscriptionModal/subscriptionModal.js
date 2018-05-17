@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import _ from 'lodash';
 import {
     Modal,
@@ -10,11 +11,14 @@ import {
 import {NavLink} from 'react-router-dom';
 import CreditCard from '../subscription/creditCard';
 import {Elements} from 'react-stripe-elements';
-import BankPayment from '../subscription/bankPaymentPlaid';
+import BankPayment from '../subscription/bankPayment';
 import AddCategory from '../../components/subscription/AddCategoryPage';
 import AddCountry from '../../components/subscription/addCountryPage';
 import SelectSubscription from '../../components/subscription/selectSubscription';
 import './subscriptionModal.css';
+import PesaPal from "../subscription/pesapal";
+import {openAlertModal} from '../../actionMethods/alertMessageActionMethods';
+import {registerMethod} from '../../actionMethods/authActionMethods';
 
 
 class SubscriptionModal extends React.Component {
@@ -27,15 +31,17 @@ class SubscriptionModal extends React.Component {
             subscriptionPackage: 0,
             selectedCountry: [],
             selectedCategories: [],
-            alert:0,
+            alert: 0,
             displaySelect: "",
-            selections:"",
-            paymentMethod:''
+            selections: "",
+            paymentMethod: ''
         }
     }
+
     componentDidMount() {
         document.addEventListener('keydown', this.onKeyDown)
     }
+
     onKeyDown = (e) => {
         if (e.keyCode === 27) {
             this.setState({
@@ -70,7 +76,7 @@ class SubscriptionModal extends React.Component {
         }
     };
     onSelectChange = (e, selectedOption) => {
-        if (e.target.id === 'selectedCountry') {
+        if (e.target.id === 'selectedCountry' && e.target.value !== '') {
             let {selectedCountry, selections} = this.state;
             selections = selections && JSON.parse(selections) || {};
             debugger;
@@ -89,7 +95,7 @@ class SubscriptionModal extends React.Component {
                 debugger;
                 selectedCountry.push(selectedC);
             }
-            console.log('countries : ',selections);
+            console.log('countries : ', selections);
             debugger;
             selectedCountry = [...new Set(selectedCountry)];
             this.setState({selectedCountry, selections}, () => {
@@ -159,12 +165,13 @@ class SubscriptionModal extends React.Component {
         });
     };
     nextPage = () => {
-        this.validation();
+        this.validation() &&
         this.setState({
             stepIndex: this.state.stepIndex + 1
         });
     };
     navigate = (page) => {
+        this.validation() &&
         this.setState({
             stepIndex: page
         });
@@ -186,8 +193,9 @@ class SubscriptionModal extends React.Component {
             });
             return false;
         }
-        else if(selectedCategories.length === 0) {
+        else if (selectedCategories.length === 0) {
             this.setState({
+                stepIndex: 3,
                 alert: 3
             });
             return false;
@@ -217,11 +225,11 @@ class SubscriptionModal extends React.Component {
         }
     };
     changePaymentMethod = (payment) => {
-      return e =>this.setState({paymentMethod:payment,stepIndex:5});
+        return e => this.setState({paymentMethod: payment, stepIndex: 5});
     };
     subscribe = () => {
         const result = this.validation();
-        if(result){
+        if (result) {
             alert('All Good');
         }
     };
@@ -230,28 +238,9 @@ class SubscriptionModal extends React.Component {
             displaySelect: v._id
         });
     };
-    register = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const {fields} = this.state;
-        if (fields.role === 'contractor') {
-            const {errors} = this.state;
-            let flag = 0;
-            const keys = ['selectedCountry', 'category', 'subscribe'];
-            for (let key in keys) {
-                if (errors[keys[key]] === undefined || errors[keys[key]] !== '') {
-                    flag = 1;
-                    break;
-                }
-            }
-            if (flag) {
-                this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
-            } else {
-                this.props.registerMethod(this.state.fields);
-            }
-        } else {
-            this.props.registerMethod(this.state.fields);
-        }
+    register = () => {
+        debugger;
+        this.props.registerMethod({...this.props.fields, selections: this.state.selections});
     };
 
     render() {
@@ -262,8 +251,9 @@ class SubscriptionModal extends React.Component {
                 <Modal isOpen={this.props.isOpen} toggle={this.props.toggleChange} size="lg">
                     <ModalHeader>
                         Select your Subscription
-                        <h6>Current Subscription - <NavLink to=''
-                                                            onClick={this.ResetPlan}>{['none', 'Free', 'Monthly', 'Yearly'][+this.state.subscriptionPackage]}</NavLink>
+                        <h6>Current Subscription - <NavLink to='' onClick={this.ResetPlan}>
+                            {['none', 'Free', 'Monthly', 'Yearly'][+this.state.subscriptionPackage]}
+                        </NavLink>
                         </h6>
                     </ModalHeader>
                     <ModalBody>
@@ -296,20 +286,39 @@ class SubscriptionModal extends React.Component {
                                             />
                                             :
                                             stepIndex === 4 ?
-                                            <React.Fragment>
-                                                <p>Please Select Your preferred Payment Method:</p>
-                                                <button className='btn btnAll' onClick={this.changePaymentMethod('creditcard')}><i className='fa fa-credit-card' /> Card payment</button><br /><br />
-                                                <button className='btn btnAll ' onClick={this.changePaymentMethod('bank')}><i className='fa fa-university' /> Bank payment</button><br /><br />
-                                                <button className='btn btnAll' onClick={this.changePaymentMethod}><i className='fa fa-mobile' /> Pesa pal</button>
+                                                !this.props.user ?
+                                                    this.register()
+                                                    :
+                                                    <React.Fragment>
+                                                        <p>Please Select Your preferred Payment Method:</p>
+                                                        <button className='btn btnAll'
+                                                                onClick={this.changePaymentMethod('creditcard')}><i
+                                                            className='fa fa-credit-card'/> Card payment
+                                                        </button>
+                                                        <br/><br/>
+                                                        <button className='btn btnAll '
+                                                                onClick={this.changePaymentMethod('bank')}><i
+                                                            className='fa fa-university'/> Bank payment
+                                                        </button>
+                                                        <br/><br/>
+                                                        <button className='btn btnAll'
+                                                                onClick={this.changePaymentMethod('pesapal')}><i
+                                                            className='fa fa-mobile'/> PesaPal
+                                                        </button>
 
-                                            </React.Fragment>:
+                                                    </React.Fragment> :
                                                 <React.Fragment>
-                                                    {this.state.paymentMethod ==='creditcard' && <Elements>
-                                                        <CreditCard {...this.state}
-
-                                                        />
+                                                    {this.state.paymentMethod === 'creditcard' && <Elements>
+                                                        <CreditCard {...this.state}/>
                                                     </Elements>}
-                                                    {this.state.paymentMethod === 'bank' && <React.Fragment><BankPayment /></React.Fragment>}
+                                                    {this.state.paymentMethod === 'bank' &&
+                                                    <BankPayment subscription={this.state.subscriptionPackage}/>}
+
+                                                    {this.state.paymentMethod === 'pesapal' &&
+                                                    <PesaPal subscription={this.state.subscriptionPackage}
+                                                             phone={this.props.user.contactNo}
+                                                    />}
+
                                                 </React.Fragment>
                             }
                         </div>
@@ -331,18 +340,18 @@ class SubscriptionModal extends React.Component {
                         </span>
                         <span>
                             <i className="fa fa-check-circle"
-                                   style={this.state.selectedCategories.length > 0 ? {color: "#28a745"} : {color: 'grey'}}/>
+                               style={this.state.selectedCategories.length > 0 ? {color: "#28a745"} : {color: 'grey'}}/>
                             <span className="pageNavigation" onClick={() => {
                                 this.navigate(3)
                             }}>Select Categories</span>
                         </span>
-                        <span>
+                        {this.props.user && <span>
                             <i className="fa fa-check-circle"
                                style={this.state.paymentMethod.length > 0 ? {color: "#28a745"} : {color: 'grey'}}/>
                             <span className="pageNavigation" onClick={() => {
                                 this.navigate(4)
                             }}>Payment</span>
-                        </span>
+                        </span>}
                     </ModalFooter>
                 </Modal>
             </React.Fragment>
@@ -353,7 +362,8 @@ class SubscriptionModal extends React.Component {
 const mapStateToProps = (state) => {
     return {
         formData: state.formData,
-        user: state.auth.user
+        user: state.userProfile.user
     }
 };
-export default connect(mapStateToProps, null)(SubscriptionModal);
+const mapDispatchToProps = (dispatch) => bindActionCreators({openAlertModal, registerMethod}, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionModal);

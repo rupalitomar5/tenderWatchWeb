@@ -38,22 +38,23 @@ export default (state = initialState, action) => {
             };
         case ADD_FAVORITE_TENDER:
             let current_tender = state.current_tender;
-            current_tender.favorite = action.payload.favorite;
-            return{
+            if(current_tender && action.payload._id===current_tender._id) current_tender.favorite = action.payload.favorite;
+            return _.cloneDeep({
                 ...state,
                 current_tender
-            };
+            });
         case DELETE_FAVORITE_TENDER:
             let current_tender1 = state.current_tender;
-            _.pull(current_tender1.favorite,action.payload);
+            current_tender1 && _.pull(current_tender1.favorite,action.payload.userId);
             return{
                 ...state,
                 current_tender: current_tender1
             };
         case INTERESTED_TENDER:
+            debugger;
             const index= _.findIndex(state.allTenders,{'_id':action.payload.tenderId});
-            state.allTenders[index].interested.push(action.payload.userId);
-            state.current_tender.interested.push(action.payload.userId);
+            index>-1 && state.allTenders[index].interested.push(action.payload.userId);
+            index>-1 && state.current_tender && state.current_tender.interested.push(action.payload.userId);
             return {...state,allTenders:[...state.allTenders],current_tender:{...state.current_tender}};
         case SEARCH_KEY:
             return{

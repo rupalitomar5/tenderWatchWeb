@@ -6,7 +6,7 @@ import {withRouter, Redirect, Route, Switch} from 'react-router-dom';
 
 import TenderList from './containers/tenderList/tenderList';
 import Login from './containers/Login/login';
-import NavBar from './components/navbar/NavBar';
+import NavBar from './containers/navbar/NavBar';
 import SideBar from './components/sidebar/SideBar';
 import NotFound from './components/NotFound/notFound';
 import Register from './containers/register/register';
@@ -46,7 +46,6 @@ class App extends Component {
         );
         const PrivateRoute = ({component: Component, ...rest}) => (
             <Route {...rest} render={(routeProps) => {
-                this.props.user && this.props.getNotification();
                 return (
                 this.props.user ?
                     <div className="app-wrapper">
@@ -132,9 +131,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.auth.user,
-        countries: state.formData.countries,
-        categories:state.formData.categories,
+        user: state.auth.user
     }
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({ getCountries,getCategories, getUserProfile,getNotification}, dispatch);

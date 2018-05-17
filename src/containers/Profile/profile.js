@@ -9,6 +9,8 @@ import AlertModal from '../../components/alertModal/alertmodal';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
 import { openAlertModal } from '../../actionMethods/alertMessageActionMethods';
 
+import UserImage from '../../images/user-pic.png';
+
 import './profile.css';
 
 class Profile extends React.Component {
@@ -106,6 +108,7 @@ class Profile extends React.Component {
                                                                 <img className='profile-image'
                                                                      src={_.includes(user.profilePhoto, 'amazonaws') ? user.profilePhoto : `https://s3.ap-south-1.amazonaws.com/tenderwatch/profileimages/${user.profilePhoto}`}
                                                                      disabled={isView}
+                                                                     onError={(e)=>e.target.src=UserImage}
                                                                 />
                                                         }
                                                         {!isView && <div className="middle">

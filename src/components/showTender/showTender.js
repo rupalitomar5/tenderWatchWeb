@@ -3,11 +3,17 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap';
 import picture from '../tenderForm/picture.svg';
+import _ from 'lodash';
 
 import {addFavoriteTender, deleteFavoriteTender, interestedTenderMethod} from '../../actionMethods/tenderActionMethods';
 
 const ShowTender = (props) => {
     debugger;
+    const country=props.fields && props.fields.country &&
+    props.fields.country._id ? props.fields.country : _.find(props.formData.countries,{_id:props.fields.country});
+
+    const category=props.fields && props.fields.category &&
+    props.fields.category._id ? props.fields.category : _.find(props.formData.categories,{_id:props.fields.category});
     return (
         <React.Fragment>
             <div className="login-logo">
@@ -17,14 +23,15 @@ const ShowTender = (props) => {
                 <div className='row'>
                     <div className="col-lg-6 ml-auto custom-box1 hide">
                         <div style={{float: 'right'}}>
-                            {props.role === 'contractor' && ((props.fields.favorite && props.fields.favorite[0]) === props.user ?
+                            {props.role === 'contractor' &&
+                            ((props.fields.favorite && props.fields.favorite[0]) === props.user || props.fields.favorite && props.fields.favorite.includes(props.user) ?
                                 <div onClick={() => {
                                     props.deleteFavoriteTender(props.fields._id, props.user)
                                 }}>
                                     <i className="fas fa-heart" style={{color: '#ff0000', fontSize: '150%'}}/>
                                 </div>
                                 : <div onClick={() => {
-                                    props.addFavoriteTender(props.fields._id)
+                                    props.addFavoriteTender(props.id,props.user)
                                 }}>
                                     <i className='far  fa-heart' style={{fontSize: '150%'}}/>
                                 </div>)
@@ -55,20 +62,20 @@ const ShowTender = (props) => {
                                 </ListGroupItemText>
                                 <ListGroupItemHeading className='colorText'>Country:</ListGroupItemHeading>
                                 <ListGroupItemText className='colorText'>
-                                    {props.fields && props.fields.country &&
+                                    { country &&
                                     <React.Fragment><img
-                                        src={`data:image/png;base64,${props.fields.country.imageString}`}
+                                        src={`data:image/png;base64,${country.imageString}`}
                                         alt=''/>
-                                        {' '}{props.fields.country.countryName}</React.Fragment>}
+                                        {' '}{country.countryName}</React.Fragment>}
                                 </ListGroupItemText>
                                 <ListGroupItemHeading className='colorText'>Category:</ListGroupItemHeading>
                                 <ListGroupItemText>
-                                    {props.fields && props.fields.category && <React.Fragment>
+                                    {category &&<React.Fragment>
                                         <img
-                                            src={`data:image/png;base64,${props.fields.category.imgString}`}
+                                            src={`data:image/png;base64,${category.imgString}`}
                                             alt=''
                                         />
-                                        {' '}{props.fields.category.categoryName}</React.Fragment>}
+                                        {' '}{category.categoryName}</React.Fragment>}
                                 </ListGroupItemText>
                                 <ListGroupItemHeading className='colorText'>Expiry Date:</ListGroupItemHeading>
                                 <ListGroupItemText>
@@ -124,7 +131,8 @@ const ShowTender = (props) => {
 const mapStateToProps = state => {
     return {
         user: state.userProfile.user && state.userProfile.user._id,
-        role: state.userProfile.user && state.userProfile.user.role
+        role: state.userProfile.user && state.userProfile.user.role,
+        formData:state.formData
     }
 };
 

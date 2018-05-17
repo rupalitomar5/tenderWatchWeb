@@ -32,6 +32,7 @@ export const getAllTendersMethod = () => {
             !res.data.message && dispatch({type: GET_ALL_TENDERS, payload: res.data});
         }).catch((error) => {
             dispatch({type: DISABLELOADING});
+            /*dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: 'cannot load tenders'}});*/
         })
     }
 };
@@ -88,8 +89,10 @@ export const getTenderMethod = (index) => {
 export const updateTenderMethod = (data, index) => {
     return dispatch => {
         dispatch({type: ENABLELOADING});
+        debugger;
         data = data.country && data.country._id ? {...data, country: data.country._id} : data;
         data = data.category && data.category._id ? {...data, category: data.category._id} : data;
+        debugger;
         let regForm = new FormData();
         for (let key in data) {
             regForm.append(key, data[key]);
@@ -101,6 +104,7 @@ export const updateTenderMethod = (data, index) => {
             dispatch({type: SHOW_MODAL, payload: {header: 'Tender', message: 'tender successfully updated!'}});
             return true;
         }).catch((error) => {
+            debugger;
             dispatch({type: DISABLELOADING});
             dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: error.response.data.error}});
             return false;
@@ -121,12 +125,15 @@ export const getFavoriteTenders = () => {
     }
 };
 
-export const addFavoriteTender = tenderId => {
+export const addFavoriteTender = (tenderId,clientId) => {
     return dispatch => {
         addFavoriteTenderService(tenderId).then(response => {
-            dispatch({type: ADD_FAVORITE_TENDER, payload: response.data});
+            debugger;
+            dispatch({type: ADD_FAVORITE_TENDER, payload: {...response.data,clientId}});
+            debugger;
         }).catch(error => {
-            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: error.response.data.error}});
+            dispatch({type: SHOW_MODAL, payload: {header: 'Error', message: error.response && error.response.data && error.response.data.error}});
+            debugger;
         });
     }
 };
@@ -134,11 +141,11 @@ export const addFavoriteTender = tenderId => {
 export const deleteFavoriteTender = (tenderId, userId) => {
     return dispatch => {
         deleteFavoriteTenderService(tenderId).then(response => {
-            dispatch({type: DELETE_FAVORITE_TENDER, payload: userId});
+            dispatch({type: DELETE_FAVORITE_TENDER, payload: {tenderId,userId}});
         }).catch(error => {
             dispatch({
                 type: SHOW_MODAL,
-                payload: {header: 'Error', message: error.response.data && error.response.data.error || error.message}
+                payload: {header: 'Error', message: error.response && error.response.data && error.response.data.error || error.message}
             });
         });
     }

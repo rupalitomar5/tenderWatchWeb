@@ -6,6 +6,8 @@ import {find} from 'lodash';
 import {readNotificationMethod} from '../../actionMethods/ProfileActionsMethods';
 import '../tenderList/tenderList.css';
 import {NavLink} from 'react-router-dom';
+import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
+import AlertModal from '../../components/alertModal/alertmodal';
 
 class Notification extends React.Component {
     constructor(props) {
@@ -28,28 +30,35 @@ class Notification extends React.Component {
     render() {
         debugger;
         return (
-            <div className='login'>
-                <div className="login-form">
-                    <h4 className='colorText'>
-                        {this.state.notification && this.state.notification.message}&nbsp;{' '}
-                        {this.state.notification && <NavLink to={`${this.state.token}/senderinfo`}>
-                            {this.state.notification && this.state.notification.sender.email}
-                        </NavLink>}
-                    </h4>
+            <React.Fragment>
+                {this.props.isLoading && <SpinnerLoader/>}
+                {this.props.alertModal.isAlert &&
+                <AlertModal alertModal={this.props.alertModal}/>}
+                <div className='login'>
+                    <div className="login-form">
+                        <h4 className='colorText'>
+                            {this.state.notification && this.state.notification.message}&nbsp;{' '}
+                            {this.state.notification && <NavLink to={`${this.state.token}/senderinfo`}>
+                                {this.state.notification && this.state.notification.sender.email}
+                            </NavLink>}
+                        </h4>
+                    </div>
+                    {this.state.notification &&
+                    <ShowTender
+                        fields={this.state.notification.tender}
+                        id={this.state.notification.tender._id}
+                    />}
                 </div>
-                {this.state.notification &&
-                <ShowTender
-                    fields={this.state.notification.tender}
-                    id={this.state.notification.tender._id}
-                />}
-            </div>
+            </React.Fragment>
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        notifications: state.userProfile.notifications.allNotifications
+        notifications: state.userProfile.notifications.allNotifications,
+        isLoading: state.isLoading,
+        alertModal: state.alertModal
     }
 };
 const mapDispatchToProps = (dispatch) => bindActionCreators({readNotificationMethod}, dispatch);

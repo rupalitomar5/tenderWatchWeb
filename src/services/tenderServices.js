@@ -36,5 +36,6 @@ export const deleteFavoriteTenderService = ( tenderId ) =>{
 };
 
 export const interestedTenderService = (tenderId) => {
+    debugger;
     return baseService.put(`/api/tender/interested/${tenderId}`);
 };

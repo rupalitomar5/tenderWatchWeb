@@ -4,12 +4,21 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import AlertModal from '../../components/alertModal/alertmodal';
 import SpinnerLoader from '../../components/spinnerLoader/spinnerLoader';
-
+import PesapalInfo from "./pesapalInfo";
+let paramArr,params={};
 class Subscription extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        console.log(props);
+        paramArr = props.location.search.slice(1).replace(/\&|\=/ig, '**').split('**');
+        debugger;
+        paramArr.forEach((x, i) => {
+            debugger;
+            i%2 === 0 ? params[x] = paramArr[i + 1] : '';
+        });
         this.state = {
             isOpen: false,
+            params
         }
     }
 
@@ -20,8 +29,10 @@ class Subscription extends React.Component {
     };
 
     render() {
+        const {params} = this.state;
         return (
             <React.Fragment>
+                {console.log(this.state)}
                 {this.props.isLoading && <SpinnerLoader/>}
                 {this.props.alertModal.isAlert &&
                 <AlertModal alertModal={this.props.alertModal}/>}
@@ -32,6 +43,7 @@ class Subscription extends React.Component {
                             isOpen={this.state.isOpen}
                             toggleChange={this.toggleChange}
                         />
+                        {params.pesapal_merchant_reference && params.pesapal_transaction_tracking_id && <PesapalInfo params={params} />}
                     </div>
                 </div>
             </React.Fragment>
@@ -45,5 +57,5 @@ const mapStateToProps = (state) => {
         isLoading: state.isLoading
     }
 };
-const mapDispatchToProps = (dispatch) => bindActionCreators({},dispatch);
-export default connect(mapStateToProps,mapDispatchToProps)(Subscription);
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(Subscription);

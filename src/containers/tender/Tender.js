@@ -106,9 +106,11 @@ class Tender extends React.Component {
 
     render() {
         return (
-            this.state.edit ? <div className='col-lg-12 ml-auto p-5 hide'>
+            <React.Fragment>
+                {this.props.isLoading && <SpinnerLoader/>}
+                {this.state.edit ? <div className='col-lg-12 ml-auto p-5 hide'>
                     <NavLink to='' onClick={this.toggleEditMode}>{'< back'}</NavLink>
-                    {this.props.isLoading && <SpinnerLoader/>}
+
                     {this.props.alertModal.isAlert &&
                     <AlertModal alertModal={this.props.alertModal}/>}
                     <h1 className='colorText'>Edit Tender:</h1>
@@ -128,14 +130,14 @@ class Tender extends React.Component {
                 </div>
                 :
                 <div className="login">
-                    {this.props.isLoading && <SpinnerLoader/>}
                     {this.props.alertModal.isAlert &&
                     <AlertModal alertModal={this.props.alertModal}/>}
                     <ShowTender
                         {...this.state}
                         toggleEditMode={this.toggleEditMode}
                     />
-                </div>
+                </div>}
+            </React.Fragment>
         )
     }
 }

@@ -7,6 +7,7 @@ const AddCountry = (props) => {
         <React.Fragment>
             <div>
                 {props.data.selectedCountry.map((value) => {
+
                     return (
                         <Badge className="badgee" pill color="info">
                             <img
@@ -24,6 +25,7 @@ const AddCountry = (props) => {
                 <Input type="select" id="selectedCountry" onChange={(e) => {
                     props.onSelectChange(e)
                 }}>
+                    <option value={''}>select one</option>
                     {
                         props.formData.countries && props.formData.countries.map((value) => {
                             return <option value={value._id}>{value.countryName}</option>

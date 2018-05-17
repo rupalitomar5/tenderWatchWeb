@@ -56,8 +56,8 @@ class UploadTender extends React.Component {
         e.preventDefault();
         e.stopPropagation();
         const {fields, errors} = this.state;
-
-        if (!fields.tenderName || !fields.email || errors.email || errors.contactNo) {
+        debugger;
+        if (!fields.tenderName || !fields.email || errors.email || errors.contactNo || !fields.country || !fields.category) {
             this.props.openAlertModal({header: 'Register', message: 'Please enter valid details'});
         } else if (!fields.agree) {
             this.props.openAlertModal({header: 'Register', message: 'please check on agree'});

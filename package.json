@@ -2,12 +2,11 @@
   "name": "tenderwatch",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://192.168.200.63:4000",
+  "proxy": "http://13.127.41.167:4000/",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
     "history": "^4.7.2",
-    "i": "^0.3.6",
     "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.10",
     "npm": "^6.0.1",
